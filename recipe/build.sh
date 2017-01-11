@@ -21,7 +21,7 @@ then
     # (thanks to @chapmanb)
     mkdir -p jre/lib/fonts
     cd jre/lib/fonts
-    wget --no-check-certificate http://sourceforge.net/projects/dejavu/files/dejavu/2.36/dejavu-fonts-ttf-2.36.tar.bz2
+    curl -O -C - http://sourceforge.net/projects/dejavu/files/dejavu/2.36/dejavu-fonts-ttf-2.36.tar.bz2
     tar -xjvpf dejavu-fonts-ttf-2.36.tar.bz2
     mv dejavu-fonts-ttf-*/ttf/* .
     rm -rf dejavu-fonts-ttf-*

@@ -28,6 +28,11 @@ build:
   track_features:
     - openjdk
 
+requirements:
+  build:
+    - curl
+
+
 test:
   commands:
     - java -version
