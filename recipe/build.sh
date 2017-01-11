@@ -29,7 +29,7 @@ then
 fi
 
 mv jre $PREFIX/
-mv lib $PREFIX/lib
+mv lib/* $PREFIX/lib
 
 # ensure that JAVA_HOME is set correctly
 mkdir -p $PREFIX/etc/conda/activate.d
