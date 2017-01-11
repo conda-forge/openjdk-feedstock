@@ -22,11 +22,16 @@ source:
   md5: {{ md5_win }}  # [win64]
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{PKG_BUILDNUM}}
   track_features:
     - openjdk
+
+requirements:
+  build:
+    - curl
+
 
 test:
   commands:
