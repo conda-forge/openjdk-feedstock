@@ -16,6 +16,16 @@ then
     rm -r lib/amd64
     # libnio.so does not find this within jre/lib/amd64 subdirectory
     cp jre/lib/amd64/libnet.so lib
+
+    # include dejavu fonts to allow java to work even on minimal cloud images where these fonts are missing
+    # (thanks to @chapmanb)
+    mkdir -p jre/lib/fonts
+    cd jre/lib/fonts
+    wget --no-check-certificate http://sourceforge.net/projects/dejavu/files/dejavu/2.36/dejavu-fonts-ttf-2.36.tar.bz2
+    tar -xjvpf dejavu-fonts-ttf-2.36.tar.bz2
+    mv dejavu-fonts-ttf-*/ttf/* .
+    rm -rf dejavu-fonts-ttf-*
+    cd ../../../
 fi
 
 mv jre $PREFIX/
