@@ -3,7 +3,7 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.112" %}
 {% set zulu_build = "8.19.0.1" %}
-{% set build_number = 1 %}
+{% set build_number = 2 %}
 {% set md5_linux = "3f95d82bf8ece272497ae2d3c5b56c3b" %}
 {% set md5_osx = "8d9cce47fbc8f80dafbfc88fa4ae5d07" %}
 {% set md5_win = "70bbe971a9a6995a9e909b709ae52b34" %}
