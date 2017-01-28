@@ -36,7 +36,7 @@ requirements:
 
 test:
   files:
-    - test-jni
+    - test-jni  # [not win]
     - test-jni.sh  # [not win]
   commands:
     - java -version
