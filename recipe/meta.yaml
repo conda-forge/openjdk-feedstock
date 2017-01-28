@@ -35,8 +35,12 @@ requirements:
 
 
 test:
+  files:
+    - test-jni
+    - test-jni.sh  # [not win]
   commands:
     - java -version
+    - ./test-jni.sh  # [not win]
 
 about:
   home: https://www.azul.com/products/zulu/
