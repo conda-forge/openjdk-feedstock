@@ -4,7 +4,7 @@ chmod +x bin/*
 chmod +x jre/bin/*
 mv bin/* $PREFIX/bin/
 ls -la $PREFIX/bin
-mv include $PREFIX/include
+mv include/* $PREFIX/include
 if [ -e jre/lib/jspawnhelper ]; then
     chmod +x jre/lib/jspawnhelper
 fi
