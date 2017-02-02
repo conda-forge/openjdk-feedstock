@@ -1,10 +1,17 @@
 #!/bin/bash
 
 set -e
+export 
+if [ ! -d $JAVA_LD_LIBRARY_PATH ]; then
+	echo "Did you remember to activate the conda environment?"
+	exit -1
+fi
 os=$(uname -s | tr '[:upper:]' '[:lower:]')
-JAVA_LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/amd64/server
+
 if [ $os == 'darwin' ]; then
-	JAVA_LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/server
+	export DYLD_LIBRARY_PATH=$JAVA_LD_LIBRARY_PATH:$DYLD_LIBRARY_PATH
+elif [ $os == 'linux' ]; then
+	export LD_LIBRARY_PATH=$JAVA_LD_LIBRARY_PATH:$JAVA_LD_LIBRARY_PATH
 fi
 
 gcc \
@@ -15,8 +22,4 @@ gcc \
 	-o vmtest				\
 	test-jni/vmtest.c 
 	
-if [ $os == 'darwin' ]; then
-	DYLD_LIBRARY_PATH=$JAVA_LD_LIBRARY_PATH ./vmtest
-elif [ $os == 'linux']; then
-	LD_LIBRARY_PATH=$JAVA_LD_LIBRARY_PATH ./vmtest
-fi
+./vmtest
