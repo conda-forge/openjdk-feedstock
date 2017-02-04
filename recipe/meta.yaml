@@ -28,6 +28,9 @@ build:
   string: zulu{{ zulu_build }}_{{ build_number }}
   track_features:
     - openjdk
+  rpath:
+    - lib
+    - jre/lib
 
 requirements:
   build:
