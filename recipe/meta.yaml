@@ -1,12 +1,12 @@
 # Based on recipes from birdhouse and anaconda channel.
 
 {% set name = "openjdk" %}
-{% set version = "8.0.112" %}
-{% set zulu_build = "8.19.0.1" %}
-{% set build_number = 3 %}
-{% set md5_linux = "3f95d82bf8ece272497ae2d3c5b56c3b" %}
-{% set md5_osx = "8d9cce47fbc8f80dafbfc88fa4ae5d07" %}
-{% set md5_win = "70bbe971a9a6995a9e909b709ae52b34" %}
+{% set version = "8.0.121" %}
+{% set zulu_build = "8.20.0.5" %}
+{% set build_number = 0 %}
+{% set md5_linux = "e5f4b1d997e50ffe4998c68c8ec45403" %}
+{% set md5_osx = "87cbe3789cba2851bd3a93c28a1b1672" %}
+{% set md5_win = "89ea67c5966a44627809d9a46a2f3b25" %}
 
 package:
   name: {{ name|lower }}
