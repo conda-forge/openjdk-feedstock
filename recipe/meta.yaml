@@ -37,17 +37,14 @@ requirements:
 
 test:
   files:
-    - test-jni  # [not win]
+    - test-jni     # [not win]
     - test-jni.sh  # [not win]
     - test-nio
   commands:
     - java -version
-    - ./test-jni.sh  # [not win]
-    - javac test-nio/*.java
-    - java -classpath test-nio TestFilePaths $PREFIX/jre file://./test-nio/TestFilePaths.java  # [unix]
-    - java -classpath test-nio TestFilePaths %PREFIX%\jre  # [win]
+    - ./test-jni.sh                                # [not win]
     - conda inspect linkages -p ${PREFIX} openjdk  # [linux]
-    - conda inspect objects -p ${PREFIX} openjdk  # [osx]
+    - conda inspect objects -p ${PREFIX} openjdk   # [osx]
 
 about:
   home: https://www.azul.com/products/zulu/
