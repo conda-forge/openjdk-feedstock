@@ -4,23 +4,21 @@
 {% set version = "8.0.121" %}
 {% set zulu_build = "8.20.0.5" %}
 {% set build_number = 0 %}
-{% set md5_linux = "e5f4b1d997e50ffe4998c68c8ec45403" %}
-{% set md5_osx = "87cbe3789cba2851bd3a93c28a1b1672" %}
-{% set md5_win = "89ea67c5966a44627809d9a46a2f3b25" %}
+{% set sha256_linux = "7fdfb17d890406470b2303d749d3138e7f353749e67a0a22f542e1ab3e482745" %}
+{% set sha256_osx = "2a58bd1d9b0cbf0b3d8d1bcdd117c407e3d5a0ec01e2f53565c9bec5cf9ea78b" %}
+{% set sha256_win = "35414df28f17704546b9559b5e62b4d00cdc8fdfd349116be4f987abaeaaff68" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-zulu{{ zulu_build }}-{{ version }}.tar.gz  # [linux64]
-  fn: {{ name }}-zulu{{ zulu_build }}-{{ version }}.zip  # [osx or win64]
-  url: http://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
-  url: http://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
-  url: http://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
-  md5: {{ md5_linux }}  # [linux64]
-  md5: {{ md5_osx }}  # [osx]
-  md5: {{ md5_win }}  # [win64]
+  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
+  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip    # [osx]
+  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip       # [win64]
+  sha256: {{ sha256_linux }}  # [linux64]
+  sha256: {{ sha256_osx }}    # [osx]
+  sha256: {{ sha256_win }}    # [win64]
 
 build:
   number: {{ build_number }}
@@ -62,3 +60,4 @@ extra:
   recipe-maintainers:
     - johanneskoester
     - sodre
+    - mingwandroid
