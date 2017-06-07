@@ -2,6 +2,7 @@ MOVE bin\* %LIBRARY_BIN%
 MOVE include\* %LIBRARY_INC%
 MOVE jre %LIBRARY_PREFIX%\jre
 MOVE lib\* %LIBRARY_LIB%
+MOVE src.zip %LIBRARY_PREFIX%\jre\src.zip
 
 :: ensure that JAVA_HOME is set correctly
 mkdir %PREFIX%\etc\conda\activate.d
