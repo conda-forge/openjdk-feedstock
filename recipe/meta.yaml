@@ -6,7 +6,7 @@
 {% set build_number = 0 %}
 {% set sha256_linux = "7fdfb17d890406470b2303d749d3138e7f353749e67a0a22f542e1ab3e482745" %}
 {% set sha256_osx = "2a58bd1d9b0cbf0b3d8d1bcdd117c407e3d5a0ec01e2f53565c9bec5cf9ea78b" %}
-{% set sha256_win = "35414df28f17704546b9559b5e62b4d00cdc8fdfd349116be4f987abaeaaff68" %}
+{% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
 
 package:
   name: {{ name|lower }}
@@ -52,7 +52,6 @@ about:
   summary: The Zulu OpenJDK build.
   description: |
     Zulu OpenJDK is an open source build of the Java JDK.
-
 extra:
   recipe-maintainers:
     - johanneskoester
