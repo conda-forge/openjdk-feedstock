@@ -3,7 +3,7 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.144" %}
 {% set zulu_build = "8.23.0.3" %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 {% set sha256_linux = "7e6284739c0e5b7142bc7a9adc61ced70dc5bb26b130b582b18e809013bcb251" %}
 {% set sha256_osx = "ff533364c9cbd3b271ab5328efe28e2dd6d7bae5b630098a5683f742ecf0709d" %}
 {% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
@@ -26,9 +26,6 @@ build:
   string: zulu{{ zulu_build }}_{{ build_number }}
   track_features:
     - openjdk
-  rpath:
-    - lib
-    - jre/lib
 
 requirements:
   build:
