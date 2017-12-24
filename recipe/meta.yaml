@@ -4,8 +4,8 @@
 {% set version = "8.0.152" %}
 {% set zulu_build = "8.25.0.1" %}
 {% set build_number = 1 %}
-{% set sha256_linux = "7e6284739c0e5b7142bc7a9adc61ced70dc5bb26b130b582b18e809013bcb251" %}
-{% set sha256_osx = "ff533364c9cbd3b271ab5328efe28e2dd6d7bae5b630098a5683f742ecf0709d" %}
+{% set sha256_linux = "57911a136fedc476a8b505d00c364913bf4cf5b7a50ef6913334362bc219e21a" %}
+{% set sha256_osx = "ea5797daeb74da7348c6725e2142359c6b34bcb97c142584ebeea07dc28db9c3" %}
 {% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
 
 package:
@@ -55,3 +55,4 @@ extra:
     - johanneskoester
     - sodre
     - mingwandroid
+    - abhi18av
