@@ -1,12 +1,12 @@
 # Based on recipes from birdhouse and anaconda channel.
 
 {% set name = "openjdk" %}
-{% set version = "8.0.144" %}
-{% set zulu_build = "8.23.0.3" %}
-{% set build_number = 1 %}
-{% set sha256_linux = "7e6284739c0e5b7142bc7a9adc61ced70dc5bb26b130b582b18e809013bcb251" %}
-{% set sha256_osx = "ff533364c9cbd3b271ab5328efe28e2dd6d7bae5b630098a5683f742ecf0709d" %}
-{% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
+{% set version = "7.0.161" %}
+{% set zulu_build = "7.21.0.3" %}
+{% set build_number = 0 %}
+{% set sha256_linux = "af1ea1676d33ec655a1d333709829b9242d55f7ec7de21e6295a2a2ad7dd43a5" %}
+{% set sha256_osx = "6bb3d562b79e97c08e33f5eaf3a0193a1b8b0617105a3fbdcfe833d04bdbe2fd" %}
+{% set sha256_win = "73a9e326a30cf53388de447c1ec8552744b24d4822ad57634615232fd27b3f55" %}
 
 package:
   name: {{ name|lower }}
