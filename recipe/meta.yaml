@@ -4,9 +4,9 @@
 {% set version = "10" %}
 {% set zulu_build = "10.1+11" %}
 {% set build_number = 0 %}
-{% set sha256_linux = "be69c4ad5f2ccc165f6cb74b4eb520290b4cdac6106308c6a27dde3a5310f2f8" %}
-{% set sha256_osx = "a8d53fd5032f3adf705a6182af78d0625d43d3b872ffdc64e7dd59dc7d7d7e49" %}
-{% set sha256_win = "46930ff450be6138ddf7489a3c7411513e2a3ede568d469222c8b2d99a2b15c3" %}
+{% set sha256_linux = "a8bebc6c25f6181cb25866fd83e83eac04e972aec3d36293a0cac6c3beb0a13c" %}
+{% set sha256_osx = "7e1cb6045a3154fe4fa857a33b4ffe86e60f6d09af8621e3f9cf6c6b4658b1b0" %}
+{% set sha256_win = "4ab5684fc1cb63c1b3e17886e39c8e3814280fba2583374f26e2116462dc3543" %}
 
 package:
   name: {{ name|lower }}
