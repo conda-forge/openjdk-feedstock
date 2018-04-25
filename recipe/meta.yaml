@@ -1,12 +1,12 @@
 # Based on recipes from birdhouse and anaconda channel.
 
 {% set name = "openjdk" %}
-{% set version = "8.0.144" %}
-{% set zulu_build = "8.23.0.3" %}
-{% set build_number = 1 %}
-{% set sha256_linux = "7e6284739c0e5b7142bc7a9adc61ced70dc5bb26b130b582b18e809013bcb251" %}
-{% set sha256_osx = "ff533364c9cbd3b271ab5328efe28e2dd6d7bae5b630098a5683f742ecf0709d" %}
-{% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
+{% set version = "10" %}
+{% set zulu_build = "10.1.+11" %}
+{% set build_number = 0 %}
+{% set sha256_linux = "be69c4ad5f2ccc165f6cb74b4eb520290b4cdac6106308c6a27dde3a5310f2f8" %}
+{% set sha256_osx = "a8d53fd5032f3adf705a6182af78d0625d43d3b872ffdc64e7dd59dc7d7d7e49" %}
+{% set sha256_win = "46930ff450be6138ddf7489a3c7411513e2a3ede568d469222c8b2d99a2b15c3" %}
 
 package:
   name: {{ name|lower }}
@@ -30,7 +30,7 @@ build:
 requirements:
   build:
     - curl
-
+    - gcc
 
 test:
   files:
@@ -55,3 +55,4 @@ extra:
     - johanneskoester
     - sodre
     - mingwandroid
+    - marcelotrevisani
