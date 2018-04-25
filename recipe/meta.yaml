@@ -2,7 +2,7 @@
 
 {% set name = "openjdk" %}
 {% set version = "10" %}
-{% set zulu_build = "10.1.+11" %}
+{% set zulu_build = "10.1+11" %}
 {% set build_number = 0 %}
 {% set sha256_linux = "be69c4ad5f2ccc165f6cb74b4eb520290b4cdac6106308c6a27dde3a5310f2f8" %}
 {% set sha256_osx = "a8d53fd5032f3adf705a6182af78d0625d43d3b872ffdc64e7dd59dc7d7d7e49" %}
