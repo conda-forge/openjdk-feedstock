@@ -30,7 +30,6 @@ build:
 requirements:
   build:
     - curl
-    - gcc
 
 test:
   files:
