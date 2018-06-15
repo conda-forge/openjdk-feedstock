@@ -1,12 +1,14 @@
+setlocal EnableDelayedExpansion
+
 MOVE bin\* %LIBRARY_BIN%
 MOVE include\* %LIBRARY_INC%
 MOVE jre %LIBRARY_PREFIX%\jre
 MOVE lib\* %LIBRARY_LIB%
 MOVE src.zip %LIBRARY_PREFIX%\jre\src.zip
 
-:: ensure that JAVA_HOME is set correctly
-mkdir %PREFIX%\etc\conda\activate.d
-echo set "JAVA_HOME_CONDA_BACKUP=%%JAVA_HOME%%" > "%PREFIX%\etc\conda\activate.d\java_home.bat"
-echo set "JAVA_HOME=%%CONDA_PREFIX%%\Library" >> "%PREFIX%\etc\conda\activate.d\java_home.bat"
-mkdir %PREFIX%\etc\conda\deactivate.d
-echo set "JAVA_HOME=%%JAVA_HOME_CONDA_BACKUP%%" > "%PREFIX%\etc\conda\deactivate.d\java_home.bat"
+:: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
+:: This will allow them to be run on environment activation.
+FOR %%F IN (activate deactivate) DO (
+    IF NOT EXIST %PREFIX%\etc\conda\%%F.d MKDIR %PREFIX%\etc\conda\%%F.d
+    COPY %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat
+)
