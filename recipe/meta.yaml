@@ -29,7 +29,7 @@ build:
 
 requirements:
   build:
-    - curl
+    - curl  # [unix]
 
 
 test:
