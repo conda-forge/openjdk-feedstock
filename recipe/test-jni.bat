@@ -8,5 +8,8 @@ cl ^
 	jvm.lib
 if errorlevel 1 exit 1
 
+dir
+if errorlevel 1 exit 1
+
 .\vmtest.exe
 if errorlevel 1 exit 1

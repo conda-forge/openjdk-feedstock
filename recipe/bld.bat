@@ -1,24 +1,21 @@
 setlocal EnableDelayedExpansion
 
-xcopy bin\* %LIBRARY_BIN% /s /i /y
+move bin\* %LIBRARY_BIN%
 if errorlevel 1 exit 1
 
-xcopy include\* %LIBRARY_INC% /s /i /y
+move include\* %LIBRARY_INC%
+if errorlevel 1 exit 1
+
+move include\win32 %LIBRARY_INC%\win32
 if errorlevel 1 exit 1
 
 move jre %LIBRARY_PREFIX%\jre
 if errorlevel 1 exit 1
 
-xcopy lib\* %LIBRARY_LIB% /s /i /y
+move lib\* %LIBRARY_LIB%
 if errorlevel 1 exit 1
 
 move src.zip %LIBRARY_PREFIX%\jre\src.zip
-if errorlevel 1 exit 1
-
-:: Needed by JNI programs that link against this library.
-copy %LIBRARY_PREFIX%\jre\bin\server\jvm.dll %LIBRARY_BIN%\
-if errorlevel 1 exit 1
-copy %LIBRARY_PREFIX%\jre\bin\*.dll %LIBRARY_BIN%\
 if errorlevel 1 exit 1
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
