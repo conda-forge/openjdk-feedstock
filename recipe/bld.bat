@@ -1,15 +1,15 @@
 setlocal EnableDelayedExpansion
 
-move bin\* %LIBRARY_BIN%
+xcopy bin\* %LIBRARY_BIN% /s /i /y
 if errorlevel 1 exit 1
 
-move include\* %LIBRARY_INC%
+xcopy include\* %LIBRARY_INC% /s /i /y
 if errorlevel 1 exit 1
 
 move jre %LIBRARY_PREFIX%\jre
 if errorlevel 1 exit 1
 
-move lib\* %LIBRARY_LIB%
+xcopy lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
 move src.zip %LIBRARY_PREFIX%\jre\src.zip
