@@ -15,14 +15,16 @@ Zulu OpenJDK is an open source build of the Java JDK.
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/openjdk-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/openjdk-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/openjdk-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/openjdk-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/openjdk-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/openjdk-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/openjdk-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/openjdk-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/openjdk-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/openjdk-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/openjdk-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/openjdk-feedstock/branch/master)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/openjdk/badges/version.svg)](https://anaconda.org/conda-forge/openjdk)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/openjdk/badges/downloads.svg)](https://anaconda.org/conda-forge/openjdk)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-openjdk-green.svg)](https://anaconda.org/conda-forge/openjdk) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/openjdk.svg)](https://anaconda.org/conda-forge/openjdk) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/openjdk.svg)](https://anaconda.org/conda-forge/openjdk) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/openjdk.svg)](https://anaconda.org/conda-forge/openjdk) |
 
 Installing openjdk
 ==================
