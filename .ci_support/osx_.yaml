@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
+c_compiler:
+- toolchain_c
 curl:
 - '7.59'
 macos_machine:

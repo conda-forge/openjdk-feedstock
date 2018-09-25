@@ -29,17 +29,21 @@ build:
 
 requirements:
   build:
-    - curl
+    - curl  # [unix]
 
 
 test:
+  requires:
+    - {{ compiler("c") }}
   files:
-    - test-jni     # [not win]
-    - test-jni.sh  # [not win]
+    - test-jni
+    - test-jni.sh   # [unix]
+    - test-jni.bat  # [win]
     - test-nio
   commands:
     - java -version
-    - ./test-jni.sh                                # [not win]
+    - ./test-jni.sh                                # [unix]
+    - call test-jni.bat                            # [win]
     - conda inspect linkages -p ${PREFIX} openjdk  # [linux]
     - conda inspect objects -p ${PREFIX} openjdk   # [osx]
 

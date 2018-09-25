@@ -32,8 +32,10 @@ mv jre $PREFIX/
 mv lib/* $PREFIX/lib
 mv src.zip $PREFIX/jre/
 
-# ensure that JAVA_HOME is set correctly
-mkdir -p $PREFIX/etc/conda/activate.d
-mkdir -p $PREFIX/etc/conda/deactivate.d
-cp $RECIPE_DIR/scripts/activate.sh $PREFIX/etc/conda/activate.d/java_home.sh
-cp $RECIPE_DIR/scripts/deactivate.sh $PREFIX/etc/conda/deactivate.d/java_home.sh
+# Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
+# This will allow them to be run on environment activation.
+for CHANGE in "activate" "deactivate"
+do
+    mkdir -p "${PREFIX}/etc/conda/${CHANGE}.d"
+    cp "${RECIPE_DIR}/scripts/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
+done
