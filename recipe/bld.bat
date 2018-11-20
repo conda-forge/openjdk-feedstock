@@ -1,8 +1,12 @@
-MOVE bin\* %LIBRARY_BIN%
-MOVE include\* %LIBRARY_INC%
-MOVE jre %LIBRARY_PREFIX%\jre
-MOVE lib\* %LIBRARY_LIB%
-MOVE src.zip %LIBRARY_PREFIX%\jre\src.zip
+XCOPY bin\* %LIBRARY_BIN% /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY include\* %LIBRARY_INC% /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY lib\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
 
 :: ensure that JAVA_HOME is set correctly
 mkdir %PREFIX%\etc\conda\activate.d

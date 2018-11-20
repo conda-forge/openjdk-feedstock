@@ -1,6 +1,7 @@
 IF NOT "%JAVA_HOME%" == "%PREFIX%\Library" exit 1
 
 pushd test-nio
+  java -version
   javac TestFilePaths.java
   jar cfm TestFilePaths.jar manifest.mf TestFilePaths.class
   java -jar TestFilePaths.jar TestFilePaths.java
