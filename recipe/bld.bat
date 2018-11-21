@@ -1,3 +1,5 @@
+setlocal EnableDelayedExpansion
+
 XCOPY bin\* %LIBRARY_BIN% /s /i /y
 if errorlevel 1 exit 1
 
@@ -7,10 +9,11 @@ if errorlevel 1 exit 1
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
-
-:: ensure that JAVA_HOME is set correctly
-mkdir %PREFIX%\etc\conda\activate.d
-echo set "JAVA_HOME_CONDA_BACKUP=%%JAVA_HOME%%" > "%PREFIX%\etc\conda\activate.d\java_home.bat"
-echo set "JAVA_HOME=%%CONDA_PREFIX%%\Library" >> "%PREFIX%\etc\conda\activate.d\java_home.bat"
-mkdir %PREFIX%\etc\conda\deactivate.d
-echo set "JAVA_HOME=%%JAVA_HOME_CONDA_BACKUP%%" > "%PREFIX%\etc\conda\deactivate.d\java_home.bat"
+:: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
+:: This will allow them to be run on environment activation.
+FOR %%F IN (activate deactivate) DO (
+    if not exist %PREFIX%\etc\conda\%%F.d MKDIR %PREFIX%\etc\conda\%%F.d
+    if errorlevel 1 exit 1
+    copy %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat
+    if errorlevel 1 exit 1
+)
