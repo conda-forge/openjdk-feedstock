@@ -9,7 +9,6 @@ if errorlevel 1 exit 1
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
-:: Use this as the license file
 XCOPY DISCLAIMER %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 

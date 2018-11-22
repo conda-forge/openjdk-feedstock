@@ -25,7 +25,6 @@ fi
 mkdir $PREFIX/lib
 mv lib/* $PREFIX/lib
 
-# Use this as the license file
 mv DISCLAIMER $PREFIX/DISCLAIMER
 
 mkdir -p $PREFIX/conf
