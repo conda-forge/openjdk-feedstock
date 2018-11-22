@@ -31,6 +31,8 @@ build:
     - openjdk
 
 test:
+  requires:
+    - {{ compiler('c') }}
   files:
     - test-jni  # [not win]
     - test-jni.sh  # [not win]
