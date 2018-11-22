@@ -1,9 +1,11 @@
 #!/bin/bash -euo
 
 chmod +x bin/*
+mkdir -p $PREFIX/bin
 mv bin/* $PREFIX/bin/
 ls -la $PREFIX/bin
 
+mkdir -p $PREFIX/include
 mv include/* $PREFIX/include
 if [ -e ./lib/jspawnhelper ]; then
     chmod +x ./lib/jspawnhelper
@@ -20,7 +22,22 @@ then
     rm -rf ./fonts
 fi
 
+mkdir $PREFIX/lib
 mv lib/* $PREFIX/lib
+
+mv DISCLAIMER $PREFIX/DISCLAIMER
+
+mkdir -p $PREFIX/conf
+mv conf/* $PREFIX/conf
+
+mkdir -p $PREFIX/jmods
+mv jmods/* $PREFIX/jmods
+
+mkdir -p $PREFIX/legal
+mv legal/* $PREFIX/legal
+
+mkdir -p $PREFIX/man
+mv man/* $PREFIX/man
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.

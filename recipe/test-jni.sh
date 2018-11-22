@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 if [ ! -d $JAVA_LD_LIBRARY_PATH ]; then
 	echo "Did you remember to activate the conda environment?"
@@ -7,13 +7,13 @@ if [ ! -d $JAVA_LD_LIBRARY_PATH ]; then
 fi
 
 os=$(uname -s | tr '[:upper:]' '[:lower:]')
-gcc -I$JAVA_HOME/include \
-	-I$JAVA_HOME/include/$os \
-	-Wl,-rpath,$JAVA_LD_LIBRARY_PATH \
-	-L$JAVA_LD_LIBRARY_PATH \
-	-L$JAVA_LD_LIBRARY_PATH/server \
-	-o vmtest \
-	test-jni/vmtest.c \
-	-ljvm
+${CC} -I$JAVA_HOME/include \
+	  -I$JAVA_HOME/include/$os \
+	  -Wl,-rpath,$JAVA_LD_LIBRARY_PATH \
+	  -L$JAVA_LD_LIBRARY_PATH \
+	  -L$JAVA_LD_LIBRARY_PATH/server \
+	  -o vmtest \
+	  test-jni/vmtest.c \
+	  -ljvm
 
 ./vmtest
