@@ -9,6 +9,10 @@ if errorlevel 1 exit 1
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
+:: Use this as the license file
+XCOPY DISCLAIMER %LIBRARY_LIB%\DISCLAIMER /s /i /y
+if errorlevel 1 exit 1
+
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
 FOR %%F IN (activate deactivate) DO (
