@@ -1,24 +1,27 @@
 # Based on recipes from birdhouse and anaconda channel.
 
 {% set name = "openjdk" %}
-{% set version = "8.0.144" %}
-{% set zulu_build = "8.23.0.3" %}
-{% set build_number = 2 %}
-{% set sha256_linux = "7e6284739c0e5b7142bc7a9adc61ced70dc5bb26b130b582b18e809013bcb251" %}
-{% set sha256_osx = "ff533364c9cbd3b271ab5328efe28e2dd6d7bae5b630098a5683f742ecf0709d" %}
-{% set sha256_win = "f1d9d3341ef7c8c9baff3597953e99a6a7c64f8608ee62c03fdd7574b7655c02" %}
+{% set version = "9.0.7" %}
+{% set zulu_build = "9.0.7.1" %}
+{% set build_number = 0 %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
-  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip    # [osx]
-  url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip       # [win64]
-  sha256: {{ sha256_linux }}  # [linux64]
-  sha256: {{ sha256_osx }}    # [osx]
-  sha256: {{ sha256_win }}    # [win64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
+    sha256: 45f2dfbee93b91b1468cf81d843fc6d9a47fef1f831c0b7ceff4f1eb6e6851c8  # [linux64]
+
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
+    sha256: 4b1f8529ff3a8bebc974e2a22395cb27ad8750e386c8c4d1b0a1b16f89cfcf66  # [osx]
+
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
+    sha256: 75f76c53c6a1f12b1a571b86bd9708ab75adf582d689dddc94fdd77dcc0f3f5c  # [win64]
+
+  - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux64]
+    sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux64]
+    folder: fonts  # [linux64]
 
 build:
   number: {{ build_number }}
@@ -29,19 +32,18 @@ build:
 
 requirements:
   build:
-    - curl
-
+    - curl  # [unix]
 
 test:
   files:
-    - test-jni     # [not win]
+    - test-jni  # [not win]
     - test-jni.sh  # [not win]
     - test-nio
   commands:
     - java -version
-    - ./test-jni.sh                                # [not win]
+    - ./test-jni.sh  # [not win]
     - conda inspect linkages -p ${PREFIX} openjdk  # [linux]
-    - conda inspect objects -p ${PREFIX} openjdk   # [osx]
+    - conda inspect objects -p ${PREFIX} openjdk  # [osx]
 
 about:
   home: https://www.azul.com/products/zulu/
@@ -55,3 +57,4 @@ extra:
     - johanneskoester
     - sodre
     - mingwandroid
+    - hadim
