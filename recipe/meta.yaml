@@ -41,10 +41,11 @@ test:
 
 about:
   home: https://www.azul.com/products/zulu/
-  license: GPLv2
+  license: GPL-2.0
+  license_family: GPL
+  license_file: DISCLAIMER
   summary: The Zulu OpenJDK build.
-  description: |
-    Zulu OpenJDK is an open source build of the Java JDK.
+  description: Zulu OpenJDK is an open source build of the Java JDK.
 
 extra:
   recipe-maintainers:
