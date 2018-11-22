@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 if [ ! -d $JAVA_LD_LIBRARY_PATH ]; then
 	echo "Did you remember to activate the conda environment?"
