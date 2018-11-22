@@ -28,6 +28,18 @@ mv lib/* $PREFIX/lib
 # Use this as the license file
 mv DISCLAIMER $PREFIX/DISCLAIMER
 
+mkdir -p $PREFIX/conf
+mv conf/* $PREFIX/conf
+
+mkdir -p $PREFIX/jmods
+mv jmods/* $PREFIX/jmods
+
+mkdir -p $PREFIX/legal
+mv legal/* $PREFIX/legal
+
+mkdir -p $PREFIX/man
+mv man/* $PREFIX/man
+
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
 for CHANGE in "activate" "deactivate"

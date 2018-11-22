@@ -13,6 +13,18 @@ if errorlevel 1 exit 1
 XCOPY DISCLAIMER %LIBRARY_LIB%\DISCLAIMER /s /i /y
 if errorlevel 1 exit 1
 
+XCOPY conf\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY jmods\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY legal\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY man\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
 FOR %%F IN (activate deactivate) DO (
