@@ -21,9 +21,6 @@ if errorlevel 1 exit 1
 XCOPY legal\* %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY man\* %PREFIX% /s /i /y
-if errorlevel 1 exit 1
-
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
 FOR %%F IN (activate deactivate) DO (
