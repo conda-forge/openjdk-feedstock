@@ -10,19 +10,19 @@ XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
 :: Use this as the license file
-XCOPY DISCLAIMER %LIBRARY_LIB%\DISCLAIMER /s /i /y
+XCOPY DISCLAIMER %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY conf\* %LIBRARY_LIB% /s /i /y
+XCOPY conf\* %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY jmods\* %LIBRARY_LIB% /s /i /y
+XCOPY jmods\* %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY legal\* %LIBRARY_LIB% /s /i /y
+XCOPY legal\* %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY man\* %LIBRARY_LIB% /s /i /y
+XCOPY man\* %PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
