@@ -27,8 +27,6 @@ build:
   number: {{ build_number }}
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{ build_number }}
-  track_features:
-    - openjdk
 
 test:
   requires:
