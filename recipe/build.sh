@@ -1,9 +1,11 @@
 #!/bin/bash -euo
 
 chmod +x bin/*
+mkdir -p $PREFIX/bin
 mv bin/* $PREFIX/bin/
 ls -la $PREFIX/bin
 
+mkdir -p $PREFIX/include
 mv include/* $PREFIX/include
 if [ -e ./lib/jspawnhelper ]; then
     chmod +x ./lib/jspawnhelper
@@ -20,6 +22,7 @@ then
     rm -rf ./fonts
 fi
 
+mkdir $PREFIX/lib
 mv lib/* $PREFIX/lib
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.

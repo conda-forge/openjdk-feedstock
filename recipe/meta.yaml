@@ -30,10 +30,6 @@ build:
   track_features:
     - openjdk
 
-requirements:
-  build:
-    - curl  # [unix]
-
 test:
   files:
     - test-jni  # [not win]
