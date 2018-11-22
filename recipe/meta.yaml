@@ -30,7 +30,7 @@ build:
 
 test:
   requires:
-    - {{ compiler('c') }}
+    - {{ compiler('c') }}  # [not win]
   files:
     - test-jni  # [not win]
     - test-jni.sh  # [not win]
