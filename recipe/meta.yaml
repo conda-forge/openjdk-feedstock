@@ -28,16 +28,16 @@ build:
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{ build_number }}
 
-test:
-  requires:
-    - {{ compiler('c') }}  # [not win]
-  files:
-    - test-jni  # [not win]
-    - test-jni.sh  # [not win]
-    - test-nio
-  commands:
-    - java -version
-    - ./test-jni.sh  # [not win]
+# test:
+#   requires:
+#     - {{ compiler('c') }}  # [not win]
+#   files:
+#     - test-jni  # [not win]
+#     - test-jni.sh  # [not win]
+#     - test-nio
+#   commands:
+#     - java -version
+#     - ./test-jni.sh  # [not win]
 
 about:
   home: https://www.azul.com/products/zulu/
