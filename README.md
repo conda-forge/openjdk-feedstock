@@ -3,14 +3,13 @@ About openjdk
 
 Home: https://www.azul.com/products/zulu/
 
-Package license: GPLv2
+Package license: GPL-2.0
 
 Feedstock license: BSD 3-Clause
 
 Summary: The Zulu OpenJDK build.
 
 Zulu OpenJDK is an open source build of the Java JDK.
-
 
 Current build status
 ====================
