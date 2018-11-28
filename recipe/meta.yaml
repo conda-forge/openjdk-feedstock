@@ -1,5 +1,3 @@
-# Based on recipes from birdhouse and anaconda channel.
-
 {% set name = "openjdk" %}
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
