@@ -7,17 +7,13 @@ ls -la $PREFIX/bin
 
 mkdir -p $PREFIX/include
 mv include/* $PREFIX/include
-if [ -e ./jre/lib/jspawnhelper ]; then
-    chmod +x ./jre/lib/jspawnhelper
+if [ -e ./lib/jspawnhelper ]; then
+    chmod +x ./lib/jspawnhelper
 fi
 
 if [[ `uname` == "Linux" ]]
 then
-    mv lib/amd64/jli/*.so lib
-    mv lib/amd64/*.so lib
-    rm -r lib/amd64
-    # libnio.so does not find this within jre/lib/amd64 subdirectory
-    cp jre/lib/amd64/libnet.so lib
+    mv lib/jli/*.so lib/
 
     # Include dejavu fonts to allow java to work even on minimal cloud
     # images where these fonts are missing (thanks to @chapmanb)
@@ -26,16 +22,22 @@ then
     rm -rf ./fonts
 fi
 
-mkdir -p $PREFIX/jre
-mv jre/* $PREFIX/jre
-
 mkdir -p $PREFIX/lib
 mv lib/* $PREFIX/lib
 
+mv DISCLAIMER $PREFIX/DISCLAIMER
+
+mkdir -p $PREFIX/conf
+mv conf/* $PREFIX/conf
+
+mkdir -p $PREFIX/jmods
+mv jmods/* $PREFIX/jmods
+
+mkdir -p $PREFIX/legal
+mv legal/* $PREFIX/legal
+
 mkdir -p $PREFIX/man
 mv man/* $PREFIX/man
-
-mv src.zip $PREFIX/src.zip
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
