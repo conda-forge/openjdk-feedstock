@@ -26,6 +26,10 @@ build:
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{ build_number }}
 
+requirements:
+  host:
+    - {{ compiler('c') }}
+
 test:
   requires:
     - {{ compiler('c') }}  # [not win]
