@@ -28,6 +28,10 @@ build:
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{ build_number }}
 
+test:
+  files:
+    - test-nio
+
 # test:
 #   requires:
 #     - {{ compiler('c') }}  # [not win]
