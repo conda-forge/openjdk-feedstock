@@ -9,16 +9,7 @@ if errorlevel 1 exit 1
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY DISCLAIMER %PREFIX% /s /i /y
-if errorlevel 1 exit 1
-
-XCOPY conf\* %PREFIX% /s /i /y
-if errorlevel 1 exit 1
-
-XCOPY jmods\* %PREFIX% /s /i /y
-if errorlevel 1 exit 1
-
-XCOPY legal\* %PREFIX% /s /i /y
+MOVE src.zip %LIBRARY_PREFIX%\jre\src.zip
 if errorlevel 1 exit 1
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
