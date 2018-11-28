@@ -22,7 +22,7 @@ then
     rm -rf ./fonts
 fi
 
-mkdir $PREFIX/lib
+mkdir -p $PREFIX/lib
 mv lib/* $PREFIX/lib
 
 mv DISCLAIMER $PREFIX/DISCLAIMER

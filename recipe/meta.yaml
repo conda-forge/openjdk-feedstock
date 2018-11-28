@@ -1,9 +1,7 @@
-# Based on recipes from birdhouse and anaconda channel.
-
 {% set name = "openjdk" %}
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
-{% set build_number = 0 %}
+{% set build_number = 1001 %}
 
 package:
   name: {{ name|lower }}
@@ -27,6 +25,10 @@ build:
   number: {{ build_number }}
   skip: true  # [win32 or linux32]
   string: zulu{{ zulu_build }}_{{ build_number }}
+
+requirements:
+  host:
+    - {{ compiler('c') }}
 
 test:
   requires:
