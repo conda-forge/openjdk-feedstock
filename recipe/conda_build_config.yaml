@@ -1,0 +1,6 @@
+c_compiler:
+  - toolchain_c  # [not win]
+  - gcc  # [linux]
+  - clang  # [osx]
+  - vs2008  # [win]
+  - vs2015  # [win]
