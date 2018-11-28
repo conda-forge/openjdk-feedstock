@@ -6,6 +6,12 @@ if errorlevel 1 exit 1
 XCOPY include\* %LIBRARY_INC% /s /i /y
 if errorlevel 1 exit 1
 
+XCOPY jre\* %LIBRARY_PREFIX%\jre /s /i /y
+if errorlevel 1 exit 1
+
+XCOPY lib\* %LIBRARY_LIB% /s /i /y
+if errorlevel 1 exit 1
+
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
