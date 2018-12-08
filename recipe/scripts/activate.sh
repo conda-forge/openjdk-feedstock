@@ -1,14 +1,5 @@
-if [[ $(uname -s) == CYGWIN* ]] || [[ $(uname -s) =~ M* ]];
-then
-    # Windows
-    export JAVA_HOME_CONDA_BACKUP=${JAVA_HOME:-}
-    export JAVA_HOME=$CONDA_PREFIX/Library
+export JAVA_HOME_CONDA_BACKUP=${JAVA_HOME:-}
+export JAVA_HOME=$CONDA_PREFIX
 
-else 
-    # Linux / OSX
-    export JAVA_HOME_CONDA_BACKUP=${JAVA_HOME:-}
-    export JAVA_HOME=$CONDA_PREFIX
-
-    export JAVA_LD_LIBRARY_PATH_BACKUP=${JAVA_LD_LIBRARY_PATH:-}
-    export JAVA_LD_LIBRARY_PATH=$JAVA_HOME/lib/server
-fi
+export JAVA_LD_LIBRARY_PATH_BACKUP=${JAVA_LD_LIBRARY_PATH:-}
+export JAVA_LD_LIBRARY_PATH=$JAVA_HOME/lib/server
