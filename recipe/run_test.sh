@@ -3,6 +3,7 @@ set -e
 
 if [ "${JAVA_HOME}" != "${PREFIX}" ] && [ "${JAVA_HOME}" != "${PREFIX}/Library" ]; then
   echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX} or ${PREFIX}/Library)"
+  exit 1
 fi
 
 ${JAVA_HOME}/bin/java -version
