@@ -9,16 +9,19 @@ if errorlevel 1 exit 1
 XCOPY lib\* %LIBRARY_LIB% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY DISCLAIMER %PREFIX% /s /i /y
+XCOPY DISCLAIMER %LIBRARY_PREFIX% /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY conf\* %PREFIX% /s /i /y
+if not exist "%LIBRARY_PREFIX%\conf\" mkdir %LIBRARY_PREFIX%\conf\
+XCOPY conf\* %LIBRARY_PREFIX%\conf\ /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY jmods\* %PREFIX% /s /i /y
+if not exist "%LIBRARY_PREFIX%\jmods\" mkdir %LIBRARY_PREFIX%\jmods\
+XCOPY jmods\* %LIBRARY_PREFIX%\jmods\ /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY legal\* %PREFIX% /s /i /y
+if not exist "%LIBRARY_PREFIX%\legal\" mkdir %LIBRARY_PREFIX%\legal\
+XCOPY legal\* %LIBRARY_PREFIX%\legal\ /s /i /y
 if errorlevel 1 exit 1
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
@@ -27,5 +30,8 @@ FOR %%F IN (activate deactivate) DO (
     if not exist %PREFIX%\etc\conda\%%F.d MKDIR %PREFIX%\etc\conda\%%F.d
     if errorlevel 1 exit 1
     copy %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat
+    :: We also copy .sh scripts to be able to use them
+    :: with POSIX CLI on Windows.
+    copy %RECIPE_DIR%\scripts\%%F.sh %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.sh
     if errorlevel 1 exit 1
 )
