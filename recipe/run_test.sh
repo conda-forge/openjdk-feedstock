@@ -1,15 +1,8 @@
 #!/bin/sh
 set -e
 
-# Linux / OSX
-if [ "${JAVA_HOME}" != "${PREFIX}" ]; then
-  echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX})"
-
-  # Windows
-  if [ "${JAVA_HOME}" != "${PREFIX}/Library" ]; then
-    echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX}/Library)"
-    exit 1
-  fi
+if [ "${JAVA_HOME}" != "${PREFIX}" ] && [ "${JAVA_HOME}" != "${PREFIX}/Library" ]; then
+  echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX} or ${PREFIX}/Library)"
 fi
 
 ${JAVA_HOME}/bin/java -version
