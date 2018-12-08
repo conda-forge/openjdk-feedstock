@@ -1,5 +1,7 @@
 IF NOT "%JAVA_HOME%" == "%PREFIX%\Library" exit 1
 
+%JAVA_HOME%/bin/java -version
+
 pushd test-nio
   java -version
   javac TestFilePaths.java
