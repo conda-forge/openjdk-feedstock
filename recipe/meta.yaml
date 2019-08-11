@@ -1,7 +1,8 @@
 {% set name = "openjdk" %}
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
-{% set build_number = 1016 %}
+{% set adopt_build = "13" %}
+{% set build_number = 1017 %}
 
 package:
   name: {{ name|lower }}
@@ -21,14 +22,35 @@ source:
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux64]
     folder: fonts  # [linux64]
 
+  - url: https://github.com/AdoptOpenJDK/openjdk-jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ adopt_build }}.tar.gz   # [linux64]
+    sha256: 7f3e68d65e6c5b68d853f35db1168525336aac06104b9d91e281ab6b6643864d  # [linux64]
+    folder: src    # [linux64]
+
 build:
   number: {{ build_number }}
-  skip: true  # [win32 or linux32]
-  string: c_compiler{{ c_compiler }}_{{ build_number }}  # [win64]
 
 requirements:
-  run:
-    - zlib              # [unix]
+  build:
+    - {{ compiler('cxx') }}
+    - pkg-config
+  host:
+    - zlib              # [linux]
+    - freetype          # [linux]
+    - bzip2             # [linux]
+    - harfbuzz          # [linux]
+    - libpng            # [linux]
+    - giflib            # [linux]
+    - jpeg              # [linux]
+    - libcups           # [linux]
+    - fontconfig        # [linux]
+    - alsa-lib          # [linux]
+    - libffi            # [linux]
+    - xorg-libxrandr    # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-libx11       # [linux]
+    - xorg-libxt        # [linux]
+    - xorg-libxtst      # [linux]
+    - xorg-libxext      # [linux]
 
 test:
   requires:
@@ -45,7 +67,9 @@ about:
   home: https://www.azul.com/products/zulu/
   license: GPL-2.0
   license_family: GPL
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  license_file:
+    - LICENSE
+    - fonts/LICENSE
   summary: The Zulu OpenJDK build.
   description: Zulu OpenJDK is an open source build of the Java JDK.
 
