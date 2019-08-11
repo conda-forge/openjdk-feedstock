@@ -16,7 +16,9 @@ function jdk_install
   mkdir -p $INSTALL_DIR/lib
   mv lib/* $INSTALL_DIR/lib
 
-  #mv DISCLAIMER $INSTALL_DIR/DISCLAIMER
+  if [ -f "DISCLAIMER" ]; then
+    mv DISCLAIMER $INSTALL_DIR/DISCLAIMER
+  fi
 
   mkdir -p $INSTALL_DIR/conf
   mv conf/* $INSTALL_DIR/conf
@@ -36,13 +38,14 @@ function jdk_install
 function source_build
 {
   cd src
-  export CPATH=$PREFIX/include
-  export LIBRARY_PATH=$PREFIX/lib
   export LIBS="-liconv"
 
   if [[ "$target_platform" == linux* ]]; then
     rm $PREFIX/include/iconv.h
   fi
+
+  export CPATH=$PREFIX/include
+  export LIBRARY_PATH=$PREFIX/lib
 
   export -n CFLAGS
   export -n CXXFLAGS
@@ -62,6 +65,7 @@ function source_build
     --with-libpng=system \
     --with-zlib=system \
     --with-libjpeg=system \
+    --with-lcms=system \
     --with-stdc++lib=dynamic \
     --with-boot-jdk=$SRC_DIR/bootjdk
 
@@ -80,13 +84,13 @@ export INSTALL_DIR=$PREFIX
 jdk_install
 
 if [[ "$target_platform" == linux* ]]; then
-  mv lib/jli/*.so $INSTALL_DIR/lib/
+  mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
-  mkdir -p lib/fonts
-  mv $SRC_DIR/fonts/ttf/* ./lib/fonts/
+  mkdir -p $INSTALL_DIR/lib/fonts
+  mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
 fi
-
+find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.

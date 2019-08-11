@@ -36,21 +36,28 @@ requirements:
   host:
     - zlib              # [linux]
     - freetype          # [linux]
-    - bzip2             # [linux]
     - harfbuzz          # [linux]
     - libpng            # [linux]
     - giflib            # [linux]
     - jpeg              # [linux]
     - libcups           # [linux]
-    - fontconfig        # [linux]
     - alsa-lib          # [linux]
-    - libffi            # [linux]
-    - xorg-libxrandr    # [linux]
-    - xorg-libxrender   # [linux]
+    - fontconfig        # [linux]
     - xorg-libx11       # [linux]
+    - xorg-libxext      # [linux]
     - xorg-libxt        # [linux]
     - xorg-libxtst      # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-libxrandr    # [linux]
+    - xorg-libxi        # [linux]
+    - lcms2             # [linux]
+  run:
+    - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
+    - xorg-libxtst      # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-libxi        # [linux]
+    - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
 
 test:
   requires:
@@ -64,14 +71,16 @@ test:
     - ./test-jni.sh  # [not win]
 
 about:
-  home: https://www.azul.com/products/zulu/
+  home: https://www.azul.com/products/zulu/  # [not linux]
+  home: https://openjdk.java.net             # [linux]
   license: GPL-2.0
   license_family: GPL
   license_file:
     - LICENSE
     - fonts/LICENSE
-  summary: The Zulu OpenJDK build.
-  description: Zulu OpenJDK is an open source build of the Java JDK.
+  summary: The Zulu OpenJDK build.           # [not linux]
+  summary: An open-source implementation of the JDK   # [linux]
+  description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
 
 extra:
   recipe-maintainers:
