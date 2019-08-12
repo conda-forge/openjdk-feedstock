@@ -34,6 +34,7 @@ requirements:
     - {{ compiler('cxx') }}
     - pkg-config
     - autoconf          # [linux]
+    - unzip             # [linux]
   host:
     - zlib              # [linux]
     - freetype          # [linux]
