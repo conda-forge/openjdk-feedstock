@@ -33,6 +33,7 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - pkg-config
+    - autoconf          # [linux]
   host:
     - zlib              # [linux]
     - freetype          # [linux]
@@ -77,7 +78,7 @@ about:
   license_family: GPL
   license_file:
     - LICENSE
-    - fonts/LICENSE
+    - fonts/LICENSE   # [linux]
   summary: The Zulu OpenJDK build.           # [not linux]
   summary: An open-source implementation of the JDK   # [linux]
   description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
