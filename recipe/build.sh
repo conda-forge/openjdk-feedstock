@@ -38,7 +38,6 @@ function jdk_install
 function source_build
 {
   cd src
-  export LIBS="-liconv"
 
   if [[ "$target_platform" == linux* ]]; then
     rm $PREFIX/include/iconv.h
