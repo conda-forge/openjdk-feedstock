@@ -1,7 +1,7 @@
 {% set name = "openjdk" %}
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
-{% set adopt_build = "13" %}
+{% set openjdk_revision = "13" %}
 {% set build_number = 1017 %}
 
 package:
@@ -22,8 +22,8 @@ source:
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux64]
     folder: fonts  # [linux64]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk-jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ adopt_build }}.tar.gz   # [linux64]
-    sha256: 7f3e68d65e6c5b68d853f35db1168525336aac06104b9d91e281ab6b6643864d  # [linux64]
+  - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux64]
+    sha256: c6a50a814008d80f489bbb7e761e417f24db4461b6a6df5e210f484b738b1ff6  # [linux64]
     folder: src    # [linux64]
 
 build:
