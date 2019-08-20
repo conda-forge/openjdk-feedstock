@@ -1,7 +1,8 @@
 {% set name = "openjdk" %}
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
-{% set build_number = 1016 %}
+{% set openjdk_revision = "13" %}
+{% set build_number = 1017 %}
 
 package:
   name: {{ name|lower }}
@@ -21,14 +22,47 @@ source:
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux64]
     folder: fonts  # [linux64]
 
+  - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux64]
+    sha256: c6a50a814008d80f489bbb7e761e417f24db4461b6a6df5e210f484b738b1ff6  # [linux64]
+    folder: src    # [linux64]
+
 build:
   number: {{ build_number }}
-  skip: true  # [win32 or linux32]
-  string: c_compiler{{ c_compiler }}_{{ build_number }}  # [win64]
 
 requirements:
+  build:
+    - {{ compiler('cxx') }}   # [linux]
+    - pkg-config        # [linux]
+    - autoconf          # [linux]
+    - unzip             # [linux]
+    - zip               # [linux]
+  host:
+    - zlib              # [linux or osx]
+    - freetype          # [linux]
+    - harfbuzz          # [linux]
+    - libpng            # [linux]
+    - giflib            # [linux]
+    - jpeg              # [linux]
+    - libcups           # [linux]
+    - alsa-lib          # [linux]
+    - fontconfig        # [linux]
+    - xorg-libx11       # [linux]
+    - xorg-libxext      # [linux]
+    - xorg-libxt        # [linux]
+    - xorg-libxtst      # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-libxrandr    # [linux]
+    - xorg-libxi        # [linux]
+    - lcms2             # [linux]
+    - vs2013_runtime    # [win]
   run:
-    - zlib              # [unix]
+    - xorg-libx11       # [linux]
+    - xorg-libxext      # [linux]
+    - xorg-libxtst      # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-libxi        # [linux]
+    - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
+    - vs2013_runtime    # [win]
 
 test:
   requires:
@@ -42,12 +76,16 @@ test:
     - ./test-jni.sh  # [not win]
 
 about:
-  home: https://www.azul.com/products/zulu/
+  home: https://www.azul.com/products/zulu/  # [not linux]
+  home: https://openjdk.java.net             # [linux]
   license: GPL-2.0
   license_family: GPL
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
-  summary: The Zulu OpenJDK build.
-  description: Zulu OpenJDK is an open source build of the Java JDK.
+  license_file:
+    - LICENSE
+    - fonts/LICENSE   # [linux]
+  summary: The Zulu OpenJDK build.           # [not linux]
+  summary: An open-source implementation of the JDK   # [linux]
+  description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
 
 extra:
   recipe-maintainers:

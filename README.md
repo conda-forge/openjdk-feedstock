@@ -1,15 +1,15 @@
 About openjdk
 =============
 
-Home: https://www.azul.com/products/zulu/
+Home: https://openjdk.java.net
 
 Package license: GPL-2.0
 
 Feedstock license: BSD 3-Clause
 
-Summary: The Zulu OpenJDK build.
+Summary: An open-source implementation of the JDK
 
-Zulu OpenJDK is an open source build of the Java JDK.
+
 
 Current build status
 ====================
@@ -50,17 +50,17 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2008</td>
+              <td>win_cxx_compilervs2008</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5061&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=master&jobName=win&configuration=win_cxx_compilervs2008" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2015</td>
+              <td>win_cxx_compilervs2015</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5061&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=master&jobName=win&configuration=win_cxx_compilervs2015" alt="variant">
                 </a>
               </td>
             </tr>
