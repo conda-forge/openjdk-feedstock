@@ -1,0 +1,41 @@
+c_compiler:
+- gcc
+c_compiler_version:
+- '8'
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '8'
+docker_image:
+- condaforge/linux-anvil-ppc64le
+fontconfig:
+- '2.13'
+freetype:
+- 2.9.1
+giflib:
+- 5.1.7
+harfbuzz:
+- '2'
+jpeg:
+- '9'
+libpng:
+- '1.6'
+pin_run_as_build:
+  fontconfig:
+    max_pin: x
+  freetype:
+    max_pin: x
+  harfbuzz:
+    max_pin: x
+  jpeg:
+    max_pin: x
+  libpng:
+    max_pin: x.x
+  zlib:
+    max_pin: x.x
+zlib:
+- '1.2'
