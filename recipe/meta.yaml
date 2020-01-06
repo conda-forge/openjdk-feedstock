@@ -2,7 +2,7 @@
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
 {% set openjdk_revision = "13" %}
-{% set build_number = 1017 %}
+{% set build_number = 1018 %}
 
 package:
   name: {{ name|lower }}
