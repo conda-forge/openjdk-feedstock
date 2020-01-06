@@ -50,6 +50,10 @@ function source_build
   export -n CXXFLAGS
   export -n LDFLAGS
 
+  if [[ "$CI" == "travis" ]]; then
+    export CPU_COUNT=4
+  fi
+
   chmod +x configure
   ./configure \
     --prefix=$PREFIX \
