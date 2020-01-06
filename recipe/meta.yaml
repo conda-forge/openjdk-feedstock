@@ -43,6 +43,7 @@ requirements:
     - autoconf          # [linux]
     - unzip             # [linux]
     - zip               # [linux]
+    - make              # [linux]
   host:
     - zlib              # [linux or osx]
     - freetype          # [linux]
