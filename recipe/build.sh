@@ -50,6 +50,10 @@ function source_build
   export -n CXXFLAGS
   export -n LDFLAGS
 
+  if [[ "$CI" == "travis" ]]; then
+    export CPU_COUNT=4
+  fi
+
   chmod +x configure
   ./configure \
     --prefix=$PREFIX \
@@ -66,6 +70,7 @@ function source_build
     --with-libjpeg=system \
     --with-lcms=system \
     --with-stdc++lib=dynamic \
+    --disable-warnings-as-errors \
     --with-boot-jdk=$SRC_DIR/bootjdk
 
   make JOBS=$CPU_COUNT
