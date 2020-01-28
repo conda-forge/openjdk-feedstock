@@ -96,6 +96,9 @@ if [[ "$target_platform" == linux* ]]; then
 fi
 find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
 
+# Have libjvm.so show up in the right place
+ln -s $PREFIX/lib/server/libjvm.so $PREFIX/lib/libjvm.so
+
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
 for CHANGE in "activate" "deactivate"
