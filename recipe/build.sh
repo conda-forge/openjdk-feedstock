@@ -94,7 +94,7 @@ if [[ "$target_platform" == linux* ]]; then
   mkdir -p $INSTALL_DIR/lib/fonts
   mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
   # Have libjvm.so show up in the right place
-  ln -s $PREFIX/lib/server/libjvm.so $PREFIX/lib/libjvm.so
+  ln -s $INSTALL_DIR/lib/server/libjvm.so $INSTALL_DIR/lib/libjvm.so
 fi
 find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
 
