@@ -95,7 +95,7 @@ if [[ "$target_platform" == linux* ]]; then
   mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
   # Have libjvm.so show up in the right place
   ln -s $PREFIX/lib/server/libjvm.so $PREFIX/lib/libjvm.so
-  else:
+  else
   ln -s $PREFIX/lib/server/libjvm.dynlib $PREFIX/lib/libjvm.dynlib
 
 fi
