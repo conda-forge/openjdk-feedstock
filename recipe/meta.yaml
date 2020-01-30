@@ -2,7 +2,7 @@
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
 {% set openjdk_revision = "13" %}
-{% set build_number = 1018 %}
+{% set build_number = 1019 %}
 {% set adopt_openjdk_build = "2019-12-04-18-39" %}
 
 package:
@@ -101,3 +101,4 @@ extra:
     - sodre
     - mingwandroid
     - hadim
+    - CJ-Wright

@@ -93,8 +93,11 @@ if [[ "$target_platform" == linux* ]]; then
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p $INSTALL_DIR/lib/fonts
   mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
+  # Have libjvm.so show up in the right place
+  ln -s $INSTALL_DIR/lib/server/libjvm.so $INSTALL_DIR/lib/libjvm.so
 fi
 find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
+
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
