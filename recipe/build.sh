@@ -14,6 +14,7 @@ fi
 if [[ `uname` == "Linux" ]]
 then
     mv lib/amd64/jli/*.so lib
+    mv lib/amd64/server*.so lib
     mv lib/amd64/*.so lib
     rm -r lib/amd64
     # libnio.so does not find this within jre/lib/amd64 subdirectory
@@ -24,8 +25,6 @@ then
     mkdir -p lib/fonts
     mv ./fonts/ttf/* ./lib/fonts/
     rm -rf ./fonts
-    # Have libjvm.so show up in the right place
-    ln -s $INSTALL_DIR/lib/server/libjvm.so $INSTALL_DIR/lib/libjvm.so
 fi
 
 mkdir -p $PREFIX/jre
