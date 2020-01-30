@@ -24,6 +24,8 @@ then
     mkdir -p lib/fonts
     mv ./fonts/ttf/* ./lib/fonts/
     rm -rf ./fonts
+    # Have libjvm.so show up in the right place
+    ln -s $INSTALL_DIR/lib/server/libjvm.so $INSTALL_DIR/lib/libjvm.so
 fi
 
 mkdir -p $PREFIX/jre
