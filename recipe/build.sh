@@ -14,11 +14,12 @@ fi
 if [[ `uname` == "Linux" ]]
 then
     mv lib/amd64/jli/*.so lib
-    cp jre/amd64/server/*.so lib
     mv lib/amd64/*.so lib
     rm -r lib/amd64
     # libnio.so does not find this within jre/lib/amd64 subdirectory
     cp jre/lib/amd64/libnet.so lib
+    # libjvm.so isn't found
+    cp jre/lib/amd64/server/libjvm.so lib
 
     # Include dejavu fonts to allow java to work even on minimal cloud
     # images where these fonts are missing (thanks to @chapmanb)
