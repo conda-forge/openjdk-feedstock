@@ -11,8 +11,8 @@ source:
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
     sha256: 95a33bfc8de5b88b07d29116edd4485a59182921825e193f68fe494b03ab3523  # [linux64]
 
-  - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_aarch64.tar.gz. # [aarch64]
-  - sha256: 95a33bfc8de5b88b07d29116edd4485a59182921825e193f68fe494b03ab3523  # [aarch64]
+  - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
+    sha256: 95a33bfc8de5b88b07d29116edd4485a59182921825e193f68fe494b03ab3523  # [aarch64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
     sha256: 2f49058ecb532cd6ef2773441f7a10aa23e484639881775b367c28f8f2d9566a  # [osx]
