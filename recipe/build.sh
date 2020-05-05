@@ -1,7 +1,7 @@
 #!/bin/bash -euo
 
 ls -lah
-
+ls -lah lib/*
 
 echo " "
 
