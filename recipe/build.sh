@@ -16,15 +16,23 @@ if [ -e ./jre/lib/jspawnhelper ]; then
     chmod +x ./jre/lib/jspawnhelper
 fi
 
-if [[ `uname` == "Linux" ]]
+if [[ "$target_platform" == linux* ]]
 then
-    mv lib/amd64/jli/*.so lib
-    mv lib/amd64/*.so lib
-    rm -r lib/amd64
+
+    if [[ "$target_platform" == *aarch64* ]]; then
+      plat=aarch64
+    elif [[ "$target_platform" == *ppc64* ]]; then
+      plat=ppc64
+    else
+      plat=amd64
+    fi
+    mv lib/${plat}/jli/*.so lib
+    mv lib/${plat}/*.so lib
+    rm -r lib/${plat}
     # libnio.so does not find this within jre/lib/amd64 subdirectory
-    cp jre/lib/amd64/libnet.so lib
+    cp jre/lib/${plat}/libnet.so lib
     # libjvm.so isn't found
-    cp jre/lib/amd64/server/libjvm.so lib
+    cp jre/lib/${plat}/server/libjvm.so lib
 
     # Include dejavu fonts to allow java to work even on minimal cloud
     # images where these fonts are missing (thanks to @chapmanb)
@@ -49,5 +57,8 @@ mv src.zip $PREFIX/src.zip
 for CHANGE in "activate" "deactivate"
 do
     mkdir -p "${PREFIX}/etc/conda/${CHANGE}.d"
-    cp "${RECIPE_DIR}/scripts/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
+    if [[ "$target_platform" == linux* ]]; then
+      echo -e "plat=${plat}\n" > "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
+    fi
+    cat "${RECIPE_DIR}/scripts/${CHANGE}.sh" >> "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
 done
