@@ -1,5 +1,10 @@
 #!/bin/bash -euo
 
+ls -lah
+
+
+echo " "
+
 chmod +x bin/*
 mkdir -p $PREFIX/bin
 mv bin/* $PREFIX/bin/
