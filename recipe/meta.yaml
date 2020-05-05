@@ -44,7 +44,7 @@ test:
 
 about:
   home: https://www.azul.com/products/zulu/
-  license: GPL-2.0
+  license: GPL-2.0-only WITH 	Classpath-exception-2.0
   license_family: GPL
   license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
   summary: The Zulu OpenJDK build.
