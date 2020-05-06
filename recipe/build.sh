@@ -23,13 +23,13 @@ function jdk_install
   if [[ "$target_platform" == linux* ]]; then
     mkdir -p $INSTALL_DIR/conf
     mv conf/* $INSTALL_DIR/conf
+
+    mkdir -p $INSTALL_DIR/jmods
+    mv jmods/* $INSTALL_DIR/jmods
+
+    mkdir -p $INSTALL_DIR/legal
+    mv legal/* $INSTALL_DIR/legal
   fi
-
-  mkdir -p $INSTALL_DIR/jmods
-  mv jmods/* $INSTALL_DIR/jmods
-
-  mkdir -p $INSTALL_DIR/legal
-  mv legal/* $INSTALL_DIR/legal
 
   mkdir -p $INSTALL_DIR/man/man1
   mv man/man1/* $INSTALL_DIR/man/man1
