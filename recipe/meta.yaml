@@ -20,7 +20,7 @@ source:
     sha256: b26b4f0069e2fc9439063578cf06188a23be2016611886d69d2664a2ac2299eb  # [linux64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
-    sha256: c7ef75d36a1cf0a30c6ea3fdeadd780dd55cafeb120de6dce4a469f91e435cba # [osx]
+    sha256: c7ef75d36a1cf0a30c6ea3fdeadd780dd55cafeb120de6dce4a469f91e435cba  # [osx]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
     sha256: 993ef31276d18446ef8b0c249b40aa2dfcea221a5725d9466cbea1ba22686f6b  # [win64]
@@ -86,7 +86,7 @@ test:
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
   home: https://openjdk.java.net             # [linux]
-  license: GPL-2.0
+  license: "GPL-2.0-only WITH Classpath-exception-2.0"
   license_family: GPL
   license_file:
     - LICENSE
