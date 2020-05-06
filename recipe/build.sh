@@ -20,8 +20,10 @@ function jdk_install
     mv DISCLAIMER $INSTALL_DIR/DISCLAIMER
   fi
 
-  mkdir -p $INSTALL_DIR/conf
-  mv conf/* $INSTALL_DIR/conf
+  if [[ "$target_platform" == linux* ]]; then
+    mkdir -p $INSTALL_DIR/conf
+    mv conf/* $INSTALL_DIR/conf
+  fi
 
   mkdir -p $INSTALL_DIR/jmods
   mv jmods/* $INSTALL_DIR/jmods
@@ -77,7 +79,7 @@ function source_build
   make images
 }
 
-if [[ "$target_platform" == linux* ]]; then 
+if [[ "$target_platform" == linux* ]]; then
   export INSTALL_DIR=$SRC_DIR/bootjdk/
   jdk_install
   source_build
