@@ -3,7 +3,7 @@ About openjdk
 
 Home: https://openjdk.java.net
 
-Package license: GPL-2.0
+Package license: GPL-2.0-only WITH Classpath-exception-2.0
 
 Feedstock license: BSD 3-Clause
 
@@ -26,7 +26,7 @@ Current build status
     <td>Drone</td>
     <td>
       <a href="https://cloud.drone.io/conda-forge/openjdk-feedstock">
-        <img alt="linux" src="https://img.shields.io/drone/build/conda-forge/master.svg?label=Linux">
+        <img alt="linux" src="https://img.shields.io/drone/build/conda-forge/openjdk-feedstock/master.svg?label=Linux">
       </a>
     </td>
   </tr>
@@ -177,6 +177,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@CJ-Wright](https://github.com/CJ-Wright/)
 * [@hadim](https://github.com/hadim/)
 * [@johanneskoester](https://github.com/johanneskoester/)
 * [@mingwandroid](https://github.com/mingwandroid/)
