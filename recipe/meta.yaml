@@ -1,7 +1,7 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.192" %}
 {% set zulu_build = "8.33.0.1" %}
-{% set build_number = 1004 %}
+{% set build_number = 1005 %}
 
 package:
   name: {{ name|lower }}
@@ -50,3 +50,5 @@ extra:
     - sodre
     - mingwandroid
     - hadim
+    - CJ-Wright
+    - xhochy
