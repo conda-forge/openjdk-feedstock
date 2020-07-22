@@ -3,7 +3,7 @@ About openjdk
 
 Home: https://www.azul.com/products/zulu/
 
-Package license: GPL-2.0
+Package license: GPL-2.0-with-classpath-exception
 
 Feedstock license: BSD-3-Clause
 
