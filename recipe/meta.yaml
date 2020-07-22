@@ -86,7 +86,7 @@ test:
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
   home: https://openjdk.java.net             # [linux]
-  license: GPL-2.0
+  license: GPL-2.0-with-classpath-exception
   license_family: GPL
   license_file:
     - LICENSE
