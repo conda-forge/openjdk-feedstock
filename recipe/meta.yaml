@@ -2,7 +2,7 @@
 {% set version = "11.0.1" %}
 {% set zulu_build = "11.2.3" %}
 {% set openjdk_revision = "13" %}
-{% set build_number = 1020 %}
+{% set build_number = 1021 %}
 {% set adopt_openjdk_build = "2019-12-04-18-39" %}
 
 package:
@@ -86,7 +86,7 @@ test:
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
   home: https://openjdk.java.net             # [linux]
-  license: GPL-2.0
+  license: GPL-2.0-with-classpath-exception
   license_family: GPL
   license_file:
     - LICENSE
@@ -101,3 +101,4 @@ extra:
     - sodre
     - mingwandroid
     - CJ-Wright
+    - xhochy

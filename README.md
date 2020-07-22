@@ -1,15 +1,15 @@
 About openjdk
 =============
 
-Home: https://openjdk.java.net
+Home: https://www.azul.com/products/zulu/
 
-Package license: GPL-2.0
+Package license: GPL-2.0-with-classpath-exception
 
 Feedstock license: BSD-3-Clause
 
-Summary: An open-source implementation of the JDK
+Summary: The Zulu OpenJDK build.
 
-
+Zulu OpenJDK is an open source build of the Java JDK.
 
 Current build status
 ====================
@@ -181,4 +181,5 @@ Feedstock Maintainers
 * [@johanneskoester](https://github.com/johanneskoester/)
 * [@mingwandroid](https://github.com/mingwandroid/)
 * [@sodre](https://github.com/sodre/)
+* [@xhochy](https://github.com/xhochy/)
 
