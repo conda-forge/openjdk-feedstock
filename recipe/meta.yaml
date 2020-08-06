@@ -1,6 +1,8 @@
 {% set name = "openjdk" %}
 {% set version = "11.0.8" %}
+{% set zulu_build = "11.41.23-ca" %}
 {% set openjdk_revision = "10" %}
+
 {% set build_number = 0 %}
 
 package:
@@ -17,18 +19,18 @@ source:
   - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [linux64]
     sha256: 6e4cead158037cb7747ca47416474d4f408c9126be5b96f9befd532e0a762b47  # [linux64]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_mac_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz  # [osx]
-    sha256: 4a8dadd58cdc32c7e59978971d56aec610be7ee0ddf0dc1d137bb8b78456499f  # [osx]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
+    sha256: 643C6648CC4374F39E830E4FCB3D68F8667893D487C07EB7091DF65937025CC3  # [osx]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_windows_hotspot_{{ version }}_{{ openjdk_revision }}.zip  # [win64]
-    sha256: 473e552748b23bd95ad097249e97f5d923d8dde3b956a9487ab17c860a6baa48  # [win64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
+    sha256: 3602ED7BAE52898C540C2D3AE3230C081CF061B219D14FB9AC15A47F4226D307  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts  # [linux]
 
   - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux]
-    sha256: c6a50a814008d80f489bbb7e761e417f24db4461b6a6df5e210f484b738b1ff6  # [linux]
+    sha256: 64ef8aa23b19020e08e1ff6afe84cc8ea4d09d432abb636a31c5559db798a618  # [linux]
     folder: src    # [linux]
 
 build:
@@ -82,13 +84,16 @@ test:
     - ./test-jni.sh  # [not win]
 
 about:
-  home: https://openjdk.java.net
+  home: https://www.azul.com/products/zulu/  # [not linux]
+  home: https://openjdk.java.net             # [linux]
   license: GPL-2.0-with-classpath-exception
   license_family: GPL
   license_file:
     - LICENSE
     - fonts/LICENSE   # [linux]
-  summary: An open-source implementation of the JDK
+  summary: The Zulu OpenJDK build.           # [not linux]
+  summary: An open-source implementation of the JDK   # [linux]
+  description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
 
 extra:
   recipe-maintainers:
