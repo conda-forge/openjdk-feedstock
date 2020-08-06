@@ -2,7 +2,6 @@
 {% set version = "11.0.8" %}
 {% set zulu_build = "11.41.23-ca" %}
 {% set openjdk_revision = "10" %}
-
 {% set build_number = 0 %}
 
 package:
@@ -20,10 +19,10 @@ source:
     sha256: 6e4cead158037cb7747ca47416474d4f408c9126be5b96f9befd532e0a762b47  # [linux64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
-    sha256: 643C6648CC4374F39E830E4FCB3D68F8667893D487C07EB7091DF65937025CC3  # [osx]
+    sha256: 643c6648cc4374f39e830e4fcb3d68f8667893d487c07eb7091df65937025cc3  # [osx]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
-    sha256: 3602ED7BAE52898C540C2D3AE3230C081CF061B219D14FB9AC15A47F4226D307  # [win64]
+    sha256: 3602ed7bae52898c540c2d3ae3230c081cf061b219d14fb9ac15a47f4226d307  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
