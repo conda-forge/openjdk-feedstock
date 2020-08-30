@@ -8,13 +8,13 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
     sha256: ed32513524b32a83b3b388831c69d1884df5675bd5069c6d1485fd1a060be209  # [linux64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_x64.zip  # [osx]
     sha256: 36f189bfbd0255195848835819377474ba9c1c868e3c204633c451c96e21f30a  # [osx]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-win_x64.zip  # [win64]
     sha256: ba8036b8080549f1e575d9f3f68708e6612404b4a55d474918cef7a14778595a  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux64]
