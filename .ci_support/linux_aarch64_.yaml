@@ -19,11 +19,11 @@ cxx_compiler:
 cxx_compiler_version:
 - '7'
 docker_image:
-- condaforge/linux-anvil-aarch64
+- quay.io/condaforge/linux-anvil-aarch64
 fontconfig:
 - '2.13'
 freetype:
-- 2.9.1
+- '2'
 giflib:
 - '5.2'
 harfbuzz:
@@ -45,5 +45,10 @@ pin_run_as_build:
     max_pin: x.x
   zlib:
     max_pin: x.x
+target_platform:
+- linux-aarch64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'
