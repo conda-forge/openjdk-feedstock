@@ -22,7 +22,7 @@ source:
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
     sha256: 45a3d08a6ef21404975433bd8babe4e04c0dbfe8f6e5f34561d89af50b874006  # [osx and x86_64]
    
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macos_aarch64.zip  # [osx and arm64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-macos_aarch64.zip  # [osx and arm64]
     sha256: 643c6648cc4374f39e830e4fcb3d68f8667893d487c07eb7091df65937025cc3  # [osx and arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
