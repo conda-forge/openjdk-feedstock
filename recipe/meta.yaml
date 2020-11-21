@@ -1,7 +1,8 @@
 {% set name = "openjdk" %}
-{% set version = "11.0.8" %}
-{% set zulu_build = "11.41.23-ca" %}
-{% set openjdk_revision = "10" %}
+{% set version = "11.0.9.1" %}
+{% set zulu_build = "11.43.55-ca" %}
+{% set zulu_build_arm64 = "11.43.1007-ca" %}
+{% set openjdk_revision = "1" %}
 {% set build_number = 0 %}
 
 package:
@@ -10,26 +11,29 @@ package:
 
 source:
   - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [ppc64le]
-    sha256: d206a63cd719b65717f7f20ee3fe49f0b8b2db922986b4811c828db57212699e  # [ppc64le]
+    sha256: d94b6b46a14ab0974b1c1b89661741126d8cf8a0068b471b8f5fa286a71636b1  # [ppc64le]
 
   - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [aarch64]
-    sha256: fb27ea52ed901c14c9fe8ad2fc10b338b8cf47d6762571be1fe3fb7c426bab7c  # [aarch64]
+    sha256: e9cea040cdf5d9b0a2986feaf87662e1aef68e876f4d66664cb2be36e26db412  # [aarch64]
 
   - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [linux64]
-    sha256: 6e4cead158037cb7747ca47416474d4f408c9126be5b96f9befd532e0a762b47  # [linux64]
+    sha256: e388fd7f3f2503856d0b04fde6e151cbaa91a1df3bcebf1deddfc3729d677ca3  # [linux64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx]
-    sha256: 643c6648cc4374f39e830e4fcb3d68f8667893d487c07eb7091df65937025cc3  # [osx]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
+    sha256: 45a3d08a6ef21404975433bd8babe4e04c0dbfe8f6e5f34561d89af50b874006  # [osx and x86_64]
+   
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macos_aarch64.zip  # [osx and arm64]
+    sha256: 643c6648cc4374f39e830e4fcb3d68f8667893d487c07eb7091df65937025cc3  # [osx and arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
-    sha256: 3602ed7bae52898c540c2d3ae3230c081cf061b219d14fb9ac15a47f4226d307  # [win64]
+    sha256: b619df7a6f625095ee4adb3add44839b0b1af2adc09a16c7312ca96bb2b61ec9  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts  # [linux]
 
   - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux]
-    sha256: 64ef8aa23b19020e08e1ff6afe84cc8ea4d09d432abb636a31c5559db798a618  # [linux]
+    sha256: 1bfcf63e0be8fc37517856e6181b97ed1d83a2436949ad21855ffc6ce14a5a0e  # [linux]
     folder: src    # [linux]
 
 build:
