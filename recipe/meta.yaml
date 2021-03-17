@@ -1,7 +1,6 @@
 {% set name = "openjdk" %}
-{% set version = "8.0.265" %}
-{% set zulu_build = "8.48.0.53" %}
-{% set build_number = 0 %}
+{% set version = "8.0.282" %}
+{% set zulu_build = "8.52.0.23" %}
 
 package:
   name: {{ name|lower }}
@@ -9,21 +8,26 @@ package:
 
 source:
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
-    sha256: ed32513524b32a83b3b388831c69d1884df5675bd5069c6d1485fd1a060be209  # [linux64]
+    sha256: 36c39878724f509d765a8f3804f6cef87c2eff39ac85447a0dc870231c1d3bca  # [linux64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_x64.zip  # [osx]
-    sha256: 36f189bfbd0255195848835819377474ba9c1c868e3c204633c451c96e21f30a  # [osx]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_x64.zip  # [osx and not arm64]
+    sha256: a2f161b41dc8e812e223645dbbf8f57fc1224006aab9243d1b1d7f2502c95f11  # [osx and not arm64]
+
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_aarch64.tar.gz  # [osx and arm64]
+    sha256: 011845318d37567ff2cb63d0f9115dd251504dc0d9156c9b7d9c4213a032c3be  # [osx and arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-win_x64.zip  # [win64]
-    sha256: ba8036b8080549f1e575d9f3f68708e6612404b4a55d474918cef7a14778595a  # [win64]
+    sha256: af76e1a483ec7a119716e4b9c2f4c050ce413b5b15afe66563f25048a1b00220  # [win64]
 
-  - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux64]
-    sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux64]
-    folder: fonts  # [linux64]
+  - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
+    sha256: ae0ad6046f6e7e751b43c615e3d37afc8b6b1c19b88dffd5f22c225aae9d26a7  # [aarch64]
+
+  - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
+    sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
+    folder: fonts  # [linux]
 
 build:
-  number: {{ build_number }}
-  skip: true  # [win32 or linux32]
+  number: 0
 
 test:
   requires:
@@ -38,9 +42,8 @@ test:
 
 about:
   home: https://www.azul.com/products/zulu/
-  license: GPL-2.0
-  license_family: GPL
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  license: GPL-2.0-or-later WITH Classpath-exception-2.0
+  license_file: LICENSE
   summary: The Zulu OpenJDK build.
   description: Zulu OpenJDK is an open source build of the Java JDK.
 

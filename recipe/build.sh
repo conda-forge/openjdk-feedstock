@@ -1,4 +1,18 @@
-#!/bin/bash -euo
+#!/bin/bash -exuo
+
+# Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
+if [[ "${target_platform}" == "osx-64" ]]; then
+  for b in `ls bin`; do
+    codesign --remove-signature bin/$b
+  done
+  for b in `ls jre/bin`; do
+    codesign --remove-signature jre/bin/$b
+  done
+  for b in `ls jre/lib/*.dylib jre/lib/*.dylib.* jre/lib/**/*.dylib`; do
+    codesign --remove-signature $b
+  done
+  codesign --remove-signature jre/lib/jspawnhelper
+fi
 
 chmod +x bin/*
 mkdir -p $PREFIX/bin
@@ -11,19 +25,23 @@ if [ -e ./jre/lib/jspawnhelper ]; then
     chmod +x ./jre/lib/jspawnhelper
 fi
 
-if [[ `uname` == "Linux" ]]
-then
-    mv lib/amd64/jli/*.so lib
-    mv lib/amd64/*.so lib
-    rm -r lib/amd64
-    # libnio.so does not find this within jre/lib/amd64 subdirectory
-    cp jre/lib/amd64/libnet.so lib
+if [[ "${target_platform}" == linux-* ]]; then
+  if [[ "${target_platform}" == "linux-aarch64" ]]; then
+    JDK_ARCH=aarch64
+  else
+    JDK_ARCH=amd64
+  fi
+  mv lib/${JDK_ARCH}/jli/*.so lib
+  mv lib/${JDK_ARCH}/*.so lib
+  rm -r lib/${JDK_ARCH}
+  # libnio.so does not find this within jre/lib/amd64 subdirectory
+  cp jre/lib/${JDK_ARCH}/libnet.so lib
 
-    # Include dejavu fonts to allow java to work even on minimal cloud
-    # images where these fonts are missing (thanks to @chapmanb)
-    mkdir -p lib/fonts
-    mv ./fonts/ttf/* ./lib/fonts/
-    rm -rf ./fonts
+  # Include dejavu fonts to allow java to work even on minimal cloud
+  # images where these fonts are missing (thanks to @chapmanb)
+  mkdir -p lib/fonts
+  mv ./fonts/ttf/* ./lib/fonts/
+  rm -rf ./fonts
 fi
 
 mkdir -p $PREFIX/jre

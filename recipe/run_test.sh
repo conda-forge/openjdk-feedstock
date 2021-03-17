@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -ex
 
 if [ "${JAVA_HOME}" != "${PREFIX}" ]; then
   echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX})"
