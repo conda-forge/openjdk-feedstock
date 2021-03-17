@@ -11,22 +11,23 @@ if [ -e ./jre/lib/jspawnhelper ]; then
     chmod +x ./jre/lib/jspawnhelper
 fi
 
-if [[ "${target_platform}" == "linux-64" ]]; then
-  mv lib/amd64/jli/*.so lib
-  mv lib/amd64/*.so lib
-  rm -r lib/amd64
+if [[ "${target_platform}" == linux-* ]]; then
+  if [[ "${target_platform}" == "linux-aarch64" ]]; then
+    JDK_ARCH=aarch64
+  else
+    JDK_ARCH=amd64
+  fi
+  mv lib/${JDK_ARCH}/jli/*.so lib
+  mv lib/${JDK_ARCH}/*.so lib
+  rm -r lib/${JDK_ARCH}
   # libnio.so does not find this within jre/lib/amd64 subdirectory
-  cp jre/lib/amd64/libnet.so lib
+  cp jre/lib/${JDK_ARCH}/libnet.so lib
 
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p lib/fonts
   mv ./fonts/ttf/* ./lib/fonts/
   rm -rf ./fonts
-elif [[ "${target_platform}" == "linux-aarch64" ]]; then
-  ls -la lib
-  ls -la jre/lib
-  exit 1
 fi
 
 mkdir -p $PREFIX/jre
