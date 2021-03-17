@@ -37,8 +37,8 @@ test:
     - test-jni.sh  # [not win]
     - test-nio
   commands:
-    - java -version  # [not (build_platform != target_platform and target_platfrom == "osx-arm64")]
-    - ./test-jni.sh  # [not (win or (build_platform != target_platform and target_platfrom == "osx-arm64"))]
+    - java -version
+    - ./test-jni.sh  # [not win]
 
 about:
   home: https://www.azul.com/products/zulu/
