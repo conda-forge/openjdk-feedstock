@@ -41,7 +41,8 @@ build:
 
 requirements:
   build:
-    - {{ compiler('cxx') }}   # [linux]
+    # We also need a compiler on osx to produce correct signatures
+    - {{ compiler('cxx') }}   # [not win]
     - pkg-config        # [linux]
     - autoconf          # [linux]
     - unzip             # [linux]
