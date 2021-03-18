@@ -63,13 +63,19 @@ function source_build
   export -n CXXFLAGS
   export -n LDFLAGS
 
-  if [[ "$CI" == "travis" ]]; then
-    export CPU_COUNT=4
-  fi
+  export BUILD_CC=${CC_FOR_BUILD}
+  export BUILD_CXX=${CXX_FOR_BUILD}
+  export BUILD_NM=$($CC_FOR_BUILD -print-prog-name=nm)
+  export BUILD_AR=$($CC_FOR_BUILD -print-prog-name=ar)
+  export BUILD_OBJCOPY=$($CC_FOR_BUILD -print-prog-name=objcopy)
+  export BUILD_STRIP=$($CC_FOR_BUILD -print-prog-name=strip)
 
   chmod +x configure
   ./configure \
     --prefix=$PREFIX \
+    --build=${BUILD} \
+    --host=${HOST} \
+    --target=${HOST} \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
