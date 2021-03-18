@@ -47,6 +47,7 @@ requirements:
     - unzip             # [linux]
     - zip               # [linux]
     - make !=4.3.*      # [linux]
+    - zlib              # [build_platform != target_platform]
   host:
     - zlib              # [linux or osx]
     - freetype          # [linux]
