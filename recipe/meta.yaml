@@ -3,7 +3,6 @@
 {% set zulu_build = "11.43.55-ca" %}
 {% set zulu_build_arm64 = "11.43.1007-ca" %}
 {% set openjdk_revision = "1" %}
-{% set build_number = 0 %}
 
 package:
   name: {{ name|lower }}
@@ -37,7 +36,7 @@ source:
     folder: src    # [linux]
 
 build:
-  number: {{ build_number }}
+  number: 1
 
 requirements:
   build:
