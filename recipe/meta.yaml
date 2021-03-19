@@ -33,7 +33,9 @@ source:
 
   - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux]
     sha256: 1bfcf63e0be8fc37517856e6181b97ed1d83a2436949ad21855ffc6ce14a5a0e  # [linux]
-    folder: src    # [linux]
+    folder: src        # [linux]
+    patches:           # [linux]
+      - fix-arm.patch  # [linux]
 
 build:
   number: 1
@@ -47,7 +49,23 @@ requirements:
     - unzip             # [linux]
     - zip               # [linux]
     - make !=4.3.*      # [linux]
-    - zlib              # [build_platform != target_platform]
+    - zlib              # [linux and (build_platform != target_platform)]
+    - freetype          # [linux and (build_platform != target_platform)]
+    - harfbuzz          # [linux and (build_platform != target_platform)]
+    - libpng            # [linux and (build_platform != target_platform)]
+    - giflib            # [linux and (build_platform != target_platform)]
+    - jpeg              # [linux and (build_platform != target_platform)]
+    - libcups           # [linux and (build_platform != target_platform)]
+    - alsa-lib          # [linux and (build_platform != target_platform)]
+    - fontconfig        # [linux and (build_platform != target_platform)]
+    - xorg-libx11       # [linux and (build_platform != target_platform)]
+    - xorg-libxext      # [linux and (build_platform != target_platform)]
+    - xorg-libxt        # [linux and (build_platform != target_platform)]
+    - xorg-libxtst      # [linux and (build_platform != target_platform)]
+    - xorg-libxrender   # [linux and (build_platform != target_platform)]
+    - xorg-libxrandr    # [linux and (build_platform != target_platform)]
+    - xorg-libxi        # [linux and (build_platform != target_platform)]
+    - lcms2             # [linux and (build_platform != target_platform)]
   host:
     - zlib              # [linux or osx]
     - freetype          # [linux]
