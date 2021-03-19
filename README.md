@@ -1,28 +1,19 @@
 About openjdk
 =============
 
-Home: https://www.azul.com/products/zulu/
+Home: https://openjdk.java.net
 
 Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openjdk-feedstock/blob/master/LICENSE.txt)
 
-Summary: The Zulu OpenJDK build.
-
-Zulu OpenJDK is an open source build of the Java JDK.
+Summary: An open-source implementation of the JDK
 
 Current build status
 ====================
 
 
 <table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://travis-ci.com/conda-forge/openjdk-feedstock">
-        <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/openjdk-feedstock/master.svg?label=macOS">
-      </a>
-    </td>
-  </tr><tr>
     <td>Drone</td>
     <td>
       <a href="https://cloud.drone.io/conda-forge/openjdk-feedstock">
