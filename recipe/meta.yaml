@@ -1,7 +1,7 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.302" %}
 {% set major_version = version.split(".")[0] %}
-{% set zulu_build = "8.56.0.23-ca" %}
+{% set zulu_build = "8.56.0.21-ca" %}
 {% set zulu_build_arm64 = "8.56.0.23-ca" %}
 {% set openjdk_revision = "1" %}
 
