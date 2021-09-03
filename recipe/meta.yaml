@@ -1,5 +1,6 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.302" %}
+{% set major_version = version.split(".")[0] %}
 {% set zulu_build = "8.56.0.23-ca" %}
 {% set zulu_build_arm64 = "8.56.0.23-ca" %}
 {% set openjdk_revision = "1" %}
@@ -9,13 +10,13 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
+  - url: https://github.com/AdoptOpenJDK/openjdk{{ major_version }}-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
     sha256: d94b6b46a14ab0974b1c1b89661741126d8cf8a0068b471b8f5fa286a71636b1  # [build_platform == "linux-ppc64le"]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
+  - url: https://github.com/AdoptOpenJDK/openjdk{{ major_version }}-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
     sha256: e9cea040cdf5d9b0a2986feaf87662e1aef68e876f4d66664cb2be36e26db412  # [build_platform == "linux-aarch64"]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
+  - url: https://github.com/AdoptOpenJDK/openjdk{{ major_version }}-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
     sha256: e388fd7f3f2503856d0b04fde6e151cbaa91a1df3bcebf1deddfc3729d677ca3  # [build_platform == "linux-64"]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
