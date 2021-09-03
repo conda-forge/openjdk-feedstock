@@ -21,7 +21,7 @@ source:
     sha256: 1581efae7fd465aed7ad1e3f776df1b588ebb6fdd7fbc7d2281af448118654eb  # [win64]
 
   - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
-    sha256: ae0ad6046f6e7e751b43c615e3d37afc8b6b1c19b88dffd5f22c225aae9d26a7  # [aarch64]
+    sha256: cc917670e2622dbbc243b6f96c9c199de4ed9e5d541acc68abcb9b378013a38c  # [aarch64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
