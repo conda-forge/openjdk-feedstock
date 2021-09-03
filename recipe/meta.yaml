@@ -1,25 +1,26 @@
 {% set name = "openjdk" %}
 {% set version = "8.0.302" %}
-{% set zulu_build = "8.56.0.21" %}
+{% set zulu_build = "8.56.0.21-ca" %}
+{% set zulu_build_arm64 = "8.56.0.23-ca" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
     sha256: f6e6946713575aeeadfb75bd2eb245669e59ce4f797880490beb53a6c5b7138a  # [linux64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_x64.zip  # [osx and not arm64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and not arm64]
     sha256: 102a93674f33e52a0076731889d49b3b18e2dd7d447cda3cb08e558649d1b22c  # [osx and not arm64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-macosx_aarch64.tar.gz  # [osx and arm64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-macosx_aarch64.tar.gz  # [osx and arm64]
     sha256: 4482990c96e87519f52725b0bf3a6171510e3da268d55b793d1bf6eeb6485030  # [osx and arm64]
 
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-win_x64.zip  # [win64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
     sha256: 1581efae7fd465aed7ad1e3f776df1b588ebb6fdd7fbc7d2281af448118654eb  # [win64]
 
-  - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build }}-ca-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
+  - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
     sha256: ae0ad6046f6e7e751b43c615e3d37afc8b6b1c19b88dffd5f22c225aae9d26a7  # [aarch64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
