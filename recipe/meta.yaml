@@ -1,7 +1,7 @@
 {% set name = "openjdk" %}
-{% set version = "8.0.302" %}
-{% set zulu_build = "8.56.0.21-ca" %}
-{% set zulu_build_arm64 = "8.56.0.23-ca" %}
+{% set version = "8.0.312" %}
+{% set zulu_build = "8.58.0.13-ca" %}
+{% set zulu_build_arm64 = "8.58.0.13-ca" %}
 
 package:
   name: {{ name|lower }}
@@ -9,19 +9,19 @@ package:
 
 source:
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-linux_x64.tar.gz  # [linux64]
-    sha256: f6e6946713575aeeadfb75bd2eb245669e59ce4f797880490beb53a6c5b7138a  # [linux64]
+    sha256: 73417488fa4b7f7f8c0c5940dabea87908b29a23e1ee6c948b2f0ca8b9af231d  # [linux64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and not arm64]
-    sha256: 102a93674f33e52a0076731889d49b3b18e2dd7d447cda3cb08e558649d1b22c  # [osx and not arm64]
+    sha256: e8088937f8df77a4e18c690cfe3d602ff50af3446b1a5420438ec811b0cf50ea  # [osx and not arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-macosx_aarch64.tar.gz  # [osx and arm64]
-    sha256: 4482990c96e87519f52725b0bf3a6171510e3da268d55b793d1bf6eeb6485030  # [osx and arm64]
+    sha256: 304251193046120487e6ee4b3172349118911f58e84fb8449e1ca14e03924db9  # [osx and arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
-    sha256: 1581efae7fd465aed7ad1e3f776df1b588ebb6fdd7fbc7d2281af448118654eb  # [win64]
+    sha256: 96343df9e254db233d91a325abbeecf89a71f2cdd3f3d676dcab6f657f880e4e  # [win64]
 
   - url: https://cdn.azul.com/zulu-embedded/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-linux_aarch64.tar.gz  # [aarch64]
-    sha256: cc917670e2622dbbc243b6f96c9c199de4ed9e5d541acc68abcb9b378013a38c  # [aarch64]
+    sha256: a3e9f7cfe55eb9ed9dfd87e38d61240c8bbf8543125ff9ae905ffb73bc625e06  # [aarch64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
