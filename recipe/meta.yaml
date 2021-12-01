@@ -12,7 +12,7 @@ source:
     sha256: 73417488fa4b7f7f8c0c5940dabea87908b29a23e1ee6c948b2f0ca8b9af231d  # [linux64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and not arm64]
-    sha256: e8088937f8df77a4e18c690cfe3d602ff50af3446b1a5420438ec811b0cf50ea  # [osx and not arm64]
+    sha256: 7f7ffead8c58b027a901702ecd6d5b4ad8799743564fd0148576f2d6b5899672  # [osx and not arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-macosx_aarch64.tar.gz  # [osx and arm64]
     sha256: 304251193046120487e6ee4b3172349118911f58e84fb8449e1ca14e03924db9  # [osx and arm64]
