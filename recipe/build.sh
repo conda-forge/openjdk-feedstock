@@ -44,12 +44,11 @@ function jdk_install
 
   mkdir -p $INSTALL_DIR/man/man1
   mv man/man1/* $INSTALL_DIR/man/man1
-  rm -rf man/man1
-  mv man/* $INSTALL_DIR/man
 }
 
 function source_build
 {
+  ls -l
   cd src
 
   chmod +x configure
@@ -169,7 +168,7 @@ export INSTALL_DIR=$PREFIX
 jdk_install
 
 if [[ "$target_platform" == linux* ]]; then
-  mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
+  ##mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p $INSTALL_DIR/lib/fonts
