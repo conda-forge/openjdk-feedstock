@@ -4,13 +4,14 @@ set -exuo pipefail
 
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
 if [[ "${target_platform}" == "osx-64" ]]; then
-  for b in `ls bin`; do
-    codesign --remove-signature bin/$b
-  done
-  for b in `ls lib/*.dylib lib/*.dylib.* lib/**/*.dylib`; do
-    codesign --remove-signature $b
-  done
-  codesign --remove-signature lib/jspawnhelper
+  codesign --help
+  #for b in `ls bin`; do
+  #  codesign --remove-signature bin/$b
+  #done
+  #for b in `ls lib/*.dylib lib/*.dylib.* lib/**/*.dylib`; do
+  #  codesign --remove-signature $b
+  #done
+  #codesign --remove-signature lib/jspawnhelper
 fi
 
 function jdk_install
