@@ -56,7 +56,7 @@ requirements:
     - giflib            # [linux and (build_platform != target_platform)]
     - jpeg              # [linux and (build_platform != target_platform)]
     - libcups           # [linux and (build_platform != target_platform)]
-    - alsa-lib          # [linux and (build_platform != target_platform)]
+    # - alsa-lib          # [linux and (build_platform != target_platform)]
     - fontconfig        # [linux and (build_platform != target_platform)]
     - xorg-libx11       # [linux and (build_platform != target_platform)]
     - xorg-libxext      # [linux and (build_platform != target_platform)]
