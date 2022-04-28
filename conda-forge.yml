@@ -8,6 +8,6 @@ github:
   tooling_branch_name: main
 provider:
   linux_aarch64: default
-  linux_ppc64le: default
+  linux_ppc64le: azure
   win: azure
 test_on_native_only: true
