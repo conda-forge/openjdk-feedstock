@@ -106,6 +106,7 @@ function source_build
           --with-zlib=system \
           --with-libjpeg=system \
           --with-lcms=system \
+	  --with-alsa=$PREFIX \
           --with-fontconfig=${BUILD_PREFIX} \
           --with-boot-jdk=$SRC_DIR/bootjdk
         make JOBS=$CPU_COUNT images
@@ -151,6 +152,7 @@ function source_build
     --with-libjpeg=system \
     --with-lcms=system \
     --with-stdc++lib=dynamic \
+    --with-alsa=$PREFIX \
     --disable-warnings-as-errors \
     --with-boot-jdk=$SRC_DIR/bootjdk \
     ${CONFIGURE_ARGS}
