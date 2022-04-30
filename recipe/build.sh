@@ -131,7 +131,7 @@ function source_build
 
   CONFIGURE_ARGS=""
   if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
-    CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk"
+    CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk --with-alsa=${BUILD_PREFIX}"
   fi
 
   ./configure \
@@ -152,7 +152,6 @@ function source_build
     --with-libjpeg=system \
     --with-lcms=system \
     --with-stdc++lib=dynamic \
-    --with-alsa=$PREFIX \
     --disable-warnings-as-errors \
     --with-boot-jdk=$SRC_DIR/bootjdk \
     ${CONFIGURE_ARGS}
