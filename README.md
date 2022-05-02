@@ -198,6 +198,7 @@ Feedstock Maintainers
 =====================
 
 * [@CJ-Wright](https://github.com/CJ-Wright/)
+* [@izahn](https://github.com/izahn/)
 * [@johanneskoester](https://github.com/johanneskoester/)
 * [@mingwandroid](https://github.com/mingwandroid/)
 * [@sodre](https://github.com/sodre/)
