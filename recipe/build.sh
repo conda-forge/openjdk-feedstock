@@ -106,7 +106,6 @@ function source_build
           --with-zlib=system \
           --with-libjpeg=system \
           --with-lcms=system \
-	  --with-alsa=${BUILD_PREFIX} \
           --with-fontconfig=${BUILD_PREFIX} \
           --with-boot-jdk=$SRC_DIR/bootjdk
         make JOBS=$CPU_COUNT images
@@ -131,7 +130,7 @@ function source_build
 
   CONFIGURE_ARGS=""
   if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
-    CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk --with-alsa=${PREFIX}"
+    CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk"
   fi
 
   ./configure \
