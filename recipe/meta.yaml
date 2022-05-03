@@ -38,7 +38,7 @@ source:
       - fix-arm.patch  # [linux]
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -84,7 +84,7 @@ requirements:
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
     - lcms2             # [linux]
-    - vs2013_runtime    # [win]
+    - vs2015_runtime    # [win]
   run:
     - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
@@ -92,7 +92,7 @@ requirements:
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
     - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
-    - vs2013_runtime    # [win]
+    - vs2015_runtime    # [win]
 
 test:
   requires:
@@ -103,7 +103,7 @@ test:
     - test-nio
   commands:
     - java -version
-    - ./test-jni.sh  # [not win]
+    - ./test-jni.sh  # [not win and not ppc64le]
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
@@ -124,3 +124,4 @@ extra:
     - mingwandroid
     - CJ-Wright
     - xhochy
+    - izahn
