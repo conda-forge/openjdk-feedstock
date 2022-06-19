@@ -1,44 +1,43 @@
 {% set name = "openjdk" %}
-{% set version = "11.0.9.1" %}
-{% set zulu_build = "11.43.55-ca" %}
-{% set zulu_build_arm64 = "11.43.1007-ca" %}
-{% set openjdk_revision = "1" %}
+{% set version = "11.0.15" %}
+{% set zulu_build = "11.56.19-ca" %}
+{% set openjdk_revision = "10" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
-    sha256: d94b6b46a14ab0974b1c1b89661741126d8cf8a0068b471b8f5fa286a71636b1  # [build_platform == "linux-ppc64le"]
+  - url: https://github.com/adoptium/temurin11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
+    sha256: a8fba686f6eb8ae1d1a9566821dbd5a85a1108b96ad857fdbac5c1e4649fc56f  # [build_platform == "linux-ppc64le"]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
-    sha256: e9cea040cdf5d9b0a2986feaf87662e1aef68e876f4d66664cb2be36e26db412  # [build_platform == "linux-aarch64"]
+  - url: https://github.com/adoptium/temurin11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
+    sha256: 999fbd90b070f9896142f0eb28354abbeb367cbe49fd86885c626e2999189e0a  # [build_platform == "linux-aarch64"]
 
-  - url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
-    sha256: e388fd7f3f2503856d0b04fde6e151cbaa91a1df3bcebf1deddfc3729d677ca3  # [build_platform == "linux-64"]
+  - url: https://github.com/adoptium/temurin11-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK11U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
+    sha256: 5fdb4d5a1662f0cca73fec30f99e67662350b1fa61460fa72e91eb9f66b54d0b  # [build_platform == "linux-64"]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
-    sha256: 45a3d08a6ef21404975433bd8babe4e04c0dbfe8f6e5f34561d89af50b874006  # [osx and x86_64]
+    sha256: a7d68fdf46d88db8b3531035ec1153438b8e519faca0cafd871e6be511ce8be1  # [osx and x86_64]
    
-  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build_arm64 }}-jdk{{ version }}-macos_aarch64.zip  # [osx and arm64]
-    sha256: 6f0461f2b2448ef7e5e0afe187364588312768bb77e737e90a20e8fc818394ed  # [osx and arm64]
+  - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_aarch64.zip  # [osx and arm64]
+    sha256: 43fde6e8291b972146687363b2531dc6e0ba0b18a9f9d66bdad9b88de7403297  # [osx and arm64]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-win_x64.zip  # [win64]
-    sha256: b619df7a6f625095ee4adb3add44839b0b1af2adc09a16c7312ca96bb2b61ec9  # [win64]
+    sha256: a106c77389a63b6bd963a087d5f01171bd32aa3ee7377ecef87531390dcb9050  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts  # [linux]
 
-  - url: https://hg.openjdk.java.net/jdk-updates/jdk{{ version.split(".")[0] }}u/archive/jdk-{{ version }}+{{ openjdk_revision }}.tar.bz2   # [linux]
-    sha256: 1bfcf63e0be8fc37517856e6181b97ed1d83a2436949ad21855ffc6ce14a5a0e  # [linux]
+  - url: https://github.com/openjdk/jdk{{ version.split(".")[0] }}u/archive/refs/tags/jdk-{{ version }}+{{ openjdk_revision}}.zip   # [linux]
+    sha256: b152184f707a0785f93baafbb9382aefdab94cf335b8d7a823160cb2a7a849a3  # [linux]
     folder: src        # [linux]
     patches:           # [linux]
       - fix-arm.patch  # [linux]
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
