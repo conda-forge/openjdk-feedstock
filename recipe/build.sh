@@ -159,14 +159,14 @@ function source_build
   make JOBS=$CPU_COUNT images
 }
 
-if [[ "$target_platform" == linux* ]]; then 
+if [[ "$target_platform" == linux* ]]; then
   export INSTALL_DIR=$SRC_DIR/bootjdk/
   jdk_install
   source_build
   cd build/*/images/jdk
 fi
 
-export INSTALL_DIR=$PREFIX
+export INSTALL_DIR=$PREFIX/lib/jvm
 jdk_install
 
 if [[ "$target_platform" == linux* ]]; then
