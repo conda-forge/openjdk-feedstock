@@ -169,6 +169,17 @@ fi
 export INSTALL_DIR=$PREFIX/lib/jvm
 jdk_install
 
+# Symlink java binaries
+for i in $(find $INSTALL_DIR/bin -type f -printf '%P\n'); do
+    mkdir -p "$PREFIX/bin/$(dirname $i)"
+    ln -s -r -f "$INSTALL_DIR/bin/$i" "$PREFIX/bin/$i"
+done
+# Symlink man pages
+for i in $(find $INSTALL_DIR/man -type f -printf '%P\n'); do
+    mkdir -p "$PREFIX/man/$(dirname $i)"
+    ln -s -r -f "$INSTALL_DIR/man/$i" "$PREFIX/man/$i"
+done
+
 if [[ "$target_platform" == linux* ]]; then
   mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
   # Include dejavu fonts to allow java to work even on minimal cloud
