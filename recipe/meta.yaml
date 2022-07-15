@@ -67,7 +67,6 @@ requirements:
     - lcms2             # [linux and (build_platform != target_platform)]
   host:
     - zlib              # [linux or osx]
-    - libzip            # [linux]
     - freetype          # [linux]
     - harfbuzz          # [linux]
     - libpng            # [linux]
