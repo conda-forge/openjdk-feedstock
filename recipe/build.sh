@@ -146,6 +146,10 @@ function source_build
     ln -s $($CC -print-prog-name=objcopy) $BUILD_PREFIX/bin/objcopy
   fi
 
+  if [[ "$target_platform" == "linux-aarch64" ]]; then
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=4"
+  fi
+
   ./configure \
     --prefix=$PREFIX \
     --build=${BUILD} \
@@ -154,6 +158,7 @@ function source_build
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
+    --with-log=info \
     --with-x=$PREFIX \
     --with-cups=$PREFIX \
     --with-freetype=system \
