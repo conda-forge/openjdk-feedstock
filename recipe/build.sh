@@ -46,9 +46,11 @@ function jdk_install
   mkdir -p $INSTALL_DIR/man/man1
   mv man/man1/* $INSTALL_DIR/man/man1
   rm -rf man/man1
-  if [ -d man ]; then
-    mv man/* $INSTALL_DIR/man
-  fi
+
+  # The man dir could be empty already so we can safely ignore this error
+  set +e
+  mv -f man/* $INSTALL_DIR/man
+  set -e
 }
 
 function source_build
