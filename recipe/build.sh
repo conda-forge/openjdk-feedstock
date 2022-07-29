@@ -137,6 +137,9 @@ function source_build
     CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk"
 
     env | sort
+
+    ln -s $CC $BUILD_PREFIX/bin/gcc
+    ln -s $CXX $BUILD_PREFIX/bin/g++
   fi
 
   ./configure \
