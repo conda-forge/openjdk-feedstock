@@ -140,6 +140,10 @@ function source_build
 
     ln -s $CC $BUILD_PREFIX/bin/gcc
     ln -s $CXX $BUILD_PREFIX/bin/g++
+    ln -s $($CC -print-prog-name=strip) $BUILD_PREFIX/bin/strip
+    ln -s $($CC -print-prog-name=nm) $BUILD_PREFIX/bin/nm
+    ln -s $($CC -print-prog-name=ar) $BUILD_PREFIX/bin/ar
+    ln -s $($CC -print-prog-name=objcopy) $BUILD_PREFIX/bin/objcopy
   fi
 
   ./configure \
