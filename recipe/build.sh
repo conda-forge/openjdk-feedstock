@@ -174,7 +174,10 @@ export INSTALL_DIR=$PREFIX
 jdk_install
 
 if [[ "$target_platform" == linux* ]]; then
+  # This is not present on AdoptOpenJDK>=17
+  set +e
   mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
+  set -e
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p $INSTALL_DIR/lib/fonts
