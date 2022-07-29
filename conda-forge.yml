@@ -7,7 +7,7 @@ github:
   branch_name: main
   tooling_branch_name: main
 provider:
-  linux_aarch64: azure
-  linux_ppc64le: azure
+  linux_aarch64: circle
+  linux_ppc64le: native
   win: azure
 test_on_native_only: true
