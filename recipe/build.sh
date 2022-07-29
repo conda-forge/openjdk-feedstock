@@ -46,7 +46,9 @@ function jdk_install
   mkdir -p $INSTALL_DIR/man/man1
   mv man/man1/* $INSTALL_DIR/man/man1
   rm -rf man/man1
-  mv man/* $INSTALL_DIR/man
+  if [ -d man ]; then
+    mv man/* $INSTALL_DIR/man
+  fi
 }
 
 function source_build
