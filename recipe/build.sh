@@ -147,9 +147,9 @@ function source_build
   fi
 
   if [[ "$target_platform" == "linux-aarch64" ]]; then
-    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=16"
-    export JOBS=16
-    export CPU_COUNT=16
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=8"
+    export JOBS=8
+    export CPU_COUNT=8
   fi
   if [[ "$target_platform" == "linux-ppc64le" ]]; then
     CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=8"
