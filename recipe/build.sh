@@ -147,15 +147,25 @@ function source_build
   fi
 
   if [[ "$target_platform" == "linux-aarch64" ]]; then
-    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=8"
-    export JOBS=8
-    export CPU_COUNT=8
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=6"
+    export JOBS=6
+    export CPU_COUNT=6
   fi
   if [[ "$target_platform" == "linux-ppc64le" ]]; then
     CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=8"
     export JOBS=8
     export CPU_COUNT=8
   fi
+
+  function printerror {
+    if [ -f $SRC_DIR/src/build/linux-aarch64-server-release/make-support/failure-logs ]; then
+      cat $SRC_DIR/src/build/linux-aarch64-server-release/make-support/failure-logs
+    fi
+    if [ -f $SRC_DIR/src/build/linux-ppc64le-server-release/make-support/failure-logs ]; then
+      cat $SRC_DIR/src/build/linux-ppc64le-server-release/make-support/failure-logs
+    fi
+    exit 1
+  }
 
   ./configure \
     --prefix=$PREFIX \
@@ -180,8 +190,10 @@ function source_build
     --with-boot-jdk=$SRC_DIR/bootjdk \
     ${CONFIGURE_ARGS}
 
-  make JOBS=$CPU_COUNT
-  make JOBS=$CPU_COUNT images
+
+
+  make JOBS=$CPU_COUNT || printerror
+  make JOBS=$CPU_COUNT images || printerror
 }
 
 if [[ "$target_platform" == linux* ]]; then 
