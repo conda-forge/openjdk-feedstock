@@ -7,7 +7,9 @@ github:
   branch_name: main
   tooling_branch_name: main
 provider:
-  linux_aarch64: circle
-  linux_ppc64le: native
+  # technically aarch64 has 80 cores?
+  linux_aarch64: travis
+  # This has 8 cores
+  linux_ppc64le: travis
   win: azure
 test_on_native_only: true

@@ -14,13 +14,6 @@ Current build status
 
 
 <table><tr>
-    <td>CircleCI</td>
-    <td>
-      <a href="https://circleci.com/gh/conda-forge/openjdk-feedstock">
-        <img alt="Arm64" src="https://img.shields.io/circleci/project/github/conda-forge/openjdk-feedstock/main.svg?label=Arm64">
-      </a>
-    </td>
-  </tr><tr>
     <td>Travis</td>
     <td>
       <a href="https://app.travis-ci.com/conda-forge/openjdk-feedstock">
