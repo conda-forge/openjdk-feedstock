@@ -188,9 +188,8 @@ function source_build
     --with-stdc++lib=dynamic \
     --disable-warnings-as-errors \
     --with-boot-jdk=$SRC_DIR/bootjdk \
+    --disable-javac-server \
     ${CONFIGURE_ARGS}
-
-
 
   make JOBS=$CPU_COUNT || printerror
   make JOBS=$CPU_COUNT images || printerror
