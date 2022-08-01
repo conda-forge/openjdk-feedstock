@@ -2,6 +2,8 @@
 
 set -exuo pipefail
 
+JVM_BUILD_LOG_LEVEL=warn
+
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
 # TODO: Fix https://github.com/thefloweringash/sigtool to add --remove-signature support
 if [[ "${target_platform}" == "osx-64" ]]; then
@@ -13,6 +15,10 @@ if [[ "${target_platform}" == "osx-64" ]]; then
   done
   /usr/bin/codesign --remove-signature lib/jspawnhelper
 fi
+
+echo "--------------------------------------------------"
+env | sort
+echo "--------------------------------------------------"
 
 function jdk_install
 {
@@ -72,18 +78,19 @@ function source_build
 
       export CPATH=$BUILD_PREFIX/include
       export LIBRARY_PATH=$BUILD_PREFIX/lib
-      export CC=${CC_FOR_BUILD}
-      export CXX=${CXX_FOR_BUILD}
-      export CPP=${CXX_FOR_BUILD//+/p}
-      export NM=$($CC_FOR_BUILD -print-prog-name=nm)
-      export AR=$($CC_FOR_BUILD -print-prog-name=ar)
-      export OBJCOPY=$($CC_FOR_BUILD -print-prog-name=objcopy)
-      export STRIP=$($CC_FOR_BUILD -print-prog-name=strip)
+      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD} CPP=${CXX_FOR_BUILD//+/p}"
+      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
+      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$BUILD-ar"
+      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
+      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
+      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
       # CFLAGS and CXXFLAGS are intentionally empty
       export -n CFLAGS
       export -n CXXFLAGS
+      export -n LD
+      export -n NM
       unset CPPFLAGS
 
       CFLAGS=$(echo $CFLAGS | sed 's/-mcpu=[a-z0-9]*//g' | sed 's/-mtune=[a-z0-9]*//g' | sed 's/-march=[a-z0-9]*//g')
@@ -100,6 +107,7 @@ function source_build
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
+          --with-log=${JVM_BUILD_LOG_LEVEL} \
           --with-stdc++lib=dynamic \
           --disable-warnings-as-errors \
           --with-x=${BUILD_PREFIX} \
@@ -110,9 +118,11 @@ function source_build
           --with-zlib=system \
           --with-libjpeg=system \
           --with-lcms=system \
+          --with-harfbuzz=system \
           --with-fontconfig=${BUILD_PREFIX} \
-          --with-boot-jdk=$SRC_DIR/bootjdk
-        make JOBS=$CPU_COUNT images
+          --with-boot-jdk=$SRC_DIR/bootjdk \
+          $_TOOLCHAIN_ARGS
+        make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS images
       popd
     )
   fi
@@ -120,13 +130,6 @@ function source_build
 
   export CPATH=$PREFIX/include
   export LIBRARY_PATH=$PREFIX/lib
-  export BUILD_CC=${CC_FOR_BUILD}
-  export BUILD_CXX=${CXX_FOR_BUILD}
-  export BUILD_CPP=${CXX_FOR_BUILD//+/p}
-  export BUILD_NM=$($CC_FOR_BUILD -print-prog-name=nm)
-  export BUILD_AR=$($CC_FOR_BUILD -print-prog-name=ar)
-  export BUILD_OBJCOPY=$($CC_FOR_BUILD -print-prog-name=objcopy)
-  export BUILD_STRIP=$($CC_FOR_BUILD -print-prog-name=strip)
 
   export -n CFLAGS
   export -n CXXFLAGS
@@ -137,24 +140,10 @@ function source_build
     CONFIGURE_ARGS="--with-build-jdk=$SRC_DIR/src/build-build/images/jdk"
 
     env | sort
+    echo "=================================="
+    echo "RUNNING CROSS COMPILE"
+    echo "=================================="
 
-    ln -s $CC $BUILD_PREFIX/bin/gcc
-    ln -s $CXX $BUILD_PREFIX/bin/g++
-    ln -s $($CC -print-prog-name=strip) $BUILD_PREFIX/bin/strip
-    ln -s $($CC -print-prog-name=nm) $BUILD_PREFIX/bin/nm
-    ln -s $($CC -print-prog-name=ar) $BUILD_PREFIX/bin/ar
-    ln -s $($CC -print-prog-name=objcopy) $BUILD_PREFIX/bin/objcopy
-  fi
-
-  if [[ "$target_platform" == "linux-aarch64" ]]; then
-    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=6"
-    export JOBS=6
-    export CPU_COUNT=6
-  fi
-  if [[ "$target_platform" == "linux-ppc64le" ]]; then
-    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-jobs=8"
-    export JOBS=8
-    export CPU_COUNT=8
   fi
 
   function printerror {
@@ -167,6 +156,19 @@ function source_build
     exit 1
   }
 
+  _TOOLCHAIN_ARGS="BUILD_CC=${CC_FOR_BUILD} BUILD_CXX=${CXX_FOR_BUILD} BUILD_CPP=${CXX_FOR_BUILD//+/p}"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_NM=$BUILD_PREFIX/bin/$BUILD-nm"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_AR=$BUILD_PREFIX/bin/$BUILD-ar"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX} CPP=${CXX//+/p}"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$HOST-nm"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$HOST-ar"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$HOST-objcopy"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$HOST-strip"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$HOST-readelf"
+
   ./configure \
     --prefix=$PREFIX \
     --build=${BUILD} \
@@ -175,7 +177,7 @@ function source_build
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
-    --with-log=info \
+    --with-log=${JVM_BUILD_LOG_LEVEL} \
     --with-x=$PREFIX \
     --with-cups=$PREFIX \
     --with-freetype=system \
@@ -186,13 +188,15 @@ function source_build
     --with-libjpeg=system \
     --with-lcms=system \
     --with-stdc++lib=dynamic \
+    --with-harfbuzz=system \
     --disable-warnings-as-errors \
     --with-boot-jdk=$SRC_DIR/bootjdk \
     --disable-javac-server \
-    ${CONFIGURE_ARGS}
+    ${CONFIGURE_ARGS} \
+    $_TOOLCHAIN_ARGS
 
-  make JOBS=$CPU_COUNT || printerror
-  make JOBS=$CPU_COUNT images || printerror
+  make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS || printerror
+  make JOBS=$CPU_COUNT images $_TOOLCHAIN_ARGS || printerror
 }
 
 if [[ "$target_platform" == linux* ]]; then 
