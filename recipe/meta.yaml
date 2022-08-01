@@ -30,14 +30,14 @@ source:
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts  # [linux]
 
-  - url: https://github.com/openjdk/jdk{{ version.split(".")[0] }}u/archive/refs/tags/jdk-{{ version }}+{{ openjdk_revision}}.zip   # [linux]
+  - url: https://github.com/openjdk/jdk{{ version.split(".")[0] }}u/archive/refs/tags/jdk-{{ version }}+{{ openjdk_revision }}.zip   # [linux]
     sha256: b152184f707a0785f93baafbb9382aefdab94cf335b8d7a823160cb2a7a849a3  # [linux]
     folder: src        # [linux]
     patches:           # [linux]
       - fix-arm.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
