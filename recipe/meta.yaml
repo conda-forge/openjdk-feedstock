@@ -96,12 +96,15 @@ requirements:
 test:
   requires:
     - {{ compiler('c') }}  # [not win]
+    - r-base
+    - r-rjava
   files:
     - test-jni  # [not win]
     - test-jni.sh  # [not win]
     - test-nio
   commands:
     - java -version
+    - Rscript -e "library(rJava)"
     - ./test-jni.sh  # [not win and not ppc64le]
 
 about:
