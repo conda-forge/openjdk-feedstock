@@ -205,15 +205,26 @@ function source_build
   make JOBS=$CPU_COUNT images $_TOOLCHAIN_ARGS || printerror
 }
 
-if [[ "$target_platform" == linux* ]]; then 
+if [[ "$target_platform" == linux* ]]; then
   export INSTALL_DIR=$SRC_DIR/bootjdk/
   jdk_install
   source_build
   cd build/*/images/jdk
 fi
 
-export INSTALL_DIR=$PREFIX
+export INSTALL_DIR=$PREFIX/lib/jvm
 jdk_install
+
+# Symlink java binaries
+for i in $(find $INSTALL_DIR/bin -type f -printf '%P\n'); do
+    mkdir -p "$PREFIX/bin/$(dirname $i)"
+    ln -s -r -f "$INSTALL_DIR/bin/$i" "$PREFIX/bin/$i"
+done
+# Symlink man pages
+for i in $(find $INSTALL_DIR/man -type f -printf '%P\n'); do
+    mkdir -p "$PREFIX/man/$(dirname $i)"
+    ln -s -r -f "$INSTALL_DIR/man/$i" "$PREFIX/man/$i"
+done
 
 if [[ "$target_platform" == linux* ]]; then
   # This is not present on AdoptOpenJDK>=17 and appears to have been replaced with $INSTALL_DIR/libjli.so

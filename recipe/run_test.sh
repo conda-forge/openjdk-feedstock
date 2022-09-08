@@ -3,8 +3,8 @@ set -e
 if [ ${target_platform} == "linux-ppc64le" ]; then
   exit 0
 fi
-if [ "${JAVA_HOME}" != "${PREFIX}" ] && [ "${JAVA_HOME}" != "${PREFIX}/Library" ]; then
-  echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX} or ${PREFIX}/Library)"
+if [ "${JAVA_HOME}" != "${PREFIX}/lib/jvm" ] && [ "${JAVA_HOME}" != "${PREFIX}/Library/lib/jvm" ]; then
+    echo "ERROR: JAVA_HOME (${JAVA_HOME}) not equal to PREFIX (${PREFIX}/lib/jvm or ${PREFIX}/Library/lib/jvm)"
   exit 1
 fi
 
