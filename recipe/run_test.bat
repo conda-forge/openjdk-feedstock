@@ -1,4 +1,4 @@
-IF NOT "%JAVA_HOME%" == "%PREFIX%\Library" exit 1
+IF NOT "%JAVA_HOME%" == "%PREFIX%\Library\lib\jvm" exit 1
 
 %JAVA_HOME%/bin/java -version
 
