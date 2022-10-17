@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.6
+- 1.2.7
 c_compiler:
 - gcc
 c_compiler_version:
@@ -17,7 +17,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 fontconfig:
-- '2.13'
+- '2'
 freetype:
 - '2'
 giflib:
@@ -28,19 +28,6 @@ jpeg:
 - '9'
 libpng:
 - '1.6'
-pin_run_as_build:
-  fontconfig:
-    max_pin: x
-  freetype:
-    max_pin: x
-  harfbuzz:
-    max_pin: x
-  jpeg:
-    max_pin: x
-  libpng:
-    max_pin: x.x
-  zlib:
-    max_pin: x.x
 target_platform:
 - linux-64
 zip_keys:
