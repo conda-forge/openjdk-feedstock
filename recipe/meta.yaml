@@ -37,7 +37,7 @@ source:
     folder: src        # [linux]
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -98,6 +98,7 @@ requirements:
 test:
   requires:
     - {{ compiler('c') }}  # [not win]
+    - r-rjava
   files:
     - test-jni  # [not win]
     - test-jni.sh  # [not win]
@@ -105,6 +106,7 @@ test:
   commands:
     - java -version
     - ./test-jni.sh  # [not win and not ppc64le]
+    - Rscript -e "library(rJava)"
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
