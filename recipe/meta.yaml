@@ -37,7 +37,7 @@ source:
     folder: src        # [linux]
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   build:
