@@ -29,6 +29,10 @@ if not exist "%INSTALL_DIR%\legal\" mkdir %INSTALL_DIR%\legal\
 XCOPY legal\* %INSTALL_DIR%\legal\ /s /i /y
 if errorlevel 1 exit 1
 
+:: "Wannabe symlink" java binaries (Uses Bash just for convenient globbing.)
+bash -euc "build-symlink-exe.sh ${INSTALL_DIR//\\\\//}/bin/*.exe ${LIBRARY_BIN}"
+if errorlevel 1 exit 1
+
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
 FOR %%F IN (activate deactivate) DO (

@@ -1,3 +1,2 @@
 export JAVA_HOME_CONDA_BACKUP=${JAVA_HOME:-}
 export JAVA_HOME=$CONDA_PREFIX/Library/lib/jvm
-export PATH=$JAVA_HOME/bin:$PATH
