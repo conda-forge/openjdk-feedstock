@@ -1,27 +1,36 @@
 setlocal EnableDelayedExpansion
 
-XCOPY bin\* %LIBRARY_BIN% /s /i /y
+set INSTALL_DIR=%LIBRARY_PREFIX%\lib\jvm
+
+mkdir %INSTALL_DIR%\bin
+XCOPY bin\* %INSTALL_DIR%\bin\ /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY include\* %LIBRARY_INC% /s /i /y
+mkdir %INSTALL_DIR%\include
+XCOPY include\* %INSTALL_DIR%\include\ /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY lib\* %LIBRARY_LIB% /s /i /y
+mkdir %INSTALL_DIR%\lib
+XCOPY lib\* %INSTALL_DIR%\lib\ /s /i /y
 if errorlevel 1 exit 1
 
-XCOPY DISCLAIMER %LIBRARY_PREFIX% /s /i /y
+XCOPY DISCLAIMER %INSTALL_DIR% /s /i /y
 if errorlevel 1 exit 1
 
-if not exist "%LIBRARY_PREFIX%\conf\" mkdir %LIBRARY_PREFIX%\conf\
-XCOPY conf\* %LIBRARY_PREFIX%\conf\ /s /i /y
+if not exist "%INSTALL_DIR%\conf\" mkdir %INSTALL_DIR%\conf\
+XCOPY conf\* %INSTALL_DIR%\conf\ /s /i /y
 if errorlevel 1 exit 1
 
-if not exist "%LIBRARY_PREFIX%\jmods\" mkdir %LIBRARY_PREFIX%\jmods\
-XCOPY jmods\* %LIBRARY_PREFIX%\jmods\ /s /i /y
+if not exist "%INSTALL_DIR%\jmods\" mkdir %INSTALL_DIR%\jmods\
+XCOPY jmods\* %INSTALL_DIR%\jmods\ /s /i /y
 if errorlevel 1 exit 1
 
-if not exist "%LIBRARY_PREFIX%\legal\" mkdir %LIBRARY_PREFIX%\legal\
-XCOPY legal\* %LIBRARY_PREFIX%\legal\ /s /i /y
+if not exist "%INSTALL_DIR%\legal\" mkdir %INSTALL_DIR%\legal\
+XCOPY legal\* %INSTALL_DIR%\legal\ /s /i /y
+if errorlevel 1 exit 1
+
+:: "Wannabe symlink" java binaries (Uses Bash just for convenient globbing.)
+bash -euc "build-symlink-exe.sh ${INSTALL_DIR//\\\\//}/bin/*.exe ${LIBRARY_BIN}"
 if errorlevel 1 exit 1
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.

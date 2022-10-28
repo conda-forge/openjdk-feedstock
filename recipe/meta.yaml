@@ -37,7 +37,7 @@ source:
       - fix-arm.patch  # [linux]
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -65,6 +65,8 @@ requirements:
     - xorg-libxrandr    # [linux and (build_platform != target_platform)]
     - xorg-libxi        # [linux and (build_platform != target_platform)]
     - lcms2             # [linux and (build_platform != target_platform)]
+    - symlink-exe-build  # [win]
+    - m2-bash            # [win]
   host:
     - zlib              # [linux or osx]
     - freetype          # [linux]
@@ -102,6 +104,8 @@ test:
     - test-nio
   commands:
     - java -version
+    - '${JAVA_HOME}/bin/java -version'  # [not win]
+    - '%JAVA_HOME%\bin\java -version'   # [win]
     - ./test-jni.sh  # [not win and not ppc64le]
 
 about:
