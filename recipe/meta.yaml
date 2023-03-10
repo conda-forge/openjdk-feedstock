@@ -37,7 +37,7 @@ source:
     folder: src        # [linux]
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
@@ -54,7 +54,7 @@ requirements:
     - libpng            # [linux and (build_platform != target_platform)]
     - giflib            # [linux and (build_platform != target_platform)]
     - harfbuzz          # [linux and (build_platform != target_platform)]
-    - jpeg              # [linux and (build_platform != target_platform)]
+    - libjpeg-turbo     # [linux and (build_platform != target_platform)]
     - libcups           # [linux and (build_platform != target_platform)]
     - alsa-lib          # [linux and (build_platform != target_platform)]
     - fontconfig        # [linux and (build_platform != target_platform)]
@@ -75,7 +75,7 @@ requirements:
     - libpng            # [linux]
     - giflib            # [linux]
     - harfbuzz          # [linux]
-    - jpeg              # [linux]
+    - libjpeg-turbo     # [linux]
     - libcups           # [linux]
     - alsa-lib          # [linux]
     - fontconfig        # [linux]

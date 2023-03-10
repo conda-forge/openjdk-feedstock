@@ -1,13 +1,26 @@
+About openjdk-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openjdk-feedstock/blob/main/LICENSE.txt)
+
 About openjdk
-=============
+-------------
 
 Home: https://openjdk.java.net
 
 Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openjdk-feedstock/blob/main/LICENSE.txt)
-
 Summary: An open-source implementation of the JDK
+About openjdk
+-------------
+
+Home: https://www.azul.com/products/zulu/
+
+Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
+
+Summary: The Zulu OpenJDK build.
+
+Zulu OpenJDK is an open source build of the Java JDK.
 
 Current build status
 ====================
