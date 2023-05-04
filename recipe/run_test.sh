@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -x
 if [ ${target_platform} == "linux-ppc64le" ]; then
   exit 0
 fi
@@ -13,3 +13,6 @@ pushd test-nio
   jar cfm TestFilePaths.jar manifest.mf TestFilePaths.class
   java -jar TestFilePaths.jar TestFilePaths.java
 popd
+
+ls test-nio/
+cat test-nio/hs_err_pid*.log
