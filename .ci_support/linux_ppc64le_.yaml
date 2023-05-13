@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.7
+- 1.2.8
 c_compiler:
 - gcc
 c_compiler_version:
@@ -23,9 +23,9 @@ freetype:
 giflib:
 - '5.2'
 harfbuzz:
-- '5'
-jpeg:
-- '9'
+- '7'
+libjpeg_turbo:
+- 2.1.5
 libpng:
 - '1.6'
 target_platform:
