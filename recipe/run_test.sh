@@ -9,7 +9,7 @@ if [ "${JAVA_HOME}" != "${PREFIX}/lib/jvm" ] && [ "${JAVA_HOME}" != "${PREFIX}/L
 fi
 
 pushd test-nio
-  javac -verbose TestFilePaths.java || cat *.log
+  javac TestFilePaths.java
   jar cfm TestFilePaths.jar manifest.mf TestFilePaths.class
   java -jar TestFilePaths.jar TestFilePaths.java
 popd
