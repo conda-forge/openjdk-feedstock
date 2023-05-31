@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -ex
 if [ ${target_platform} == "linux-ppc64le" ]; then
   exit 0
 fi
