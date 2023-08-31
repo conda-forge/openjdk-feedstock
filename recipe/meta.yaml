@@ -42,6 +42,7 @@ build:
 requirements:
   build:
     # We also need a compiler on osx to produce correct signatures
+    - gnuconfig  # [unix]
     - {{ compiler('cxx') }}   # [not win]
     - pkg-config        # [linux]
     - autoconf          # [linux]
