@@ -1,6 +1,7 @@
 bot:
-  abi_migrtation_branches:
+  abi_migration_branches:
   - java11
+  - java17
 build_platform:
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
