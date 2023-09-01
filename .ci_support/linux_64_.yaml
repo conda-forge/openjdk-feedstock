@@ -23,7 +23,7 @@ freetype:
 giflib:
 - '5.2'
 harfbuzz:
-- '7'
+- '8'
 libjpeg_turbo:
 - 2.1.5
 libpng:
