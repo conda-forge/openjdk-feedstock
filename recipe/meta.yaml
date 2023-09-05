@@ -1,11 +1,10 @@
-{% set name = "openjdk" %}
 {% set version = "20.0.0" %}
 {% set zulu_build = "20.28.85-ca" %}
 {% set zulu_build_arm64 = "20.28.85-ca" %}
 {% set openjdk_revision = "36" %}
 
 package:
-  name: {{ name|lower }}
+  name: openjdk
   version: {{ version }}
 
 
