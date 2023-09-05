@@ -9,15 +9,14 @@ package:
 
 
 source:
-
-  - url: https://github.com/adoptium/temurin{{ version.split(".")[0] }}-binaries/releases/download/jdk-{{ version.split(".")[0] }}+{{ openjdk_revision }}/OpenJDK{{ version.split(".")[0] }}U-jdk_ppc64le_linux_hotspot_{{ version.split(".")[0] }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
-    sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
+  - url: https://github.com/adoptium/temurin{{ version.split(".")[0] }}-binaries/releases/download/jdk-{{ version.split(".")[0] }}+{{ openjdk_revision }}/OpenJDK{{ version.split(".")[0] }}U-jdk_x64_linux_hotspot_{{ version.split(".")[0] }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
+    sha256: fb6000faf47fffcda8caf01f60097d582728a6fffb6c1b85c8075c674f0c9281  # [build_platform == "linux-64"]
 
   - url: https://github.com/adoptium/temurin{{ version.split(".")[0] }}-binaries/releases/download/jdk-{{ version.split(".")[0] }}+{{ openjdk_revision }}/OpenJDK{{ version.split(".")[0] }}U-jdk_aarch64_linux_hotspot_{{ version.split(".")[0] }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
 
-  - url: https://github.com/adoptium/temurin{{ version.split(".")[0] }}-binaries/releases/download/jdk-{{ version.split(".")[0] }}+{{ openjdk_revision }}/OpenJDK{{ version.split(".")[0] }}U-jdk_x64_linux_hotspot_{{ version.split(".")[0] }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
-    sha256: fb6000faf47fffcda8caf01f60097d582728a6fffb6c1b85c8075c674f0c9281  # [build_platform == "linux-64"]
+  - url: https://github.com/adoptium/temurin{{ version.split(".")[0] }}-binaries/releases/download/jdk-{{ version.split(".")[0] }}+{{ openjdk_revision }}/OpenJDK{{ version.split(".")[0] }}U-jdk_ppc64le_linux_hotspot_{{ version.split(".")[0] }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
+    sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
     sha256: f065f3eb951d15f26856ad8a9c1bb41dfffa9720cf731e13d9a82308ec162fa8  # [osx and x86_64]
