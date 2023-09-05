@@ -9,14 +9,14 @@ package:
 
 
 source:
-  - url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK17U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
-    sha256: a04587018c9719dca21073f19d56b335c4985f41afe7d99b24852c1a94b917e5  # [build_platform == "linux-ppc64le"]
+  - url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK17U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
+    sha256: 81f5bed21077f9fbb04909b50391620c78b9a3c376593c0992934719c0de6b73  # [build_platform == "linux-64"]
 
   - url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK17U-jdk_aarch64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-aarch64"]
     sha256: 2e3c19c1707205c6b90cc04b416e8d83078ed98417d5a69dce3cf7dc0d7cfbca  # [build_platform == "linux-aarch64"]
 
-  - url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK17U-jdk_x64_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-64"]
-    sha256: 81f5bed21077f9fbb04909b50391620c78b9a3c376593c0992934719c0de6b73  # [build_platform == "linux-64"]
+  - url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-{{ version }}+{{ openjdk_revision }}/OpenJDK17U-jdk_ppc64le_linux_hotspot_{{ version }}_{{ openjdk_revision }}.tar.gz   # [build_platform == "linux-ppc64le"]
+    sha256: a04587018c9719dca21073f19d56b335c4985f41afe7d99b24852c1a94b917e5  # [build_platform == "linux-ppc64le"]
 
   - url: https://cdn.azul.com/zulu/bin/zulu{{ zulu_build }}-jdk{{ version }}-macosx_x64.zip  # [osx and x86_64]
     sha256: bcb6d5be984ce3ea7ff60d1ea49a264c622512d96671bb3a94893fca5048aab2  # [osx and x86_64]
