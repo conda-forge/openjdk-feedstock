@@ -46,8 +46,8 @@ build:
 
 requirements:
   build:
-    # We also need a compiler on osx to produce correct signatures
-    - {{ compiler('cxx') }}   # [not win]
+    # for strong run-exports
+    - {{ compiler("cxx") }}
     - pkg-config        # [linux]
     - autoconf          # [linux]
     - unzip             # [linux]
@@ -90,7 +90,6 @@ requirements:
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
     - lcms2             # [linux]
-    - vs2015_runtime    # [win]
   run:
     - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
@@ -98,7 +97,6 @@ requirements:
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
     - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
-    - vs2015_runtime    # [win]
 
 test:
   requires:
