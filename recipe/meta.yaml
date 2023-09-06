@@ -43,6 +43,10 @@ source:
 
 build:
   number: 0
+  ignore_run_exports:
+    # the produced artefacts still need libc++.*.dylib on osx,
+    # but the one in the platform sdk is enough; avoid extra run-export
+    - libcxx  # [osx]
 
 requirements:
   build:
