@@ -1,17 +1,19 @@
-#!/bin/bash -exuo
+#!/bin/bash
+
+set -exuo pipefail
 
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
 if [[ "${target_platform}" == "osx-64" ]]; then
   for b in `ls bin`; do
-    codesign --remove-signature bin/$b
+    /usr/bin/codesign --remove-signature bin/$b
   done
   for b in `ls jre/bin`; do
-    codesign --remove-signature jre/bin/$b
+    /usr/bin/codesign --remove-signature jre/bin/$b
   done
   for b in `ls jre/lib/*.dylib jre/lib/*.dylib.* jre/lib/**/*.dylib`; do
-    codesign --remove-signature $b
+    /usr/bin/codesign --remove-signature $b
   done
-  codesign --remove-signature jre/lib/jspawnhelper
+  /usr/bin/codesign --remove-signature jre/lib/jspawnhelper
 fi
 
 chmod +x bin/*
