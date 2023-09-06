@@ -45,12 +45,16 @@ source:
     sha256: d1c402dc62961f712fa3d5ea1657de1fe1c409ca52f5d422d4bd0f51ce18064b  # [win64]
 
 build:
-  number: 0
+  number: 1
+  ignore_run_exports:
+    # the produced artefacts still need libc++.*.dylib on osx,
+    # but the one in the platform sdk is enough; avoid extra run-export
+    - libcxx  # [osx]
 
 requirements:
   build:
-    # We also need a compiler on osx to produce correct signatures
-    - {{ compiler('cxx') }}   # [not win]
+    # for strong run-exports
+    - {{ compiler("cxx") }}
     - pkg-config        # [linux]
     - autoconf          # [linux]
     - unzip             # [linux]
@@ -95,7 +99,6 @@ requirements:
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
     - lcms2             # [linux]
-    - vs2015_runtime    # [win]
   run:
     - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
@@ -103,20 +106,19 @@ requirements:
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
     - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
-    - vs2015_runtime    # [win]
 
 test:
   requires:
-    - {{ compiler('c') }}  # [not win]
+    - {{ compiler("cxx") }}  # [unix]
   files:
-    - test-jni  # [not win]
-    - test-jni.sh  # [not win]
-    - test-nio
+    - test-jni.sh
+    - test-jni/
+    - test-nio/
   commands:
     - java -version
-    - '${JAVA_HOME}/bin/java -version'  # [not win]
+    - '$JAVA_HOME/bin/java -version'    # [unix]
     - '%JAVA_HOME%\bin\java -version'   # [win]
-    - ./test-jni.sh  # [not win and not ppc64le]
+    - ./test-jni.sh                     # [unix]
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
@@ -126,7 +128,7 @@ about:
   license_file:
     - LICENSE
     - fonts/LICENSE   # [linux]
-  summary: The Zulu OpenJDK build.           # [not linux]
+  summary: The Zulu OpenJDK build.                    # [not linux]
   summary: An open-source implementation of the JDK   # [linux]
   description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
 
