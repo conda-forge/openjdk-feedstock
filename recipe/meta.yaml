@@ -45,7 +45,7 @@ source:
     sha256: 35d386fdcbd66c9539342216bd5ef99df6ccf82bcd92ab13cbe73b6a203958f5  # [win64]
 
 build:
-  number: 0
+  number: 1
   # no ppc builds for newer jdk20; should be back for jdk21
   skip: true  # [ppc64le]
 
