@@ -42,7 +42,7 @@ source:
     sha256: 43408193ce2fa0862819495b5ae8541085b95660153f2adcf91a52d3a1710e83  # [win64]
 
 build:
-  number: 1
+  number: 2
   ignore_run_exports:
     # the produced artefacts still need libc++.*.dylib on osx,
     # but the one in the platform sdk is enough; avoid extra run-export
