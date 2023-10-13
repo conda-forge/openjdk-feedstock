@@ -46,8 +46,6 @@ source:
 
 build:
   number: 0
-  # no ppc builds for newer jdk20; should be back for jdk21
-  skip: true  # [ppc64le]
 
 requirements:
   build:
