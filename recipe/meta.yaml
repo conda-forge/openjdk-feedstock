@@ -1,9 +1,9 @@
-{% set version = "21.0.0" %}
-{% set openjdk_revision = "35" %}
-{% set zulu_build = "21.28.85-ca" %}
+{% set version = "21.0.1" %}
+{% set openjdk_revision = "12" %}
+{% set zulu_build = "21.30.15-ca" %}
 
 {% set major = version.split(".")[0] %}
-{% set jdk_full = major ~ "+" ~ openjdk_revision %}
+{% set jdk_full = version ~ "+" ~ openjdk_revision %}
 
 {% set temurin_url = "https://github.com/adoptium/temurin" ~ major ~ "-binaries/releases/download" %}
 {% set temurin_base =  "jdk-" ~ jdk_full ~ "/OpenJDK" ~ major ~ "U-jdk" %}
@@ -18,10 +18,10 @@ package:
 
 
 source:
-  # example of full url for version=21.0.0 & openjdk_revision=35:
-  # https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21+35/OpenJDK21U-jdk_x64_linux_hotspot_21_35.tar.gz
+  # example of full url for version=17.0.8 & openjdk_revision=7:
+  # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: 82f64c53acaa045370d6762ebd7441b74e6fda14b464d54d1ff8ca941ec069e6  # [build_platform == "linux-64"]
+    sha256: 1a6fa8abda4c5caed915cfbeeb176e7fbd12eb6b222f26e290ee45808b529aa1  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
@@ -29,7 +29,7 @@ source:
     sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: b798ebc2e899a98edf2be99e786bb0fbad144e2270925dffe624fbe052f07ade  # [linux]
+    sha256: 9943e3814d3c1a31f1449f09a8b67df54841944f855a1d372be892c5e6b19217  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
@@ -38,11 +38,11 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: db3514d9f93f6d07311980fc871c32934fd1c2ca822abd373644d086d4f237f6  # [osx and x86_64]
+    sha256: cd8495f68bc0c2021e96490eaec4bcd98baf7fa48525ea913dbadc9d1396d28a  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: eb7345e41ab7b699fbe94c95a45dbd65f518be6a0a8bc9db1ee5704d8f4eee37  # [osx and arm64]
+    sha256: 6134db6b9dea71ae3defdbef602328295096bb9b7979423b6ef283c4c6abfa61  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: e9959d500a0d9a7694ac243baf657761479da132f0f94720cbffd092150bd802  # [win64]
+    sha256: f6541ceed2eb0b793fd27f22d9f8192ad1c9c4c53e528dd0a1e6ec8d7c3a33d3  # [win64]
 
 build:
   number: 0
