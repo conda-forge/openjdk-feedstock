@@ -17,6 +17,8 @@ package:
   version: {{ version }}
 
 source:
+  # example of full url for version=11.0.21 & openjdk_revision=9:
+  # https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.21+9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.21_9.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
     sha256: 60ea98daa09834fdd3162ca91ddc8d92a155ab3121204f6f643176ee0c2d0d5e  # [build_platform == "linux-64"]
   # native compilation: currently unused
@@ -34,6 +36,8 @@ source:
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts                                                             # [linux]
 
+  # example of full url for zulu_build=11.68.17-ca & version=11.0.21:
+  # https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
     sha256: b61ddc8b3661620b413445a82c083172f4e3eec1af4437ceddca783998daf4b7  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
