@@ -45,7 +45,7 @@ source:
     sha256: f7cc15ca17295e69c907402dfe8db240db446e75d3b150da7bf67243cded93de  # [win64]
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -117,6 +117,8 @@ test:
     - '${JAVA_HOME}/bin/java -version'  # [not win]
     - '%JAVA_HOME%\bin\java -version'   # [win]
     - ./test-jni.sh  # [not win and not ppc64le]
+    - test -f ${JAVA_HOME}/release              # [not win]
+    - if not exist %JAVA_HOME%\\release exit 1  # [win]
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
