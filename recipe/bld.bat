@@ -14,6 +14,9 @@ mkdir %INSTALL_DIR%\lib
 XCOPY lib\* %INSTALL_DIR%\lib\ /s /i /y
 if errorlevel 1 exit 1
 
+XCOPY release %INSTALL_DIR% /s /i /y
+if errorlevel 1 exit 1
+
 XCOPY DISCLAIMER %INSTALL_DIR% /s /i /y
 if errorlevel 1 exit 1
 

@@ -37,8 +37,11 @@ function jdk_install
   mv lib/* $INSTALL_DIR/lib
 
   if [ -f "DISCLAIMER" ]; then
-    mv DISCLAIMER $INSTALL_DIR/DISCLAIMER
+    # use cp to copy file and not link
+    cp DISCLAIMER $INSTALL_DIR/DISCLAIMER
   fi
+
+  cp release $INSTALL_DIR/release
 
   mkdir -p $INSTALL_DIR/conf
   mv conf/* $INSTALL_DIR/conf
