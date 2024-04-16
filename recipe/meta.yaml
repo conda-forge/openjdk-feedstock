@@ -45,7 +45,7 @@ source:
     sha256: 169bcb1c519a1cf18e3589bcbaea036eb8114311425660e6c919376227855be3  # [win64]
 
 build:
-  number: 0
+  number: 1
   ignore_run_exports:
     # the produced artefacts still need libc++.*.dylib on osx,
     # but the one in the platform sdk is enough; avoid extra run-export
@@ -119,6 +119,8 @@ test:
     - '$JAVA_HOME/bin/java -version'    # [unix]
     - '%JAVA_HOME%\bin\java -version'   # [win]
     - ./test-jni.sh                     # [unix]
+    - test -f ${JAVA_HOME}/release              # [not win]
+    - if not exist %JAVA_HOME%\\release exit 1  # [win]
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
