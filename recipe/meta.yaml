@@ -119,6 +119,8 @@ test:
     - '$JAVA_HOME/bin/java -version'    # [unix]
     - '%JAVA_HOME%\bin\java -version'   # [win]
     - ./test-jni.sh                     # [unix]
+    - test -f ${JAVA_HOME}/release              # [not win]
+    - if not exist %JAVA_HOME%\\release exit 1  # [win]
 
 about:
   home: https://www.azul.com/products/zulu/  # [not linux]
