@@ -51,6 +51,7 @@ requirements:
   build:
     # We also need a compiler on osx to produce correct signatures
     - {{ compiler('cxx') }}   # [not win]
+    - {{ stdlib('c') }}       # [linux]
     - pkg-config        # [linux]
     - autoconf          # [linux]
     - unzip             # [linux]
