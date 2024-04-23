@@ -1,6 +1,6 @@
-{% set version = "17.0.10" %}
-{% set openjdk_revision = "7" %}
-{% set zulu_build = "17.48.15-ca" %}
+{% set version = "17.0.11" %}
+{% set openjdk_revision = "9" %}
+{% set zulu_build = "17.50.19-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -21,7 +21,7 @@ source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: a8fd07e1e97352e97e330beb20f1c6b351ba064ca7878e974c7d68b8a5c1b378  # [build_platform == "linux-64"]
+    sha256: aa7fb6bb342319d227a838af5c363bfa1b4a670c209372f9e6585bd79da6220c  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 2e3c19c1707205c6b90cc04b416e8d83078ed98417d5a69dce3cf7dc0d7cfbca  # [build_platform == "linux-aarch64"]
@@ -29,7 +29,7 @@ source:
     sha256: a04587018c9719dca21073f19d56b335c4985f41afe7d99b24852c1a94b917e5  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: a310a8666d2d7770a7b29fe4750c275b9b33a07bfcc925348040a8bca745c874  # [linux]
+    sha256: 84e2e143dcab2160dcde3fe6d6b12d7d030533a5bce1aec0ac20d09c023deae0  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
@@ -38,14 +38,14 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: fb58ac32e6e75082fa2ec9d047d3bfba91de4fd6437947210c37f13c65f8bc18  # [osx and x86_64]
+    sha256: 3f653ad00a29b3ae2abebcfc598225f674d3289e52497b310441f3fb5d785f8a  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: 505708df0a57522571ef0f0972a4ab959e3d38d1847e7e25bcd8f46d70a573ed  # [osx and arm64]
+    sha256: 5aec103fc90131dc34cb1be6290dd61c426a74f1bf7e8b4895049cd27fee70a8  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: 169bcb1c519a1cf18e3589bcbaea036eb8114311425660e6c919376227855be3  # [win64]
+    sha256: 43f0f1bdecf48ba9763d46ee7784554c95b442ffdd39ebd62dc8b297cc82e116  # [win64]
 
 build:
-  number: 1
+  number: 0
   ignore_run_exports:
     # the produced artefacts still need libc++.*.dylib on osx,
     # but the one in the platform sdk is enough; avoid extra run-export
@@ -53,8 +53,9 @@ build:
 
 requirements:
   build:
-    # for strong run-exports
-    - {{ compiler("cxx") }}
+    # We also need a compiler on osx to produce correct signatures
+    - {{ compiler('cxx') }}   # [not win]
+    - {{ stdlib('c') }}       # [linux]
     - pkg-config        # [linux]
     - autoconf          # [linux]
     - unzip             # [linux]
