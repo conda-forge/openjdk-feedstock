@@ -1,6 +1,6 @@
-{% set version = "21.0.3" %}
-{% set openjdk_revision = "9" %}
-{% set zulu_build = "21.34.19-ca" %}
+{% set version = "22.0.1" %}
+{% set openjdk_revision = "8" %}
+{% set zulu_build = "22.30.13-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -21,7 +21,7 @@ source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: fffa52c22d797b715a962e6c8d11ec7d79b90dd819b5bc51d62137ea4b22a340  # [build_platform == "linux-64"]
+    sha256: e59c6bf801cc023a1ea78eceb5e6756277f1564cd0a421ea984efe6cb96cfcf8  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
@@ -29,7 +29,7 @@ source:
     sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: b7a78e596b272d958843eab0c0412fd7ee874a3b6fff577584ebeed39dfef7ee  # [linux]
+    sha256: 0cfb7f2799384df43a9832df638f31c9be33a4a8650f8478f35272ee70dd7173  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
@@ -38,11 +38,11 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: f63ce937aac830e5fe4575cac4ffa4311d11b0bd30dbce0b59fa6b914211025d  # [osx and x86_64]
+    sha256: 72875bfcee08ebe61fca9d80de4bba9ae138cee3f3584074a6d5149c79cd26e7  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: 2736a79f441ed63890414a661d82eec7abd653c57fd4e0f36d1dd4c6bb351b0f  # [osx and arm64]
+    sha256: ae8d4863565bba47a30fccbe7e5a4de153db114f16c4eb60524394c5dd190359  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: fb9f0dc6a484b0b169b3b3a3c2425d5f62bebfd15cb06c1597e33f77959c72af  # [win64]
+    sha256: cf112b96b665eb34107590c83af83e56735caa677e2a96d1991419aa26b5d511  # [win64]
 
 build:
   number: 0
