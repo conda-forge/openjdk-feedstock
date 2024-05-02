@@ -2,7 +2,6 @@
 {% set zulu_build = "8.78.0.19-ca" %}
 
 {% set zulu_url = "https://cdn.azul.com/zulu/bin" %}
-{% set zulu_url = "https://cdn.azul.com/zulu-embedded/bin" %}  # [aarch64]
 {% set zulu_base = "zulu" ~ zulu_build ~ "-jdk" ~ version %}
 
 package:
