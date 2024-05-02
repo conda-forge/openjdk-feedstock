@@ -27,6 +27,11 @@ source:
 build:
   number: 0
 
+requirements:
+  build:
+    # We need a compiler on osx to produce correct signatures
+    - {{ compiler('c') }}   # [osx]
+
 test:
   requires:
     - {{ compiler('c') }}  # [not win]
