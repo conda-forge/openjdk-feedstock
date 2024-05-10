@@ -25,6 +25,7 @@ source:
     folder: fonts                                                             # [linux]
 
 build:
+  skip: true  # [osx and x86_64]
   number: 0
 
 requirements:
