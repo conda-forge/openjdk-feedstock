@@ -1,8 +1,7 @@
-{% set version = "8.0.382" %}
-{% set zulu_build = "8.72.0.17-ca" %}
+{% set version = "8.0.412" %}
+{% set zulu_build = "8.78.0.19-ca" %}
 
 {% set zulu_url = "https://cdn.azul.com/zulu/bin" %}
-{% set zulu_url = "https://cdn.azul.com/zulu-embedded/bin" %}  # [aarch64]
 {% set zulu_base = "zulu" ~ zulu_build ~ "-jdk" ~ version %}
 
 package:
@@ -11,22 +10,33 @@ package:
 
 source:
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_x64.tar.gz                      # [linux64]
-    sha256: 7b15a56f2ae005beda0f875a269b3daad14ffa12969306cc745478385b25ba96  # [linux64]
+    sha256: 9c0ac5ebffa61520fee78ead52add0f4edd3b1b54b01b6a17429b719515caf90  # [linux64]
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_aarch64.tar.gz                  # [aarch64]
-    sha256: bde61dd92b47baf9c9a15461c365765ae825b5e6e37602014c457b5be6f7b428  # [aarch64]
+    sha256: 82c46c65d57e187ef68fdd125ef760eaeb52ebfe1be1a6a251cf5b43cbebc78a  # [aarch64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: 25bfd1f71562695eda921231fbb2b957d84969afcb814efb299fda85f9d3af51  # [osx and x86_64]
+    sha256: b1b51f5202159f312d64837dac0c8d2b90db046b5eb85e38460b009cec11e9a6  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: e6467f790854fb2fd2642b52ad61af5e6660c58dcd585e2f179146267fd06b13  # [osx and arm64]
+    sha256: fc5a06029cee288562297826a8a8c860768d757f47200d2b079c913512dee554  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: a0831e1e658554cce310b12566a7afacddce3d4d8708a2d97181d8151106f088  # [win64]
+    sha256: ca5499c301d5b42604d8535b8c40a7f928a796247b8c66a600333dd799798ff7  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts                                                             # [linux]
 
 build:
+  # problem with repackaging on osx:
+  # ```
+  # install_name_tool: fatal error: file not in an order that can be processed...
+  # ... (link edit information does not fill the __LINKEDIT segment)
+  # ```
+  skip: true  # [osx and x86_64]
   number: 0
+
+requirements:
+  build:
+    # We need a compiler on osx to produce correct signatures
+    - {{ compiler('c') }}   # [osx]
 
 test:
   requires:
