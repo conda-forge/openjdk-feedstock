@@ -25,6 +25,11 @@ source:
     folder: fonts                                                             # [linux]
 
 build:
+  # problem with repackaging on osx:
+  # ```
+  # install_name_tool: fatal error: file not in an order that can be processed...
+  # ... (link edit information does not fill the __LINKEDIT segment)
+  # ```
   skip: true  # [osx and x86_64]
   number: 0
 
