@@ -23,7 +23,7 @@ freetype:
 giflib:
 - '5.2'
 harfbuzz:
-- '8'
+- '9'
 lcms2:
 - '2'
 libjpeg_turbo:
@@ -36,4 +36,4 @@ zip_keys:
 - - c_stdlib_version
   - cdt_name
 zlib:
-- '1.2'
+- '1'
