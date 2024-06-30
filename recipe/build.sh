@@ -9,7 +9,9 @@ echo "--------------------------------------------------"
 
 function jdk_install
 {
-  ls -llR .
+  if [[ "${target_platform}" == osx* ]]; then
+    cd ./Contents/Home
+  fi
   chmod +x bin/*
   mkdir -p $INSTALL_DIR/bin
   mv bin/* $INSTALL_DIR/bin/
