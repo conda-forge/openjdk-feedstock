@@ -9,6 +9,9 @@ echo "--------------------------------------------------"
 
 function jdk_install
 {
+  if [[ "${target_platform}" == osx* ]]; then
+    cd ./Contents/Home
+  fi
   chmod +x bin/*
   mkdir -p $INSTALL_DIR/bin
   mv bin/* $INSTALL_DIR/bin/
@@ -47,6 +50,10 @@ function jdk_install
   set +e
   mv -f man/* $INSTALL_DIR/man
   set -e
+
+  if [[ "${target_platform}" == osx* ]]; then
+    cd ../..
+  fi
 }
 
 function source_build
