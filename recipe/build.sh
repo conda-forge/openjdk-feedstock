@@ -9,6 +9,7 @@ echo "--------------------------------------------------"
 
 function jdk_install
 {
+  ls -llR .
   chmod +x bin/*
   mkdir -p $INSTALL_DIR/bin
   mv bin/* $INSTALL_DIR/bin/
