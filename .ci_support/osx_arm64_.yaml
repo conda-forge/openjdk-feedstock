@@ -1,5 +1,9 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '11.0'
+MACOSX_SDK_VERSION:
+- '11.0'
+alsa_lib:
+- '1.2'
 c_compiler:
 - clang
 c_compiler_version:
@@ -16,6 +20,20 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '16'
+fontconfig:
+- '2'
+freetype:
+- '2'
+giflib:
+- '5.2'
+harfbuzz:
+- '8'
+lcms2:
+- '2'
+libjpeg_turbo:
+- '3'
+libpng:
+- '1.6'
 macos_machine:
 - arm64-apple-darwin20.0.0
 target_platform:
@@ -24,4 +42,4 @@ zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
 zlib:
-- '1.2'
+- '1'
