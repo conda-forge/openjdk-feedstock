@@ -39,6 +39,8 @@ source:
 
 build:
   number: 0
+  # debug
+  skip: true  # [not osx]
 
 requirements:
   build:
