@@ -39,6 +39,8 @@ source:
 
 build:
   number: 1
+  # debug
+  skip: true  # [not osx]
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
