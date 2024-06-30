@@ -50,6 +50,10 @@ function jdk_install
   set +e
   mv -f man/* $INSTALL_DIR/man
   set -e
+
+  if [[ "${target_platform}" == osx* ]]; then
+    cd ../..
+  fi
 }
 
 function source_build
