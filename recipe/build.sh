@@ -77,8 +77,12 @@ function source_build
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
+      if [[ "${target_platform}" == linux* ]]; then
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+      else
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-otool"
+      fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
       # CFLAGS, CXXFLAGS are intentionally empty
@@ -165,8 +169,12 @@ function source_build
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$HOST-nm"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$HOST-objcopy"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$HOST-objdump"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$HOST-readelf"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$HOST-strip"
+  if [[ "${target_platform}" == linux* ]]; then
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+  else
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-otool"
+  fi
 
   ./configure \
     --prefix=$PREFIX \
