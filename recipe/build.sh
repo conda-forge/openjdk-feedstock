@@ -179,7 +179,7 @@ function source_build
   else
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-otool"
     # see https://github.com/conda-forge/clang-compiler-activation-feedstock/pull/133
-    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=$CC-cpp"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=$PREFIX/bin/clang-cpp"
   fi
 
   ./configure \
