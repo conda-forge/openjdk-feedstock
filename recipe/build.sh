@@ -71,7 +71,7 @@ function source_build
 
       export CPATH=$BUILD_PREFIX/include
       export LIBRARY_PATH=$BUILD_PREFIX/lib
-      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD} CPP=${CXX_FOR_BUILD//+/p}"
+      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD}"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$BUILD-ar"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
@@ -80,8 +80,11 @@ function source_build
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
       if [[ "${target_platform}" == linux* ]]; then
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
       else
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-otool"
+        # see https://github.com/conda-forge/clang-compiler-activation-feedstock/pull/133
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=$BUILD_PREFIX/bin/clang-cpp"
       fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
@@ -163,7 +166,7 @@ function source_build
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX} CPP=${CXX//+/p}"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX}"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$HOST-ar"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CXXFILT=$BUILD_PREFIX/bin/$HOST-c++filt"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$HOST-nm"
@@ -172,8 +175,11 @@ function source_build
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$HOST-strip"
   if [[ "${target_platform}" == linux* ]]; then
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX//+/p}"
   else
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-otool"
+    # see https://github.com/conda-forge/clang-compiler-activation-feedstock/pull/133
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=$CC-cpp"
   fi
 
   ./configure \
