@@ -34,6 +34,7 @@ build:
 requirements:
   build:
     # We need a compiler on osx to produce correct signatures
+    - {{ stdlib('c') }}   # [osx]
     - {{ compiler('c') }}   # [osx]
 
 test:
