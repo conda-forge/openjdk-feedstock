@@ -99,11 +99,6 @@ requirements:
     - lcms2             # [unix]
     - vs2015_runtime    # [win]
   run:
-    - xorg-libx11       # [unix]
-    - xorg-libxext      # [unix]
-    - xorg-libxtst      # [unix]
-    - xorg-libxrender   # [unix]
-    - xorg-libxi        # [unix]
     - vs2015_runtime    # [win]
 
 test:
