@@ -62,12 +62,16 @@ function source_build
 
   chmod +x configure
 
-  rm $PREFIX/include/iconv.h
+  if [[ "$target_platform" == linux* ]]; then
+    rm $PREFIX/include/iconv.h
+  fi
 
 
   if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
     (
-      rm $BUILD_PREFIX/include/iconv.h
+      if [[ "$build_platform" == linux* ]]; then
+        rm $BUILD_PREFIX/include/iconv.h
+      fi
 
       export CPATH=$BUILD_PREFIX/include
       export LIBRARY_PATH=$BUILD_PREFIX/lib
