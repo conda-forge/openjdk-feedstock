@@ -25,17 +25,16 @@ source:
     folder: fonts                                                             # [linux]
 
 build:
-  # problem with repackaging on osx:
-  # ```
-  # install_name_tool: fatal error: file not in an order that can be processed...
-  # ... (link edit information does not fill the __LINKEDIT segment)
-  # ```
-  skip: true  # [osx and x86_64]
-  number: 0
+  number: 1
+  # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
+  # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
+  # the Mach-O header or build everything from source.
+  binary_relocation: false  # [osx]
 
 requirements:
   build:
     # We need a compiler on osx to produce correct signatures
+    - {{ stdlib('c') }}   # [osx]
     - {{ compiler('c') }}   # [osx]
 
 test:
