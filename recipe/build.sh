@@ -75,12 +75,15 @@ function source_build
         # gcc's preprocessor is called $TRIPLE-cpp, but has no separate `_FOR_BUILD`
         # environment variable; it's easily constructed from gxx's $TRIPLE-c++ though
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
+        CUPS_PATH=$BUILD_PREFIX
       else
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
         # clang has different naming for CC & CPP: $TRIPLE-clang{,-cpp}
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC_FOR_BUILD}-cpp"
+        # on osx, cups is in SDK
+        CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
       fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
@@ -103,7 +106,7 @@ function source_build
           --disable-warnings-as-errors \
           --enable-linkable-runtime \
           --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
-          --with-cups=${BUILD_PREFIX} \
+          --with-cups=${CUPS_PATH} \
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
@@ -142,6 +145,13 @@ function source_build
     echo "RUNNING CROSS COMPILE"
     echo "=================================="
 
+  fi
+
+  if [[ "${target_platform}" == linux* ]]; then
+    CUPS_PATH=$PREFIX
+  else
+    # on osx, cups is in SDK
+    CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
   fi
 
   function printerror {
@@ -198,7 +208,7 @@ function source_build
     --disable-javac-server \
     --disable-warnings-as-errors \
     --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
-    --with-cups=$PREFIX \
+    --with-cups=${CUPS_PATH} \
     --with-extra-cflags="$CFLAGS -I$PREFIX/harfbuzz" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
