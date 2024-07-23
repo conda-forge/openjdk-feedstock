@@ -83,12 +83,15 @@ function source_build
         # gcc's preprocessor is called $TRIPLE-cpp, but has no separate `_FOR_BUILD`
         # environment variable; it's easily constructed from gxx's $TRIPLE-c++ though
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
+        CUPS_PATH=$BUILD_PREFIX
       else
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
         # clang has different naming for CC & CPP: $TRIPLE-clang{,-cpp}
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC_FOR_BUILD}-cpp"
+        # on osx, cups is in SDK
+        CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
       fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
@@ -115,7 +118,7 @@ function source_build
           --with-stdc++lib=dynamic \
           --disable-warnings-as-errors \
           --with-x=${BUILD_PREFIX} \
-          --with-cups=${BUILD_PREFIX} \
+          --with-cups=${CUPS_PATH} \
           --with-freetype=system \
           --with-giflib=system \
           --with-libpng=system \
@@ -148,6 +151,13 @@ function source_build
     echo "RUNNING CROSS COMPILE"
     echo "=================================="
 
+  fi
+
+  if [[ "${target_platform}" == linux* ]]; then
+    CUPS_PATH=$BUILD_PREFIX
+  else
+    # on osx, cups is in SDK
+    CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
   fi
 
   function printerror {
@@ -206,7 +216,7 @@ function source_build
     --with-extra-ldflags="$LDFLAGS" \
     --with-log=${JVM_BUILD_LOG_LEVEL} \
     --with-x=$PREFIX \
-    --with-cups=$PREFIX \
+    --with-cups=${CUPS_PATH} \
     --with-freetype=system \
     --with-fontconfig=$PREFIX \
     --with-giflib=system \
