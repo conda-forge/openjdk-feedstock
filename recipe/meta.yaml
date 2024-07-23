@@ -97,9 +97,9 @@ requirements:
     - xorg-libxrandr    # [unix]
     - xorg-libxi        # [unix]
     - lcms2             # [unix]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
   run:
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
 
 test:
   requires:
