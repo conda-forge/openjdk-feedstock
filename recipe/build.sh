@@ -71,7 +71,7 @@ function source_build
 
       export CPATH=$BUILD_PREFIX/include
       export LIBRARY_PATH=$BUILD_PREFIX/lib
-      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD} CPP=${CXX_FOR_BUILD//+/p}"
+      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD}"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$BUILD-ar"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
@@ -80,10 +80,15 @@ function source_build
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+        # gcc's preprocessor is called $TRIPLE-cpp, but has no separate `_FOR_BUILD`
+        # environment variable; it's easily constructed from gxx's $TRIPLE-c++ though
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
       else
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
+        # clang has different naming for CC & CPP: $TRIPLE-clang{,-cpp}
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC_FOR_BUILD}-cpp"
       fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
@@ -157,11 +162,11 @@ function source_build
 
   # We purposefully do NOT include LD here as the openjdk build system resolves that internally from
   # --build, --host, and --target in conjunction with BUILD_CC and CC
-  _TOOLCHAIN_ARGS="BUILD_CC=${CC_FOR_BUILD} BUILD_CXX=${CXX_FOR_BUILD} BUILD_CPP=${CXX_FOR_BUILD//+/p}"
+  _TOOLCHAIN_ARGS="BUILD_CC=${CC_FOR_BUILD} BUILD_CXX=${CXX_FOR_BUILD}"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_AR=$BUILD_PREFIX/bin/$BUILD-ar"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_NM=$BUILD_PREFIX/bin/$BUILD-nm"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX} CPP=${CXX//+/p}"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX}"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$HOST-ar"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$HOST-nm"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$HOST-strip"
@@ -174,6 +179,9 @@ function source_build
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$HOST-objcopy"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$HOST-objdump"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$HOST-readelf"
+    # see comment further up
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CXX_FOR_BUILD//+/p}"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX//+/p}"
   else
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/llvm-cxxfilt"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
@@ -183,6 +191,9 @@ function source_build
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$HOST-install_name_tool"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$HOST-lipo"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$HOST-otool"
+    # see comment further up
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CC_FOR_BUILD}-cpp"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC}-cpp"
   fi
 
   ./configure \
