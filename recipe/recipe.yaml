@@ -128,14 +128,6 @@ outputs:
         - if: unix
           then:
             - zlib
-      run:
-        - if: linux
-          then:
-          - xorg-libx11
-          - xorg-libxext
-          - xorg-libxi
-          - xorg-libxrender
-          - xorg-libxtst
       ignore_run_exports:
         by_name:
           # the produced artefacts still need libc++.*.dylib on osx,
