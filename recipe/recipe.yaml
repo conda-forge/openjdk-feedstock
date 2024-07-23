@@ -97,7 +97,6 @@ outputs:
             - freetype
             - giflib
             - harfbuzz
-            - harfbuzz
             - lcms2
             - libjpeg-turbo
             - libpng
@@ -114,6 +113,9 @@ outputs:
           then:
             - alsa-lib
             - libcups
+        - if: osx
+          then:
+            - libiconv
     tests:
       - files:
           recipe:
