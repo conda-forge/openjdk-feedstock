@@ -75,15 +75,20 @@ function source_build
         # gcc's preprocessor is called $TRIPLE-cpp, but has no separate `_FOR_BUILD`
         # environment variable; it's easily constructed from gxx's $TRIPLE-c++ though
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
-        CUPS_PATH=$BUILD_PREFIX
+
+        CONFIGURE_ARGS="--with-cups=${BUILD_PREFIX}"
+        CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=system"
       else
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
         # clang has different naming for CC & CPP: $TRIPLE-clang{,-cpp}
         _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC_FOR_BUILD}-cpp"
+
         # on osx, cups is in SDK
-        CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
+        CONFIGURE_ARGS="--with-cups=${CONDA_BUILD_SYSROOT}/usr"
+        # system libs not supported for non-linux by openjdk
+        CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=bundled"
       fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
@@ -106,12 +111,10 @@ function source_build
           --disable-warnings-as-errors \
           --enable-linkable-runtime \
           --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
-          --with-cups=${CUPS_PATH} \
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-fontconfig=${BUILD_PREFIX} \
-          --with-freetype=system \
           --with-giflib=system \
           --with-harfbuzz=system \
           --with-lcms=system \
@@ -147,13 +150,6 @@ function source_build
 
   fi
 
-  if [[ "${target_platform}" == linux* ]]; then
-    CUPS_PATH=$PREFIX
-  else
-    # on osx, cups is in SDK
-    CUPS_PATH="$CONDA_BUILD_SYSROOT/usr"
-  fi
-
   function printerror {
     if [ -f $SRC_DIR/src/build/linux-aarch64-server-release/make-support/failure-logs ]; then
       cat $SRC_DIR/src/build/linux-aarch64-server-release/make-support/failure-logs
@@ -186,6 +182,9 @@ function source_build
     # see comment further up
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CXX_FOR_BUILD//+/p}"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX//+/p}"
+
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-cups=${PREFIX}"
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=system"
   else
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/llvm-cxxfilt"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
@@ -198,6 +197,11 @@ function source_build
     # see comment further up
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CC_FOR_BUILD}-cpp"
     _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC}-cpp"
+
+    # on osx, cups is in SDK
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-cups=${CONDA_BUILD_SYSROOT}/usr"
+    # system libs not supported for non-linux by openjdk
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=bundled"
   fi
 
   ./configure \
@@ -208,12 +212,10 @@ function source_build
     --disable-javac-server \
     --disable-warnings-as-errors \
     --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
-    --with-cups=${CUPS_PATH} \
     --with-extra-cflags="$CFLAGS -I$PREFIX/harfbuzz" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
     --with-fontconfig=$PREFIX \
-    --with-freetype=system \
     --with-giflib=system \
     --with-harfbuzz=system \
     --with-lcms=system \
