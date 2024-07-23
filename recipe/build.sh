@@ -9,9 +9,6 @@ echo "--------------------------------------------------"
 
 function jdk_install
 {
-  if [[ "${target_platform}" == osx* ]]; then
-    cd ./Contents/Home
-  fi
   chmod +x bin/*
   mkdir -p $INSTALL_DIR/bin
   mv bin/* $INSTALL_DIR/bin/
@@ -50,15 +47,11 @@ function jdk_install
   set +e
   mv -f man/* $INSTALL_DIR/man
   set -e
-
-  if [[ "${target_platform}" == osx* ]]; then
-    cd ../..
-  fi
 }
 
 function source_build
 {
-  cd src
+  cd $SRC_DIR/src
 
   chmod +x configure
 
@@ -244,11 +237,15 @@ function source_build
 }
 
 export INSTALL_DIR=$SRC_DIR/bootjdk/
+# jdk_install expects `./{bin,include,...}` to exist
+if [[ "${target_platform}" == osx* ]]; then
+  cd ./Contents/Home
+fi
 jdk_install
 source_build
-cd build/*/images/jdk
 
 export INSTALL_DIR=$PREFIX/lib/jvm
+cd $SRC_DIR/src/build/*/images/jdk
 jdk_install
 
 # Symlink java binaries
