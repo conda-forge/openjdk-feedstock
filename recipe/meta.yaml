@@ -52,6 +52,7 @@ requirements:
   build:
     - {{ compiler('cxx') }}   # [unix]
     - {{ stdlib('c') }}       # [unix]
+    - cctools_osx-64          # [osx and (build_platform != target_platform)]
     - pkg-config        # [unix]
     - autoconf          # [unix]
     - unzip             # [unix]
