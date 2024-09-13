@@ -1,6 +1,6 @@
-{% set version = "21.0.3" %}
-{% set openjdk_revision = "9" %}
-{% set zulu_build = "21.34.19-ca" %}
+{% set version = "21.0.4" %}
+{% set openjdk_revision = "7" %}
+{% set zulu_build = "21.36.17-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -21,7 +21,7 @@ source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: fffa52c22d797b715a962e6c8d11ec7d79b90dd819b5bc51d62137ea4b22a340  # [build_platform == "linux-64"]
+    sha256: 51fb4d03a4429c39d397d3a03a779077159317616550e4e71624c9843083e7b9  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
@@ -29,7 +29,7 @@ source:
     sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: b7a78e596b272d958843eab0c0412fd7ee874a3b6fff577584ebeed39dfef7ee  # [linux]
+    sha256: b8b37fa6fcc284d91e7458c703ca4c893a1dd5a6e0f6b9e198e7d13cd8efd24d  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
