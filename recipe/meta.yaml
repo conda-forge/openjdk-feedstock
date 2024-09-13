@@ -45,7 +45,7 @@ source:
     sha256: fb9f0dc6a484b0b169b3b3a3c2425d5f62bebfd15cb06c1597e33f77959c72af  # [win64]
 
 build:
-  number: 1
+  number: 0
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
