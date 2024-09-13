@@ -42,7 +42,7 @@ source:
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
     sha256: 95f8b4c5184e61dbb97e43700fc6f36078927db5a1668db6b52c4934c040e189  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: fb9f0dc6a484b0b169b3b3a3c2425d5f62bebfd15cb06c1597e33f77959c72af  # [win64]
+    sha256: d771dad10d3f0b440c3686d1f3d2b68b320802ac97b212d87671af3f2eef8848  # [win64]
 
 build:
   number: 0
