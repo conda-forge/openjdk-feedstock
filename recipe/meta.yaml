@@ -38,7 +38,7 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: f63ce937aac830e5fe4575cac4ffa4311d11b0bd30dbce0b59fa6b914211025d  # [osx and x86_64]
+    sha256: 3a9c0cf69403c2d10f45edfe125063a3c3a3c48c1fd79cbcba251abb87b84485  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
     sha256: 95f8b4c5184e61dbb97e43700fc6f36078927db5a1668db6b52c4934c040e189  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
