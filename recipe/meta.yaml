@@ -104,14 +104,14 @@ requirements:
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
     - lcms2             # [linux]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
   run:
     - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
     - xorg-libxtst      # [linux]
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
 
 test:
   requires:
