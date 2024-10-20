@@ -109,7 +109,6 @@ requirements:
     - xorg-libxtst      # [linux]
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
-    - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
 
 test:
   requires:
