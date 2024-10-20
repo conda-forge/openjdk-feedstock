@@ -64,7 +64,7 @@ requirements:
     - autoconf          # [linux]
     - unzip             # [linux]
     - zip               # [linux]
-    - make !=4.3.*      # [linux]
+    - make              # [linux]
     - zlib              # [linux and (build_platform != target_platform)]
     - freetype          # [linux and (build_platform != target_platform)]
     - harfbuzz          # [linux and (build_platform != target_platform)]
