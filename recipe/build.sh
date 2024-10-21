@@ -183,7 +183,7 @@ function source_build
     --build=${BUILD} \
     --host=${HOST} \
     --target=${HOST} \
-    --with-extra-cflags="$CFLAGS" \
+    --with-extra-cflags="$CFLAGS -I$PREFIX/harfbuzz" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
     --with-log=${JVM_BUILD_LOG_LEVEL} \
