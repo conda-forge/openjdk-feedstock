@@ -7,7 +7,7 @@
 
 {% set temurin_url = "https://github.com/adoptium/temurin" ~ major ~ "-binaries/releases/download" %}
 {% set temurin_base =  "jdk-" ~ jdk_full ~ "/OpenJDK" ~ major ~ "U-jdk" %}
-{% set temurin_suffix = "linux_hotspot_" ~ jdk_full.replace("+", "_") ~ ".tar.gz" %}
+{% set temurin_suffix = "hotspot_" ~ jdk_full.replace("+", "_") ~ ".tar.gz" %}
 
 {% set zulu_url = "https://cdn.azul.com/zulu/bin" %}
 {% set zulu_base = "zulu" ~ zulu_build ~ "-jdk" ~ version %}
@@ -20,32 +20,29 @@ package:
 source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
-  - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: e59c6bf801cc023a1ea78eceb5e6756277f1564cd0a421ea984efe6cb96cfcf8  # [build_platform == "linux-64"]
-  # native compilation: currently unused
-  - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
-    sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
-  - url: {{ temurin_url }}/{{ temurin_base }}_ppc64le_{{ temurin_suffix }}    # [build_platform == "linux-ppc64le"]
-    sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
+  - url: {{ temurin_url }}/{{ temurin_base }}_x64_linux_{{ temurin_suffix }}    # [build_platform == "linux-64"]
+    sha256: e59c6bf801cc023a1ea78eceb5e6756277f1564cd0a421ea984efe6cb96cfcf8    # [build_platform == "linux-64"]
+  - url: {{ temurin_url }}/{{ temurin_base }}_x64_mac_{{ temurin_suffix }}      # [build_platform == "osx-64"]
+    sha256: 9445952d4487451af024a9a3f56373df76fbd928d9ff9186988aa27be2e4f10c    # [build_platform == "osx-64"]
+  - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_mac_{{ temurin_suffix }}  # [build_platform == "osx-arm64"]
+    sha256: 80d6fa75e87280202ae7660139870fe50f07fca9dc6c4fbd3f2837cbd70ec902    # [build_platform == "osx-arm64"]
 
-  - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: 0cfb7f2799384df43a9832df638f31c9be33a4a8650f8478f35272ee70dd7173  # [linux]
-    folder: src                                                               # [linux]
-  - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
-    sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
-    folder: fonts                                                             # [linux]
+  - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [unix]
+    sha256: 0cfb7f2799384df43a9832df638f31c9be33a4a8650f8478f35272ee70dd7173  # [unix]
+    folder: src                                                               # [unix]
+  - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [unix]
+    sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [unix]
+    folder: fonts                                                             # [unix]
 
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
-  # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
-  - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: 72875bfcee08ebe61fca9d80de4bba9ae138cee3f3584074a6d5149c79cd26e7  # [osx and x86_64]
-  - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: ae8d4863565bba47a30fccbe7e5a4de153db114f16c4eb60524394c5dd190359  # [osx and arm64]
+  # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-win_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
     sha256: cf112b96b665eb34107590c83af83e56735caa677e2a96d1991419aa26b5d511  # [win64]
 
 build:
   number: 1
+  # debug
+  skip: true  # [not osx]
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
@@ -57,62 +54,57 @@ build:
 
 requirements:
   build:
-    # We also need a compiler on osx to produce correct signatures
-    - {{ compiler('cxx') }}   # [not win]
-    - {{ stdlib('c') }}       # [linux]
-    - pkg-config        # [linux]
-    - autoconf          # [linux]
-    - unzip             # [linux]
-    - zip               # [linux]
-    - make !=4.3.*      # [linux]
-    - zlib              # [linux and (build_platform != target_platform)]
-    - freetype          # [linux and (build_platform != target_platform)]
-    - harfbuzz          # [linux and (build_platform != target_platform)]
-    - libpng            # [linux and (build_platform != target_platform)]
-    - giflib            # [linux and (build_platform != target_platform)]
-    - harfbuzz          # [linux and (build_platform != target_platform)]
-    - libjpeg-turbo     # [linux and (build_platform != target_platform)]
+    - {{ compiler('cxx') }}   # [unix]
+    - {{ stdlib('c') }}       # [unix]
+    - cctools_osx-64          # [osx and (build_platform != target_platform)]
+    - libcxx                  # [osx and (build_platform != target_platform)]
+    - pkg-config        # [unix]
+    - autoconf          # [unix]
+    - unzip             # [unix]
+    - zip               # [unix]
+    - make !=4.3.*      # [unix]
+    - zlib              # [unix and (build_platform != target_platform)]
+    - freetype          # [unix and (build_platform != target_platform)]
+    - harfbuzz          # [unix and (build_platform != target_platform)]
+    - libpng            # [unix and (build_platform != target_platform)]
+    - giflib            # [unix and (build_platform != target_platform)]
+    - libiconv          # [osx and (build_platform != target_platform)]
+    - libjpeg-turbo     # [unix and (build_platform != target_platform)]
     - libcups           # [linux and (build_platform != target_platform)]
     - alsa-lib          # [linux and (build_platform != target_platform)]
-    - fontconfig        # [linux and (build_platform != target_platform)]
-    - xorg-libx11       # [linux and (build_platform != target_platform)]
-    - xorg-libxext      # [linux and (build_platform != target_platform)]
-    - xorg-libxt        # [linux and (build_platform != target_platform)]
-    - xorg-libxtst      # [linux and (build_platform != target_platform)]
-    - xorg-libxrender   # [linux and (build_platform != target_platform)]
-    - xorg-libxrandr    # [linux and (build_platform != target_platform)]
-    - xorg-libxi        # [linux and (build_platform != target_platform)]
-    - lcms2             # [linux and (build_platform != target_platform)]
+    - fontconfig        # [unix and (build_platform != target_platform)]
+    - xorg-libx11       # [unix and (build_platform != target_platform)]
+    - xorg-libxext      # [unix and (build_platform != target_platform)]
+    - xorg-libxt        # [unix and (build_platform != target_platform)]
+    - xorg-libxtst      # [unix and (build_platform != target_platform)]
+    - xorg-libxrender   # [unix and (build_platform != target_platform)]
+    - xorg-libxrandr    # [unix and (build_platform != target_platform)]
+    - xorg-libxi        # [unix and (build_platform != target_platform)]
+    - lcms2             # [unix and (build_platform != target_platform)]
     - symlink-exe-build  # [win]
     - m2-bash            # [win]
   host:
-    - zlib              # [linux or osx]
-    - freetype          # [linux]
-    - harfbuzz          # [linux]
-    - libpng            # [linux]
-    - giflib            # [linux]
-    - harfbuzz          # [linux]
-    - libjpeg-turbo     # [linux]
+    - zlib              # [unix]
+    - freetype          # [unix]
+    - harfbuzz          # [unix]
+    - libpng            # [unix]
+    - giflib            # [unix]
+    - libiconv          # [osx]
+    - libjpeg-turbo     # [unix]
     - libcups           # [linux]
     - alsa-lib          # [linux]
-    - fontconfig        # [linux]
-    - xorg-libx11       # [linux]
-    - xorg-libxext      # [linux]
-    - xorg-libxt        # [linux]
-    - xorg-libxtst      # [linux]
-    - xorg-libxrender   # [linux]
-    - xorg-libxrandr    # [linux]
-    - xorg-libxi        # [linux]
-    - lcms2             # [linux]
-    - vs2015_runtime    # [win]
+    - fontconfig        # [unix]
+    - xorg-libx11       # [unix]
+    - xorg-libxext      # [unix]
+    - xorg-libxt        # [unix]
+    - xorg-libxtst      # [unix]
+    - xorg-libxrender   # [unix]
+    - xorg-libxrandr    # [unix]
+    - xorg-libxi        # [unix]
+    - lcms2             # [unix]
+    - vc14_runtime      # [win]
   run:
-    - xorg-libx11       # [linux]
-    - xorg-libxext      # [linux]
-    - xorg-libxtst      # [linux]
-    - xorg-libxrender   # [linux]
-    - xorg-libxi        # [linux]
-    - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
 
 test:
   requires:
@@ -130,16 +122,16 @@ test:
     - if not exist %JAVA_HOME%\\release exit 1  # [win]
 
 about:
-  home: https://www.azul.com/products/zulu/  # [not linux]
-  home: https://openjdk.java.net             # [linux]
+  home: https://www.azul.com/products/zulu/  # [win]
+  home: https://openjdk.java.net             # [unix]
   license: GPL-2.0-or-later WITH Classpath-exception-2.0
   license_family: GPL
   license_file:
     - LICENSE
-    - fonts/LICENSE   # [linux]
-  summary: The Zulu OpenJDK build.           # [not linux]
-  summary: An open-source implementation of the JDK   # [linux]
-  description: Zulu OpenJDK is an open source build of the Java JDK.   # [not linux]
+    - fonts/LICENSE   # [unix]
+  summary: An open-source implementation of the JDK                     # [unix]
+  summary: The Zulu OpenJDK build.                                      # [win]
+  description: Zulu OpenJDK is an open source build of the Java JDK.    # [win]
 
 extra:
   recipe-maintainers:

@@ -1,20 +1,7 @@
 #!/bin/bash
-
 set -exuo pipefail
 
 JVM_BUILD_LOG_LEVEL=warn
-
-# Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
-# TODO: Fix https://github.com/thefloweringash/sigtool to add --remove-signature support
-if [[ "${target_platform}" == "osx-64" ]]; then
-  for b in `ls bin`; do
-    /usr/bin/codesign --remove-signature bin/$b
-  done
-  for b in `ls lib/*.dylib lib/*.dylib.* lib/**/*.dylib`; do
-    /usr/bin/codesign --remove-signature $b
-  done
-  /usr/bin/codesign --remove-signature lib/jspawnhelper
-fi
 
 echo "--------------------------------------------------"
 env | sort
@@ -64,7 +51,7 @@ function jdk_install
 
 function source_build
 {
-  cd src
+  cd $SRC_DIR/src
 
   chmod +x configure
 
@@ -81,14 +68,33 @@ function source_build
 
       export CPATH=$BUILD_PREFIX/include
       export LIBRARY_PATH=$BUILD_PREFIX/lib
-      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD} CPP=${CXX_FOR_BUILD//+/p}"
+      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD}"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$BUILD-ar"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
       _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
+      if [[ "${target_platform}" == linux* ]]; then
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+        # gcc's preprocessor is called $TRIPLE-cpp, but has no separate `_FOR_BUILD`
+        # environment variable; it's easily constructed from gxx's $TRIPLE-c++ though
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX_FOR_BUILD//+/p}"
+
+        CONFIGURE_ARGS="--with-cups=${BUILD_PREFIX}"
+        CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=system"
+      else
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
+        # clang has different naming for CC & CPP: $TRIPLE-clang{,-cpp}
+        _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC_FOR_BUILD}-cpp"
+
+        # on osx, cups is in SDK
+        CONFIGURE_ARGS="--with-cups=${CONDA_BUILD_SYSROOT}/usr"
+        # system libs not supported for non-linux by openjdk
+        CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=bundled"
+      fi
       export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
       # CFLAGS, CXXFLAGS are intentionally empty
@@ -114,8 +120,6 @@ function source_build
           --with-stdc++lib=dynamic \
           --disable-warnings-as-errors \
           --with-x=${BUILD_PREFIX} \
-          --with-cups=${BUILD_PREFIX} \
-          --with-freetype=system \
           --with-giflib=system \
           --with-libpng=system \
           --with-zlib=system \
@@ -124,6 +128,7 @@ function source_build
           --with-harfbuzz=system \
           --with-fontconfig=${BUILD_PREFIX} \
           --with-boot-jdk=$SRC_DIR/bootjdk \
+          $CONFIGURE_ARGS \
           $_TOOLCHAIN_ARGS
         make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS images
       popd
@@ -161,22 +166,47 @@ function source_build
 
   # We purposefully do NOT include LD here as the openjdk build system resolves that internally from
   # --build, --host, and --target in conjunction with BUILD_CC and CC
-  _TOOLCHAIN_ARGS="BUILD_CC=${CC_FOR_BUILD} BUILD_CXX=${CXX_FOR_BUILD} BUILD_CPP=${CXX_FOR_BUILD//+/p}"
+  _TOOLCHAIN_ARGS="BUILD_CC=${CC_FOR_BUILD} BUILD_CXX=${CXX_FOR_BUILD}"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_AR=$BUILD_PREFIX/bin/$BUILD-ar"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_NM=$BUILD_PREFIX/bin/$BUILD-nm"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX} CPP=${CXX//+/p}"
+  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CC=${CC} CXX=${CXX}"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$HOST-ar"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CXXFILT=$BUILD_PREFIX/bin/$HOST-c++filt"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$HOST-nm"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$HOST-objcopy"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$HOST-objdump"
-  _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$HOST-readelf"
   _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$HOST-strip"
+  if [[ "${target_platform}" == linux* ]]; then
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CXXFILT=$BUILD_PREFIX/bin/$HOST-c++filt"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$HOST-objcopy"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$HOST-objdump"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$HOST-readelf"
+    # see comment further up
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CXX_FOR_BUILD//+/p}"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CXX//+/p}"
+
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-cups=${BUILD_PREFIX}"
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=system"
+  else
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/llvm-cxxfilt"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$BUILD-install_name_tool"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_LIPO=$BUILD_PREFIX/bin/$BUILD-lipo"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_OTOOL=$BUILD_PREFIX/bin/$BUILD-otool"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CXXFILT=$BUILD_PREFIX/bin/llvm-cxxfilt"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS INSTALL_NAME_TOOL=$BUILD_PREFIX/bin/$HOST-install_name_tool"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS LIPO=$BUILD_PREFIX/bin/$HOST-lipo"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OTOOL=$BUILD_PREFIX/bin/$HOST-otool"
+    # see comment further up
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CPP=${CC_FOR_BUILD}-cpp"
+    _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS CPP=${CC}-cpp"
+
+    # on osx, cups is in SDK
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-cups=${CONDA_BUILD_SYSROOT}/usr"
+    # system libs not supported for non-linux by openjdk
+    CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=bundled"
+  fi
 
   ./configure \
     --prefix=$PREFIX \
@@ -188,8 +218,6 @@ function source_build
     --with-extra-ldflags="$LDFLAGS" \
     --with-log=${JVM_BUILD_LOG_LEVEL} \
     --with-x=$PREFIX \
-    --with-cups=$PREFIX \
-    --with-freetype=system \
     --with-fontconfig=$PREFIX \
     --with-giflib=system \
     --with-libpng=system \
@@ -208,14 +236,16 @@ function source_build
   make JOBS=$CPU_COUNT images $_TOOLCHAIN_ARGS || printerror
 }
 
-if [[ "$target_platform" == linux* ]]; then
-  export INSTALL_DIR=$SRC_DIR/bootjdk/
-  jdk_install
-  source_build
-  cd build/*/images/jdk
+export INSTALL_DIR=$SRC_DIR/bootjdk/
+# jdk_install expects `./{bin,include,...}` to exist
+if [[ "${target_platform}" == osx* ]]; then
+  cd ./Contents/Home
 fi
+jdk_install
+source_build
 
 export INSTALL_DIR=$PREFIX/lib/jvm
+cd $SRC_DIR/src/build/*/images/jdk
 jdk_install
 
 # Symlink java binaries
@@ -229,15 +259,12 @@ for i in $(find $INSTALL_DIR/man -type f -printf '%P\n'); do
     ln -s -r -f "$INSTALL_DIR/man/$i" "$PREFIX/man/$i"
 done
 
-if [[ "$target_platform" == linux* ]]; then
-  # This is not present on AdoptOpenJDK>=17 and appears to have been replaced with $INSTALL_DIR/libjli.so
-  # mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
-    
-  # Include dejavu fonts to allow java to work even on minimal cloud
-  # images where these fonts are missing (thanks to @chapmanb)
-  mkdir -p $INSTALL_DIR/lib/fonts
-  mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
-fi
+# Include dejavu fonts to allow java to work even on minimal cloud
+# images where these fonts are missing (thanks to @chapmanb)
+mkdir -p $INSTALL_DIR/lib/fonts
+
+mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
+
 find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
 
 
