@@ -31,6 +31,8 @@ source:
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
     sha256: 08c773325be3ce74605de24aa0adafda81814b116e8540afbb5c6d8e1e7b1fa0  # [linux]
     folder: src                                                               # [linux]
+    patches:                                                                  # [linux]
+      - 19739.patch                                                           # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts                                                             # [linux]
