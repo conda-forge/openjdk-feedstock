@@ -1,6 +1,6 @@
-{% set version = "22.0.1" %}
-{% set openjdk_revision = "8" %}
-{% set zulu_build = "22.30.13-ca" %}
+{% set version = "23.0.1" %}
+{% set openjdk_revision = "11" %}
+{% set zulu_build = "23.30.13-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -21,7 +21,7 @@ source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: e59c6bf801cc023a1ea78eceb5e6756277f1564cd0a421ea984efe6cb96cfcf8  # [build_platform == "linux-64"]
+    sha256: 2400267e4e9c0f6ae880a4d763af6caf18c673714bdee5debf8388b0b5d52886  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
@@ -29,8 +29,10 @@ source:
     sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: 0cfb7f2799384df43a9832df638f31c9be33a4a8650f8478f35272ee70dd7173  # [linux]
+    sha256: 08c773325be3ce74605de24aa0adafda81814b116e8540afbb5c6d8e1e7b1fa0  # [linux]
     folder: src                                                               # [linux]
+    patches:                                                                  # [linux]
+      - 19739.patch                                                           # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts                                                             # [linux]
@@ -38,14 +40,14 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: 72875bfcee08ebe61fca9d80de4bba9ae138cee3f3584074a6d5149c79cd26e7  # [osx and x86_64]
+    sha256: 2e3cf7ae4d5fa13416251c16ac97f7e070deaf50bf86e1d0cec6f892ac877f4f  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: ae8d4863565bba47a30fccbe7e5a4de153db114f16c4eb60524394c5dd190359  # [osx and arm64]
+    sha256: 7c71671f070db14e6222394444b8fa4f23974c6bd276c70caae400fd5cce7acc  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: cf112b96b665eb34107590c83af83e56735caa677e2a96d1991419aa26b5d511  # [win64]
+    sha256: c27a8b2d4adc2fbefcbf193cef80842491ecd69725414d30e59e514769f358cc  # [win64]
 
 build:
-  number: 1
+  number: 0
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
@@ -64,7 +66,7 @@ requirements:
     - autoconf          # [linux]
     - unzip             # [linux]
     - zip               # [linux]
-    - make !=4.3.*      # [linux]
+    - make              # [linux]
     - zlib              # [linux and (build_platform != target_platform)]
     - freetype          # [linux and (build_platform != target_platform)]
     - harfbuzz          # [linux and (build_platform != target_platform)]
@@ -104,15 +106,14 @@ requirements:
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
     - lcms2             # [linux]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
   run:
     - xorg-libx11       # [linux]
     - xorg-libxext      # [linux]
     - xorg-libxtst      # [linux]
     - xorg-libxrender   # [linux]
     - xorg-libxi        # [linux]
-    - {{ pin_compatible("alsa-lib", max_pin="x.x.x") }}     # [linux]
-    - vs2015_runtime    # [win]
+    - vc14_runtime      # [win]
 
 test:
   requires:
