@@ -1,5 +1,5 @@
 ace:
-- 8.0.1
+- 8.0.2
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -29,7 +29,7 @@ freetype:
 giflib:
 - '5.2'
 harfbuzz:
-- '9'
+- '10'
 lcms2:
 - '2'
 libjpeg_turbo:
