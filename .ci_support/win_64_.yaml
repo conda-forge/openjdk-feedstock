@@ -1,5 +1,5 @@
 ace:
-- 8.0.1
+- 8.0.2
 channel_sources:
 - conda-forge
 channel_targets:
