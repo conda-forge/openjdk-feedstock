@@ -82,6 +82,7 @@ requirements:
     - xorg-libxrender   # [linux and (build_platform != target_platform)]
     - xorg-libxrandr    # [linux and (build_platform != target_platform)]
     - xorg-libxi        # [linux and (build_platform != target_platform)]
+    - xorg-xorgproto    # [linux and (build_platform != target_platform)]
     - lcms2             # [linux and (build_platform != target_platform)]
     - symlink-exe-build  # [win]
     - m2-bash            # [win]
@@ -102,6 +103,7 @@ requirements:
     - xorg-libxrender   # [linux]
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
+    - xorg-xorgproto    # [linux]
     - lcms2             # [linux]
   run:
     - xorg-libx11       # [linux]
