@@ -46,7 +46,7 @@ source:
     sha256: fd9dcce6d9f7e2929a94cd6655c4606b79f1686b56b4ac8413b396efe08f9139  # [win64]
 
 build:
-  number: 0
+  number: 1
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
@@ -82,6 +82,7 @@ requirements:
     - xorg-libxrender   # [linux and (build_platform != target_platform)]
     - xorg-libxrandr    # [linux and (build_platform != target_platform)]
     - xorg-libxi        # [linux and (build_platform != target_platform)]
+    - xorg-xorgproto    # [linux and (build_platform != target_platform)]
     - lcms2             # [linux and (build_platform != target_platform)]
     - symlink-exe-build  # [win]
     - m2-bash            # [win]
@@ -102,6 +103,7 @@ requirements:
     - xorg-libxrender   # [linux]
     - xorg-libxrandr    # [linux]
     - xorg-libxi        # [linux]
+    - xorg-xorgproto    # [linux]
     - lcms2             # [linux]
   run:
     - xorg-libx11       # [linux]
