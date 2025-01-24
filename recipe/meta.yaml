@@ -1,6 +1,6 @@
-{% set version = "21.0.5" %}
-{% set openjdk_revision = "11" %}
-{% set zulu_build = "21.38.21-ca" %}
+{% set version = "21.0.6" %}
+{% set openjdk_revision = "7" %}
+{% set zulu_build = "21.40.17-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -21,7 +21,7 @@ source:
   # example of full url for version=17.0.8 & openjdk_revision=7:
   # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c  # [build_platform == "linux-64"]
+    sha256: a2650fba422283fbed20d936ce5d2a52906a5414ec17b2f7676dddb87201dbae  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920  # [build_platform == "linux-aarch64"]
@@ -29,7 +29,7 @@ source:
     sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: 8d57ea0ba57310fffb9257d8018e54a264d940c472228eb04d37a21b584885ac  # [linux]
+    sha256: 260e81ac93d66845c7debcf3b4a1f53b0fcf639124cc3899765f57700539259c  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
@@ -38,14 +38,14 @@ source:
   # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
   # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: a77a9c67d8f9a2341674bcea7056d9d70f69ff0850dd3874303641cc9cec2dfc  # [osx and x86_64]
+    sha256: 5bdd9fb4f7c7e581d88183860aed6aa393ad3558f49bacf7fd6285a016ca3126  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: d5c289ce2c8c67f414ede3b170dea72ca9a1322520498325a51d83bbaa94d1f0  # [osx and arm64]
+    sha256: 446911d1b58520da8a0ad2f881d3d6d729ffbb9a8e1077d3957aeb72aa8991db  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: 8dea44fd3a6f7ad0f42f38abc1371075710b58bed9bd8f093c2ef2d450dd2672  # [win64]
+    sha256: a1360d2ab3ee9932b5cb20a2386d6b0fb1518a68c89a08739736c38a4debbdae  # [win64]
 
 build:
-  number: 1
+  number: 0
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
