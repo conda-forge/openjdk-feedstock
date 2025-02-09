@@ -1,3 +1,5 @@
+azure:
+  free_disk_space: true
 bot:
   abi_migration_branches:
   - java21
