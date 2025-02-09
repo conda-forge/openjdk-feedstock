@@ -1,0 +1,201 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  # constants
+  version: 23.0.2
+  openjdk_revision: 7
+  zulu_build: 23.32.11-ca
+  zulu_url: https://cdn.azul.com/zulu/bin
+  # first-order
+  major: ${{ (version | split("."))[0] }}
+  jdk_full: ${{ version }}+${{ openjdk_revision }}
+  # second-order
+  temurin_url: https://github.com/adoptium/temurin${{ major }}-binaries/releases/download
+  temurin_base: jdk-${{ jdk_full }}/OpenJDK${{ major }}U-jdk"
+  temurin_suffix: linux_hotspot_${{ jdk_full | replace("+", "_") }}.tar.gz
+  zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
+  # platform-specific
+  homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
+  extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
+  summary: ${{ "n open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
+
+recipe:
+  name: openjdk
+  version: ${{ version }}
+
+build:
+  number: 1
+
+source:
+  - if: build_platform == "linux-64"
+    then:
+      # example of full url for version=17.0.8 & openjdk_revision=7:
+      # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
+      - url: ${{ temurin_url }}/${{ temurin_base }}_x64_${{ temurin_suffix }}
+        sha256: 870ac8c05c6fe563e7a3878a47d0234b83c050e83651d2c47e8b822ec74512dd
+  - if: build_platform == "linux-aarch64"
+    then:
+      # native compilation: currently unused
+      - url: ${{ temurin_url }}/${{ temurin_base }}_aarch64_${{ temurin_suffix }}
+        sha256: 980156d37580bd6fec142e02900497984e94c4b819a0c0eb7ce790bfc7c7d920
+  - if: build_platform == "linux-ppc64le"
+    then:
+      - url: ${{ temurin_url }}/${{ temurin_base }}_ppc64le_${{ temurin_suffix }}
+        sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded
+  - if: linux
+    then:
+    - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz
+      sha256: a5072191906781fc9b6d70e335ae8d23f008739ce58372b0198025b4ba2fbec6
+      target_directory: src
+      patches:
+        - 19739.patch
+    - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
+      sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
+      target_directory: fonts
+
+  - if: osx and x86_64
+    then:
+    # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
+    # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
+    - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_x64.zip
+      sha256: a5c917c06ceb2b2f50b42188d8c3a60c705de381ec444cedf1bdad40c965e0a4
+  - if: osx and arm64
+    then:
+    - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
+      sha256: 58d64eaca8f07cc22a4db2954da0f9ba1bf7ab1f7aa1e17d07de01d9b3b85da9
+  - if: win64
+    then:
+    - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
+      sha256: 6cf95de8f5b5d4c5ab64606810796456259a5234e9b170b92879d20aeec79ace
+
+outputs:
+  - package:
+      name: openjdk
+    build:
+      dynamic_linking:
+        binary_relocation: ${{ osx }}
+    requirements:
+      build:
+        - if: win
+          then:
+            - m2-bash
+            - symlink-exe-build
+          else:
+            - ${{ compiler("cxx") }}
+        - if: linux
+          then:
+            - autoconf
+            - make
+            - pkg-config
+            - unzip
+            - zip
+        - if: linux and (build_platform != target_platform)
+          then:
+            - alsa-lib
+            - fontconfig
+            - freetype
+            - giflib
+            - harfbuzz
+            - harfbuzz
+            - lcms2
+            - libcups
+            - libjpeg-turbo
+            - libpng
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
+            - xorg-libxt
+            - xorg-libxtst
+            - xorg-xorgproto
+            - zlib
+      host:
+        - if: win
+          then:
+            - vc14_runtime
+          else:
+            - zlib
+        - if: linux
+          then:
+            - freetype
+            - harfbuzz
+            - libpng
+            - giflib
+            - harfbuzz
+            - libjpeg-turbo
+            - libcups
+            - alsa-lib
+            - fontconfig
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxt
+            - xorg-libxtst
+            - xorg-libxrender
+            - xorg-libxrandr
+            - xorg-libxi
+            - xorg-xorgproto
+            - lcms2
+      run:
+        - if: win
+          then:
+            - vc14_runtime
+        - if: linux
+          then:
+          - xorg-libx11
+          - xorg-libxext
+          - xorg-libxtst
+          - xorg-libxrender
+          - xorg-libxi
+      ignore_run_exports:
+        by_name:
+          - if: osx
+            then:
+              - libcxx
+    tests:
+      - files:
+          recipe:
+            - test-nio/
+            - if: unix
+              then:
+                - test-jni/
+                - test-jni.sh
+                - run_test.sh
+              else:
+                - run_test.bat
+        requirements:
+          run:
+            - if: unix
+              then:
+                - ${{ compiler("c") }}
+        script:
+          - java -version
+          - if: unix
+            then:
+              - '${JAVA_HOME}/bin/java -version'
+              - test -f ${JAVA_HOME}/release
+            else:
+              - '%JAVA_HOME%\bin\java -version'
+              - if not exist %JAVA_HOME%\\release exit 1
+          - if: unix and not ppc64le
+            then:
+              - ./test-jni.sh
+
+about:
+  homepage: ${{ homepage }}
+  license: GPL-2.0-or-later WITH Classpath-exception-2.0
+  license_file:
+    - LICENSE
+    - ${{ extra_license }}
+  summary: ${{ summary }}
+
+extra:
+  recipe-maintainers:
+    - johanneskoester
+    - sodre
+    - mingwandroid
+    - CJ-Wright
+    - xhochy
+    - izahn
+    - h-vetinari
