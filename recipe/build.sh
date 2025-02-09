@@ -3,9 +3,8 @@ set -exuo pipefail
 
 JVM_BUILD_LOG_LEVEL=warn
 
-# TODO: remove once in the right working directory
 if [[ "${target_platform}" == osx* ]]; then
-  find .
+  cd zulu-*.jdk/Contents/Home
 fi
 
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
