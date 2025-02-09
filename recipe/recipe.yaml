@@ -16,7 +16,7 @@ context:
   temurin_suffix: linux_hotspot_${{ jdk_full | replace("+", "_") }}.tar.gz
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
-  homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
+  homepage:
   extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
   summary: ${{ "n open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
 
@@ -74,7 +74,7 @@ outputs:
       name: openjdk
     build:
       dynamic_linking:
-        binary_relocation: ${{ osx }}
+        binary_relocation: ${{ true if osx else false }}
     requirements:
       build:
         - if: win
@@ -119,24 +119,24 @@ outputs:
             - zlib
         - if: linux
           then:
-            - freetype
-            - harfbuzz
-            - libpng
-            - giflib
-            - harfbuzz
-            - libjpeg-turbo
-            - libcups
             - alsa-lib
             - fontconfig
+            - freetype
+            - giflib
+            - harfbuzz
+            - harfbuzz
+            - lcms2
+            - libcups
+            - libjpeg-turbo
+            - libpng
             - xorg-libx11
             - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
             - xorg-libxt
             - xorg-libxtst
-            - xorg-libxrender
-            - xorg-libxrandr
-            - xorg-libxi
             - xorg-xorgproto
-            - lcms2
       run:
         - if: win
           then:
@@ -145,9 +145,9 @@ outputs:
           then:
           - xorg-libx11
           - xorg-libxext
-          - xorg-libxtst
-          - xorg-libxrender
           - xorg-libxi
+          - xorg-libxrender
+          - xorg-libxtst
       ignore_run_exports:
         by_name:
           - if: osx
