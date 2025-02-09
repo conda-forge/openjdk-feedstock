@@ -24,9 +24,6 @@ recipe:
   name: openjdk
   version: ${{ version }}
 
-build:
-  number: 1
-
 source:
   - if: build_platform == "linux-64"
     then:
@@ -53,7 +50,6 @@ source:
     - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
       sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
       target_directory: fonts
-
   - if: osx and x86_64
     then:
     # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
@@ -69,12 +65,17 @@ source:
     - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
       sha256: 6cf95de8f5b5d4c5ab64606810796456259a5234e9b170b92879d20aeec79ace
 
+build:
+  number: 1
+
 outputs:
   - package:
       name: openjdk
     build:
+      script:
+        file: build
       dynamic_linking:
-        binary_relocation: ${{ true if osx else false }}
+        binary_relocation: ${{ false if osx else true }}
     requirements:
       build:
         - if: win
@@ -83,6 +84,7 @@ outputs:
             - symlink-exe-build
           else:
             - ${{ compiler("cxx") }}
+            - ${{ stdlib("c") }}
         - if: linux
           then:
             - autoconf
