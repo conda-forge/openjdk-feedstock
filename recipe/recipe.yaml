@@ -16,9 +16,9 @@ context:
   temurin_suffix: linux_hotspot_${{ jdk_full | replace("+", "_") }}.tar.gz
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
-  homepage:
+  homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
   extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
-  summary: ${{ "n open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
+  summary: ${{ "An open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
 
 recipe:
   name: openjdk

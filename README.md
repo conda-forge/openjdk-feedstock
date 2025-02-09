@@ -11,7 +11,7 @@ Home: https://openjdk.java.net/
 
 Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
 
-Summary: n open-source implementation of the JDK
+Summary: An open-source implementation of the JDK
 
 About openjdk
 -------------
