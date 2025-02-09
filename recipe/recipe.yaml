@@ -12,7 +12,7 @@ context:
   jdk_full: ${{ version }}+${{ openjdk_revision }}
   # second-order
   temurin_url: https://github.com/adoptium/temurin${{ major }}-binaries/releases/download
-  temurin_base: jdk-${{ jdk_full }}/OpenJDK${{ major }}U-jdk"
+  temurin_base: jdk-${{ jdk_full }}/OpenJDK${{ major }}U-jdk
   temurin_suffix: linux_hotspot_${{ jdk_full | replace("+", "_") }}.tar.gz
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
@@ -45,7 +45,7 @@ source:
         sha256: 45dde71faf8cbb78fab3c976894259655c8d3de827347f23e0ebe5710921dded
   - if: linux
     then:
-    - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz
+    - url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
       sha256: a5072191906781fc9b6d70e335ae8d23f008739ce58372b0198025b4ba2fbec6
       target_directory: src
       patches:
