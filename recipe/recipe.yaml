@@ -61,7 +61,7 @@ source:
     then:
     - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
       sha256: 58d64eaca8f07cc22a4db2954da0f9ba1bf7ab1f7aa1e17d07de01d9b3b85da9
-  - if: win64
+  - if: win
     then:
     - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
       sha256: 6cf95de8f5b5d4c5ab64606810796456259a5234e9b170b92879d20aeec79ace
