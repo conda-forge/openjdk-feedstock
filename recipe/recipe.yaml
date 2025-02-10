@@ -71,7 +71,7 @@ build:
 
 outputs:
   - package:
-      name: openjdk
+      name: openjdk-jdk-headless
     build:
       script:
         file: ${{ build_script }}
@@ -144,13 +144,6 @@ outputs:
         - if: win
           then:
             - vc14_runtime
-        - if: linux
-          then:
-          - xorg-libx11
-          - xorg-libxext
-          - xorg-libxi
-          - xorg-libxrender
-          - xorg-libxtst
       ignore_run_exports:
         by_name:
           - if: osx
@@ -184,6 +177,48 @@ outputs:
           - if: unix and not ppc64le
             then:
               - ./test-jni.sh
+
+  - package:
+      name: openjdk
+    requirements:
+      run:
+        - ${{ pin_subpackage("openjdk-jdk-headless", exact=True) }}
+        - if: linux
+          then:
+          - xorg-libx11
+          - xorg-libxext
+          - xorg-libxi
+          - xorg-libxrender
+          - xorg-libxtst
+    tests:
+      - files:
+          recipe:
+            - test-nio/
+            - if: unix
+              then:
+                - test-jni/
+                - test-jni.sh
+                - run_test.sh
+              else:
+                - run_test.bat
+        requirements:
+          run:
+            - if: unix
+              then:
+                - ${{ compiler("c") }}
+        script:
+          - java -version
+          - if: unix
+            then:
+              - '${JAVA_HOME}/bin/java -version'
+              - test -f ${JAVA_HOME}/release
+            else:
+              - '%JAVA_HOME%\bin\java -version'
+              - if not exist %JAVA_HOME%\\release exit 1
+          - if: unix and not ppc64le
+            then:
+              - ./test-jni.sh
+
 
 about:
   homepage: ${{ homepage }}
