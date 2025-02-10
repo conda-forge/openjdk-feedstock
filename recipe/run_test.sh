@@ -1,5 +1,6 @@
-#!/bin/sh
-set -ex
+#!/usr/bin/env bash
+set -exuo pipefail
+
 if [ ${target_platform} == "linux-ppc64le" ]; then
   exit 0
 fi

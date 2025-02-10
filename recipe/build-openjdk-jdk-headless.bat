@@ -1,4 +1,5 @@
 setlocal EnableDelayedExpansion
+@echo on
 
 set INSTALL_DIR=%LIBRARY_PREFIX%\lib\jvm
 
