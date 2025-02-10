@@ -103,7 +103,6 @@ outputs:
             - libcups
             - libjpeg-turbo
             - libpng
-            - libzlib
             - xorg-libx11
             - xorg-libxext
             - xorg-libxi
@@ -112,12 +111,13 @@ outputs:
             - xorg-libxt
             - xorg-libxtst
             - xorg-xorgproto
+            - zlib
       host:
         - if: win
           then:
             - vc14_runtime
           else:
-            - libzlib
+            - zlib
         - if: linux
           then:
             - alsa-lib
