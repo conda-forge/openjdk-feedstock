@@ -99,11 +99,11 @@ outputs:
             - freetype
             - giflib
             - harfbuzz
-            - harfbuzz
             - lcms2
             - libcups
             - libjpeg-turbo
             - libpng
+            - libzlib
             - xorg-libx11
             - xorg-libxext
             - xorg-libxi
@@ -112,20 +112,18 @@ outputs:
             - xorg-libxt
             - xorg-libxtst
             - xorg-xorgproto
-            - zlib
       host:
         - if: win
           then:
             - vc14_runtime
           else:
-            - zlib
+            - libzlib
         - if: linux
           then:
             - alsa-lib
             - fontconfig
             - freetype
             - giflib
-            - harfbuzz
             - harfbuzz
             - lcms2
             - libcups
@@ -148,6 +146,15 @@ outputs:
           - if: osx
             then:
               - libcxx
+          - if: linux
+            then:
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
+            - xorg-libxt
+            - xorg-libxtst
     tests:
       - files:
           recipe:
@@ -184,11 +191,13 @@ outputs:
         - ${{ pin_subpackage("openjdk-jdk-headless", exact=True) }}
         - if: linux
           then:
-          - xorg-libx11
-          - xorg-libxext
-          - xorg-libxi
-          - xorg-libxrender
-          - xorg-libxtst
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
+            - xorg-libxt
+            - xorg-libxtst
     tests:
       - files:
           recipe:
