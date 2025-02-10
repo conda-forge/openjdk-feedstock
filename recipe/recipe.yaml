@@ -73,7 +73,7 @@ outputs:
       name: openjdk-jdk-headless
     build:
       script:
-        file: build-open-jdk-headless
+        file: build-openjdk-jdk-headless
       dynamic_linking:
         binary_relocation: ${{ false if osx else true }}
     requirements:
