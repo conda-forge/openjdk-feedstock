@@ -24,5 +24,8 @@ FOR %%F IN (activate deactivate) DO (
     if not exist %PREFIX%\etc\conda\%%F.d MKDIR %PREFIX%\etc\conda\%%F.d
     if errorlevel 1 exit 1
     copy %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat
+    :: Additionally copy .ps1 scripts to work with
+    :: Windows PowerShell
+    copy %RECIPE_DIR%\scripts\%%F.ps1 %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.ps1
     if errorlevel 1 exit 1
 )
