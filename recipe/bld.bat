@@ -42,5 +42,8 @@ FOR %%F IN (activate deactivate) DO (
     :: We also copy .sh scripts to be able to use them
     :: with POSIX CLI on Windows.
     copy %RECIPE_DIR%\scripts\%%F-win.sh %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.sh
+    :: Additionally copy .ps1 scripts to work with
+    :: Windows PowerShell
+    copy %RECIPE_DIR%\scripts\%%F.ps1 %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.ps1
     if errorlevel 1 exit 1
 )
