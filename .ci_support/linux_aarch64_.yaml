@@ -29,7 +29,7 @@ freetype:
 giflib:
 - '5.2'
 harfbuzz:
-- '11'
+- 11.0.1
 lcms2:
 - '2'
 libjpeg_turbo:
