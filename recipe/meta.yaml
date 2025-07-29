@@ -29,7 +29,7 @@ source:
     sha256: a24e869b8e563fd7b9f7776f6686ca5d737c8d1c3c33c9b72836935709b44a34  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: ce37f247542092fb35d242f1c4786157898be4096007b347787b867f49068d11  # [linux]
+    sha256: 7042900bbbf9c603516c9cd7d2efdbecc13e75e00ce2eb99a5af04ae894e7656  # [linux]
     folder: src                                                               # [linux]
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
@@ -42,7 +42,7 @@ source:
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
     sha256: 69ba406dcd4b4b697657bb505c1e6e3df38aed1608cbceb8257890bc8275685c  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: 76379d799e766fb7ea1cdaacc67aa87f75a118f863cc68ffe32c251be94ab4f4  # [win64]
+    sha256: f47dbd00384cb759f86a066be7545e467e5764f4653a237c32c07da96dc1c43b  # [win64]
 
 build:
   number: 0
