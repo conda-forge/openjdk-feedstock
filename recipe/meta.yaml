@@ -1,6 +1,6 @@
 {% set version = "21.0.8" %}
 {% set openjdk_revision = "9" %}
-{% set zulu_build = "21.42.19-ca" %}
+{% set zulu_build = "21.44.17-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
