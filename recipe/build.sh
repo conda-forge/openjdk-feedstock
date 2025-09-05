@@ -46,15 +46,19 @@ function jdk_install
   mkdir -p $INSTALL_DIR/conf
   mv conf/* $INSTALL_DIR/conf
 
-  mkdir -p $INSTALL_DIR/jmods
-  mv jmods/* $INSTALL_DIR/jmods
+  if [[ "${build_platform}" != linux-* ]]; then
+    mkdir -p $INSTALL_DIR/jmods
+    mv jmods/* $INSTALL_DIR/jmods
+  fi
 
   mkdir -p $INSTALL_DIR/legal
   mv legal/* $INSTALL_DIR/legal
 
-  mkdir -p $INSTALL_DIR/man/man1
-  mv man/man1/* $INSTALL_DIR/man/man1
-  rm -rf man/man1
+  if [[ -d "man/man1" ]]; then
+    mkdir -p $INSTALL_DIR/man/man1
+    mv man/man1/* $INSTALL_DIR/man/man1
+    rm -rf man/man1
+  fi
 
   # The man dir could be empty already so we can safely ignore this error
   set +e
@@ -107,6 +111,7 @@ function source_build
           --build=${BUILD} \
           --host=${BUILD} \
           --target=${BUILD} \
+	  --enable-linkable-runtime \
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \

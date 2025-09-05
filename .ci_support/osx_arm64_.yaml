@@ -3,11 +3,11 @@ MACOSX_DEPLOYMENT_TARGET:
 MACOSX_SDK_VERSION:
 - '11.0'
 ace:
-- 8.0.2
+- 8.0.5
 c_compiler:
 - clang
 c_compiler_version:
-- '18'
+- '19'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +15,7 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '18'
+- '19'
 macos_machine:
 - arm64-apple-darwin20.0.0
 target_platform:
