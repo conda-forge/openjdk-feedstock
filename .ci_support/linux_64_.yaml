@@ -1,5 +1,5 @@
 ace:
-- 8.0.4
+- 8.0.5
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -10,8 +10,6 @@ c_stdlib:
 - sysroot
 c_stdlib_version:
 - '2.17'
-cdt_name:
-- conda
 channel_sources:
 - conda-forge
 channel_targets:
@@ -28,8 +26,6 @@ freetype:
 - '2'
 giflib:
 - '5.2'
-harfbuzz:
-- 11.0.1
 lcms2:
 - '2'
 libjpeg_turbo:
