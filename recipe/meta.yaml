@@ -1,6 +1,6 @@
-{% set version = "11.0.27" %}
-{% set openjdk_revision = "6" %}
-{% set zulu_build = "11.80.21-ca" %}
+{% set version = "11.0.29" %}
+{% set openjdk_revision = "7" %}
+{% set zulu_build = "11.84.17-ca" %}
 
 {% set major = version.split(".")[0] %}
 {% set jdk_full = version ~ "+" ~ openjdk_revision %}
@@ -20,7 +20,7 @@ source:
   # example of full url for version=11.0.21 & openjdk_revision=9:
   # https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.21+9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.21_9.tar.gz
   - url: {{ temurin_url }}/{{ temurin_base }}_x64_{{ temurin_suffix }}        # [build_platform == "linux-64"]
-    sha256: dc6136eaa8c1898cbf8973bb1e203e1f653f4c9166be0f5bebe0b02c5f3b5ae3  # [build_platform == "linux-64"]
+    sha256: 3c8f2b53dd137cd86e54f40df96fd0fc56df72c749c06469e7eab216503bc7cf  # [build_platform == "linux-64"]
   # native compilation: currently unused
   - url: {{ temurin_url }}/{{ temurin_base }}_aarch64_{{ temurin_suffix }}    # [build_platform == "linux-aarch64"]
     sha256: 999fbd90b070f9896142f0eb28354abbeb367cbe49fd86885c626e2999189e0a  # [build_platform == "linux-aarch64"]
@@ -28,7 +28,7 @@ source:
     sha256: a8fba686f6eb8ae1d1a9566821dbd5a85a1108b96ad857fdbac5c1e4649fc56f  # [build_platform == "linux-ppc64le"]
 
   - url: https://github.com/openjdk/jdk{{ major }}u/archive/refs/tags/jdk-{{ jdk_full }}.tar.gz                 # [linux]
-    sha256: fa53248e26ccf0635483b8cb6be7dc577548831e1ce421def2782d1e2373ce46  # [linux]
+    sha256: ec23d97b129822744ee43581237ce42fb66854859437de6a67945ff8a35b4e0e  # [linux]
     folder: src                                                               # [linux]
     patches:                                                                  # [linux]
       - fix-arm.patch                                                         # [linux]
@@ -39,11 +39,11 @@ source:
   # example of full url for zulu_build=11.68.17-ca & version=11.0.21:
   # https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-macosx_x64.zip
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: 7f680681920674ffdd7eefe8d71f747f71a9eccd4884efca1005d0dd102e18bb  # [osx and x86_64]
+    sha256: 59172e4055efb62affec9d0ad2622c63cd5196f6191c0b51dd790463a27fe79e  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: a412561ae67f84e82e5c6cb6871d8354dc622bef0635f44ca7c39378fad620b0  # [osx and arm64]
+    sha256: 83a0f6eff83ece56590a6780a6f9975f7b2a666dfa8b33180a28f355eb5e12fa  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: 832971784adf3456f1cc7188e8e44b931ae793c5f835851fc3be6b2c435826fe  # [win64]
+    sha256: f4002a8090662ff66bf9f3248604be0f9d226e964085bd59bbea4b8535df3de1  # [win64]
 
 build:
   number: 0
