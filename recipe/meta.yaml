@@ -1,5 +1,5 @@
-{% set version = "8.0.412" %}
-{% set zulu_build = "8.78.0.19-ca" %}
+{% set version = "8.0.472" %}
+{% set zulu_build = "8.90.0.19-ca" %}
 
 {% set zulu_url = "https://cdn.azul.com/zulu/bin" %}
 {% set zulu_base = "zulu" ~ zulu_build ~ "-jdk" ~ version %}
@@ -10,22 +10,22 @@ package:
 
 source:
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_x64.tar.gz                      # [linux64]
-    sha256: 9c0ac5ebffa61520fee78ead52add0f4edd3b1b54b01b6a17429b719515caf90  # [linux64]
+    sha256: 6f9e3fa773829ac2553411fb0cdeb394980627c47c9ab8f8892d4b917b70e2dd  # [linux64]
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_aarch64.tar.gz                  # [aarch64]
-    sha256: 82c46c65d57e187ef68fdd125ef760eaeb52ebfe1be1a6a251cf5b43cbebc78a  # [aarch64]
+    sha256: c372fb26480c052537125013cb0ba7336c404e5190ea8f6e2de247b676432a67  # [aarch64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: b1b51f5202159f312d64837dac0c8d2b90db046b5eb85e38460b009cec11e9a6  # [osx and x86_64]
+    sha256: 1a856cf5b7d053f01d07b03d5c70286b9fd20c983a355c833e6821400308000e  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: fc5a06029cee288562297826a8a8c860768d757f47200d2b079c913512dee554  # [osx and arm64]
+    sha256: ab4623db23d100fb201cf0b291d430809e0186bccbbf0fb98049f9ba4e14d8bc  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: ca5499c301d5b42604d8535b8c40a7f928a796247b8c66a600333dd799798ff7  # [win64]
+    sha256: ff90484103d3fdb9808f737af027586c8dbfa1aa8a310ce99b0b5e0517567aee  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
     folder: fonts                                                             # [linux]
 
 build:
-  number: 2
+  number: 0
   # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
   # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
   # the Mach-O header or build everything from source.
