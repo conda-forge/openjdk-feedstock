@@ -232,7 +232,7 @@ done
 if [[ "$target_platform" == linux* ]]; then
   # This is not present on AdoptOpenJDK>=17 and appears to have been replaced with $INSTALL_DIR/libjli.so
   # mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
-    
+
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p $INSTALL_DIR/lib/fonts
