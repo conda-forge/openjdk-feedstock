@@ -111,7 +111,7 @@ function source_build
           --build=${BUILD} \
           --host=${BUILD} \
           --target=${BUILD} \
-	  --enable-linkable-runtime \
+          --enable-linkable-runtime \
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
@@ -237,7 +237,7 @@ done
 if [[ "$target_platform" == linux* ]]; then
   # This is not present on AdoptOpenJDK>=17 and appears to have been replaced with $INSTALL_DIR/libjli.so
   # mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
-    
+
   # Include dejavu fonts to allow java to work even on minimal cloud
   # images where these fonts are missing (thanks to @chapmanb)
   mkdir -p $INSTALL_DIR/lib/fonts
