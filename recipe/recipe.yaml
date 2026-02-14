@@ -2,9 +2,9 @@ schema_version: 1
 
 context:
   # constants
-  version: 21.0.9
-  openjdk_revision: 10
-  zulu_build: 21.46.19-ca
+  version: 21.0.10
+  openjdk_revision: 7
+  zulu_build: 21.48.17-ca
   zulu_url: https://cdn.azul.com/zulu/bin
   # first-order
   major: ${{ (version | split("."))[0] }}
@@ -29,12 +29,12 @@ source:
       # example of full url for version=17.0.8 & openjdk_revision=7:
       # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
       - url: ${{ temurin_url }}/${{ temurin_base }}_x64_${{ temurin_suffix }}
-        sha256: 810d3773df7e0d6c4394e4e244b264c8b30e0b05a0acf542d065fd78a6b65c2f
+        sha256: ea3b9bd464d6dd253e9a7accf59f7ccd2a36e4aa69640b7251e3370caef896a4
   - if: linux
     then:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
-        sha256: f2f9a21fd61ab3f63dac7e3d8747e849c9e0a1f14ed617c239ef9911755c756b
+        sha256: 6500906cb7cc49268ce4ca368db3ddf3541b40afd25eecb378e13d5a72f43214
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
@@ -44,18 +44,18 @@ source:
       # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
       # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
       - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_x64.zip
-        sha256: d2a8914f6e1489c9b27aeece3d8de393842242187204cf5b14684535ec116602
+        sha256: bdf8505d1fc2b4b54308a80c5378ee4267e9c99769237c9725a5a2d400bccc91
   - if: osx and arm64
     then:
       - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
-        sha256: c64b588e7496cafacabdf58b1bcf832071106bd789a647a2f8ad6d5d78016aa1
+        sha256: f7d114fc6e695e0dcd4cdb6ec6a996c00fce34d7098bda1d6fbe5c26c2b6e618
   - if: win
     then:
       - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
-        sha256: 0c9812c0fe527b59f48c70cb527035c8a7abe620b31f776b4ddc21bddc1cd067
+        sha256: 1bb5e1a3e22115b935dda4a847deff62918d1de8d6f602d51b4c5726dfe45b61
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
