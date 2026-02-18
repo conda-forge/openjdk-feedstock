@@ -55,7 +55,9 @@ source:
         sha256: 801804c63e0f8334c144471ad5d980592105e459b943430507199dbe88beb679
 
 build:
-  number: 0
+  number: 1
+  skip:
+    - not win
 
 outputs:
   - package:
