@@ -33,11 +33,6 @@ function jdk_install
   mkdir -p $INSTALL_DIR/conf
   mv conf/* $INSTALL_DIR/conf
 
-  if [[ "${build_platform}" != linux-* ]]; then
-    mkdir -p $INSTALL_DIR/jmods
-    mv jmods/* $INSTALL_DIR/jmods
-  fi
-
   mkdir -p $INSTALL_DIR/legal
   mv legal/* $INSTALL_DIR/legal
 
