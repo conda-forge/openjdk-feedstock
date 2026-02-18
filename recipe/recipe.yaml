@@ -56,6 +56,8 @@ source:
 
 build:
   number: 1
+  skip:
+    - not win
 
 outputs:
   - package:
