@@ -1,0 +1,188 @@
+schema_version: 1
+
+context:
+  # constants
+  version: 11.0.30
+  openjdk_revision: 7
+  zulu_build: 11.86.21-ca
+  zulu_url: https://cdn.azul.com/zulu/bin
+  # first-order
+  major: ${{ (version | split("."))[0] }}
+  jdk_full: ${{ version }}+${{ openjdk_revision }}
+  # second-order
+  temurin_url: https://github.com/adoptium/temurin${{ major }}-binaries/releases/download
+  temurin_base: jdk-${{ jdk_full }}/OpenJDK${{ major }}U-jdk
+  temurin_suffix: linux_hotspot_${{ jdk_full | replace("+", "_") }}.tar.gz
+  zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
+  # platform-specific
+  homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
+  extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
+  summary: ${{ "An open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
+
+recipe:
+  name: openjdk
+  version: ${{ version }}
+
+source:
+  - if: build_platform == "linux-64"
+    then:
+      # example of full url for version=11.0.21 & openjdk_revision=9:
+      # https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.21+9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.21_9.tar.gz
+      - url: ${{ temurin_url }}/${{ temurin_base }}_x64_${{ temurin_suffix }}
+        sha256: 1911fa4010d59985d4cba9f4295c704ae64d08dfc3c2d5747bbc18655b1e911a
+  - if: linux
+    then:
+      - target_directory: src
+        url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
+        sha256: cb3997de994369b7f6e323901c69c51131042c565c70e51eff154f316a651ec2
+        patches:
+          - patches/fix-arm.patch
+      - target_directory: fonts
+        url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
+        sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
+
+  - if: osx and x86_64
+    then:
+      # example of full url for zulu_build=11.68.17-ca & version=11.0.21:
+      # https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-macosx_x64.zip
+      - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_x64.zip
+        sha256: 2dc5cc02738006248cca0f13f100e31362685a1432d4c21801467f3f9db2fc7c
+  - if: osx and arm64
+    then:
+      - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
+        sha256: 8845a31bbbf290297a21c59b95a31b25852d07022caa68810bf9d3e06a299ee9
+  - if: win
+    then:
+      - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
+        sha256: e41690273ea37a6faaf54bcc0224362e36cd9c9483d988a856c1e8491ba19a4d
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: openjdk
+    build:
+      script:
+        file: build
+      dynamic_linking:
+        # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
+        # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
+        # the Mach-O header or build everything from source.
+        binary_relocation: ${{ false if osx else true }}
+    requirements:
+      build:
+        # compilers also on osx for creating signatures, on win for run-exports
+        - ${{ stdlib("c") }}
+        - ${{ compiler("cxx") }}
+        - if: linux
+          then:
+            - autoconf
+            - make
+            - pkg-config
+            - unzip
+            - zip
+        - if: linux and (build_platform != host_platform)
+          then:
+            - alsa-lib
+            - fontconfig
+            - freetype
+            - giflib
+            - harfbuzz
+            - lcms2
+            - libcups
+            - libjpeg-turbo
+            - libpng
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
+            - xorg-libxt
+            - xorg-libxtst
+            - xorg-xorgproto
+            - zlib
+        - if: win
+          then:
+            - m2-bash
+            - symlink-exe-build
+      host:
+        - if: linux
+          then:
+            - alsa-lib
+            - fontconfig
+            - freetype
+            - giflib
+            - harfbuzz
+            - harfbuzz
+            - lcms2
+            - libcups
+            - libjpeg-turbo
+            - libpng
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrandr
+            - xorg-libxrender
+            - xorg-libxt
+            - xorg-libxtst
+            - xorg-xorgproto
+        - if: unix
+          then:
+            - zlib
+      run:
+        - if: linux
+          then:
+          - xorg-libx11
+          - xorg-libxext
+          - xorg-libxi
+          - xorg-libxrender
+          - xorg-libxtst
+      ignore_run_exports:
+        by_name:
+          # the produced artefacts still need libc++.*.dylib on osx,
+          # but the one in the platform sdk is enough; avoid extra run-export
+          - libcxx
+    tests:
+      - files:
+          recipe:
+            - test-nio/
+            - if: unix
+              then:
+                - test-jni/
+                - test-jni.sh
+                - run_test.sh
+              else:
+                - run_test.bat
+        requirements:
+          run:
+            - if: unix
+              then:
+                - ${{ compiler("c") }}
+        script:
+          - java -version
+          - if: unix
+            then:
+              - '${JAVA_HOME}/bin/java -version'
+            else:
+              - '%JAVA_HOME%\bin\java -version'
+          - if: unix and not ppc64le
+            then:
+              - ./test-jni.sh
+
+about:
+  homepage: ${{ homepage }}
+  license: GPL-2.0-or-later WITH Classpath-exception-2.0
+  license_file:
+    - LICENSE
+    - ${{ extra_license }}
+  summary: ${{ summary }}
+
+extra:
+  recipe-maintainers:
+    - johanneskoester
+    - sodre
+    - CJ-Wright
+    - xhochy
+    - izahn
+    - h-vetinari

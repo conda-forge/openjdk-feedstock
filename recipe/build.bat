@@ -1,10 +1,14 @@
 setlocal EnableDelayedExpansion
+@echo on
 
 set INSTALL_DIR=%LIBRARY_PREFIX%\lib\jvm
 
 mkdir %INSTALL_DIR%\bin
 XCOPY bin\* %INSTALL_DIR%\bin\ /s /i /y
 if errorlevel 1 exit 1
+
+:: remove vc runtime bits
+del /s /q %INSTALL_DIR%\bin\api-ms-win-*
 
 mkdir %INSTALL_DIR%\include
 XCOPY include\* %INSTALL_DIR%\include\ /s /i /y
