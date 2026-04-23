@@ -46,7 +46,7 @@ function jdk_install
   mkdir -p $INSTALL_DIR/conf
   mv conf/* $INSTALL_DIR/conf
 
-  if [[ "${build_platform}" != linux-* ]]; then
+  if [[ "${build_platform}" =~ ^osx-.* ]]; then
     mkdir -p $INSTALL_DIR/jmods
     mv jmods/* $INSTALL_DIR/jmods
   fi
@@ -72,7 +72,7 @@ function source_build
 
   chmod +x configure
 
-  if [[ "$target_platform" == linux* ]]; then
+  if [[ "$target_platform" =~ ^linux-.* ]]; then
     rm $PREFIX/include/iconv.h
   fi
 
@@ -153,7 +153,7 @@ function source_build
   make JOBS=$CPU_COUNT images $_TOOLCHAIN_ARGS || printerror
 }
 
-if [[ "$target_platform" == linux* ]]; then
+if [[ "$target_platform" =~ ^linux-.* ]]; then
   export INSTALL_DIR=$SRC_DIR/bootjdk/
   jdk_install
   source_build
@@ -174,7 +174,7 @@ for i in $(find $INSTALL_DIR/man -type f -printf '%P\n'); do
     ln -s -r -f "$INSTALL_DIR/man/$i" "$PREFIX/man/$i"
 done
 
-if [[ "$target_platform" == linux* ]]; then
+if [[ "$target_platform" =~ ^linux-.* ]]; then
   # This is not present on AdoptOpenJDK>=17 and appears to have been replaced with $INSTALL_DIR/libjli.so
   # mv $INSTALL_DIR/lib/jli/*.so $INSTALL_DIR/lib/
 
