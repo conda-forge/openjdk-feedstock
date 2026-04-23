@@ -3,19 +3,6 @@ About openjdk-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/openjdk-feedstock/blob/main/LICENSE.txt)
 
-
-About openjdk
--------------
-
-Home: https://openjdk.java.net/
-
-Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
-
-Summary: An open-source implementation of the JDK
-
-About openjdk
--------------
-
 Home: https://www.azul.com/products/zulu/
 
 Package license: GPL-2.0-or-later WITH Classpath-exception-2.0
@@ -65,13 +52,6 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5061&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=5061&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/openjdk-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
             </tr><tr>

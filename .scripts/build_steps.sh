@@ -20,6 +20,7 @@ export PYTHONUNBUFFERED=1
 export RECIPE_ROOT="${RECIPE_ROOT:-/home/conda/recipe_root}"
 export CI_SUPPORT="${FEEDSTOCK_ROOT}/.ci_support"
 export CONFIG_FILE="${CI_SUPPORT}/${CONFIG}.yaml"
+export RATTLER_CACHE_DIR="${FEEDSTOCK_ROOT}/build_artifacts/pkg_cache"
 
 cat >~/.condarc <<CONDARC
 
@@ -60,9 +61,6 @@ ulimit -n 1024
 # make the build number clobber
 make_build_number "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 
-if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]] && [[ "${HOST_PLATFORM}" != linux-* ]] && [[ "${BUILD_WITH_CONDA_DEBUG:-0}" != 1 ]]; then
-    EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --test skip"
-fi
 
 
 ( endgroup "Configuring conda" ) 2> /dev/null
