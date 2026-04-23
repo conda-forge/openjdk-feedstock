@@ -76,66 +76,6 @@ function source_build
     rm $PREFIX/include/iconv.h
   fi
 
-
-  if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
-    (
-      if [[ "$build_platform" == linux* ]]; then
-        rm $BUILD_PREFIX/include/iconv.h
-      fi
-
-      export CPATH=$BUILD_PREFIX/include
-      export LIBRARY_PATH=$BUILD_PREFIX/lib
-      _TOOLCHAIN_ARGS="CC=${CC_FOR_BUILD} CXX=${CXX_FOR_BUILD} CPP=${CXX_FOR_BUILD//+/p}"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS AR=$BUILD_PREFIX/bin/$BUILD-ar"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS BUILD_CXXFILT=$BUILD_PREFIX/bin/$BUILD-c++filt"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS NM=$BUILD_PREFIX/bin/$BUILD-nm"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJCOPY=$BUILD_PREFIX/bin/$BUILD-objcopy"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS OBJDUMP=$BUILD_PREFIX/bin/$BUILD-objdump"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS READELF=$BUILD_PREFIX/bin/$BUILD-readelf"
-      _TOOLCHAIN_ARGS="$_TOOLCHAIN_ARGS STRIP=$BUILD_PREFIX/bin/$BUILD-strip"
-      export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
-
-      # CFLAGS, CXXFLAGS are intentionally empty
-      export -n CFLAGS
-      export -n CXXFLAGS
-      unset CPPFLAGS
-
-      CFLAGS=$(echo $CFLAGS | sed 's/-mcpu=[a-z0-9]*//g' | sed 's/-mtune=[a-z0-9]*//g' | sed 's/-march=[a-z0-9]*//g')
-      CXXFLAGS=$(echo $CXXFLAGS | sed 's/-mcpu=[a-z0-9]*//g' | sed 's/-mtune=[a-z0-9]*//g' | sed 's/-march=[a-z0-9]*//g')
-
-      ulimit -c unlimited
-      mkdir build-build
-        pushd build-build
-        ../configure \
-          --prefix=${BUILD_PREFIX} \
-          --build=${BUILD} \
-          --host=${BUILD} \
-          --target=${BUILD} \
-          --enable-linkable-runtime \
-          --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
-          --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
-          --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
-          --with-log=${JVM_BUILD_LOG_LEVEL} \
-          --with-stdc++lib=dynamic \
-          --disable-warnings-as-errors \
-          --with-x=${BUILD_PREFIX} \
-          --with-cups=${BUILD_PREFIX} \
-          --with-freetype=system \
-          --with-giflib=system \
-          --with-libpng=system \
-          --with-zlib=system \
-          --with-libjpeg=system \
-          --with-lcms=system \
-          --with-harfbuzz=system \
-          --with-fontconfig=${BUILD_PREFIX} \
-          --with-boot-jdk=$SRC_DIR/bootjdk \
-          $_TOOLCHAIN_ARGS
-        make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS images
-      popd
-    )
-  fi
-
-
   export CPATH=$PREFIX/include
   export LIBRARY_PATH=$PREFIX/lib
 
