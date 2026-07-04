@@ -4,6 +4,10 @@ set -exuo pipefail
 
 JVM_BUILD_LOG_LEVEL=warn
 
+ls -ll ./Contents
+
+cd Contents
+
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
 # TODO: Fix https://github.com/thefloweringash/sigtool to add --remove-signature support
 if [[ "${target_platform}" == "osx-64" ]]; then
