@@ -55,7 +55,7 @@ source:
         sha256: 801804c63e0f8334c144471ad5d980592105e459b943430507199dbe88beb679
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
@@ -149,6 +149,7 @@ outputs:
               then:
                 - test-jni/
                 - test-jni.sh
+                - test_jlink.sh
                 - run_test.sh
               else:
                 - run_test.bat
@@ -169,6 +170,9 @@ outputs:
           - if: unix and not ppc64le
             then:
               - ./test-jni.sh
+          - if: linux and not ppc64le
+            then:
+              - ./test_jlink.sh
 
 about:
   homepage: ${{ homepage }}

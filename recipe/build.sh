@@ -188,6 +188,7 @@ function source_build
     --build=${BUILD} \
     --host=${HOST} \
     --target=${HOST} \
+    --enable-linkable-runtime \
     --with-extra-cflags="$CFLAGS -I$PREFIX/harfbuzz" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
