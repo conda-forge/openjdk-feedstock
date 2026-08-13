@@ -57,7 +57,7 @@ source:
         sha256: e41690273ea37a6faaf54bcc0224362e36cd9c9483d988a856c1e8491ba19a4d
 
 build:
-  number: 1
+  number: 12
 
 outputs:
   - package:
@@ -82,26 +82,26 @@ outputs:
             - pkg-config
             - unzip
             - zip
-        - if: linux and (build_platform != host_platform)
-          then:
-            - alsa-lib
-            - fontconfig
-            - freetype
-            - giflib
-            - harfbuzz
-            - lcms2
-            - libcups
-            - libjpeg-turbo
-            - libpng
-            - xorg-libx11
-            - xorg-libxext
-            - xorg-libxi
-            - xorg-libxrandr
-            - xorg-libxrender
-            - xorg-libxt
-            - xorg-libxtst
-            - xorg-xorgproto
-            - zlib
+            - if: build_platform != host_platform
+              then:
+                - alsa-lib
+                - fontconfig
+                - freetype
+                - giflib
+                - harfbuzz
+                - lcms2
+                - libcups
+                - libjpeg-turbo
+                - libpng
+                - xorg-libx11
+                - xorg-libxext
+                - xorg-libxi
+                - xorg-libxrandr
+                - xorg-libxrender
+                - xorg-libxt
+                - xorg-libxtst
+                - xorg-xorgproto
+                - zlib
         - if: win
           then:
             - m2-bash
@@ -133,11 +133,11 @@ outputs:
       run:
         - if: linux
           then:
-          - xorg-libx11
-          - xorg-libxext
-          - xorg-libxi
-          - xorg-libxrender
-          - xorg-libxtst
+            - xorg-libx11
+            - xorg-libxext
+            - xorg-libxi
+            - xorg-libxrender
+            - xorg-libxtst
       ignore_run_exports:
         by_name:
           # the produced artefacts still need libc++.*.dylib on osx,
@@ -164,12 +164,12 @@ outputs:
           - if: unix
             then:
               - '${JAVA_HOME}/bin/java -version'
+              - if: not ppc64le
+                then:
+                  - ./test-jni.sh
+
             else:
               - '%JAVA_HOME%\bin\java -version'
-          - if: unix and not ppc64le
-            then:
-              - ./test-jni.sh
-
 about:
   homepage: ${{ homepage }}
   license: GPL-2.0-or-later WITH Classpath-exception-2.0
