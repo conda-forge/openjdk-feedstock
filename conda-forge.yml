@@ -21,3 +21,5 @@ provider:
   linux_ppc64le: azure
   win: azure
 test: native_and_emulated
+workflow_settings:
+  free_disk_space: quick
