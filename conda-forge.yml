@@ -18,6 +18,7 @@ provider:
   linux_aarch64: azure
   linux_ppc64le: azure
   win: azure
+  win_arm64: default
 test: native_and_emulated
 workflow_settings:
   free_disk_space: quick
