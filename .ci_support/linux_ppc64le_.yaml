@@ -1,9 +1,11 @@
+DOCKER_PLATFORM:
+- linux/amd64
 alsa_lib:
 - '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
-- '14'
+- '15'
 c_stdlib:
 - sysroot
 c_stdlib_version:
@@ -15,15 +17,15 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '14'
+- '15'
 docker_image:
-- quay.io/condaforge/linux-anvil-x86_64:alma9
+- quay.io/condaforge/linux-anvil-x86_64:alma10
 fontconfig:
 - '2'
 freetype:
 - '2'
 giflib:
-- '5.2'
+- '6'
 lcms2:
 - '2'
 libjpeg_turbo:
