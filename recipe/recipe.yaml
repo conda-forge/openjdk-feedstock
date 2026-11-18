@@ -80,7 +80,7 @@ outputs:
           then:
             - autoconf
             - make
-            - pkg-config
+            - pkgconf
             - unzip
             - zip
             - if: build_platform != host_platform
