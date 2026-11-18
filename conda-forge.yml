@@ -18,4 +18,6 @@ provider:
   win_arm64: default
 test: native_and_emulated
 workflow_settings:
-  free_disk_space: quick
+  free_disk_space:
+    - value: quick
+      os: linux
