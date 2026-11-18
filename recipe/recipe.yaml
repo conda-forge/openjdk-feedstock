@@ -6,16 +6,10 @@ context:
   openjdk_revision: 2
   zulu_build: 17.70.201-ca
   zulu_url: https://cdn.azul.com/zulu/bin
-  # Temurin is only used as the boot JDK for the from-source linux build,
-  # so it does not need to match `version`; bump independently.
-  bootjdk_full: "17.0.18+8"
   # first-order
   major: ${{ (version | split("."))[0] }}
   jdk_full: ${{ version }}+${{ openjdk_revision }}
   # second-order
-  temurin_url: https://github.com/adoptium/temurin${{ major }}-binaries/releases/download
-  temurin_base: jdk-${{ bootjdk_full }}/OpenJDK${{ major }}U-jdk
-  temurin_suffix: linux_hotspot_${{ bootjdk_full | replace("+", "_") }}.tar.gz
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
   homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
@@ -35,12 +29,6 @@ recipe:
   version: ${{ version }}
 
 source:
-  - if: build_platform == "linux-64"
-    then:
-      # example of full url for version=17.0.8 & openjdk_revision=7:
-      # https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz
-      - url: ${{ temurin_url }}/${{ temurin_base }}_x64_${{ temurin_suffix }}
-        sha256: 0c94cbb54325c40dcf026143eb621562017db5525727f2d9131a11250f72c450
   - if: linux
     then:
       - target_directory: src
@@ -76,6 +64,8 @@ outputs:
         - ${{ compiler("cxx") }}
         - if: linux
           then:
+            # boot JDK for the from-source build; must be JDK N-1 or N
+            - openjdk >=${{ (major | int) - 1 }},<${{ (major | int) + 1 }}
             - autoconf
             - make
             - pkgconf

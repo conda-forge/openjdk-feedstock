@@ -129,7 +129,7 @@ function source_build
           --with-lcms=system \
           --with-harfbuzz=system \
           --with-fontconfig=${BUILD_PREFIX} \
-          --with-boot-jdk=$SRC_DIR/bootjdk \
+          --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
           $_TOOLCHAIN_ARGS
         make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS images
       popd
@@ -205,7 +205,7 @@ function source_build
     --with-stdc++lib=dynamic \
     --with-harfbuzz=system \
     --disable-warnings-as-errors \
-    --with-boot-jdk=$SRC_DIR/bootjdk \
+    --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
     --disable-javac-server \
     ${CONFIGURE_ARGS} \
     $_TOOLCHAIN_ARGS
@@ -215,8 +215,6 @@ function source_build
 }
 
 if [[ "$target_platform" == linux* ]]; then
-  export INSTALL_DIR=$SRC_DIR/bootjdk/
-  jdk_install
   source_build
   cd build/*/images/jdk
 fi
