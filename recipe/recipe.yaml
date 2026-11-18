@@ -52,10 +52,14 @@ source:
     then:
       - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
         sha256: 6bba467c3758cc1735aca05bb6231d332b42e07f096d978996cb233debdcae09
-  - if: win
+  - if: win and x86_64
     then:
       - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
         sha256: 78865bdbc82b1164e475c36d471f53880250a768385bc8e4132598d75b58bc36
+  - if: win and arm64
+    then:
+      - url: ${{ zulu_url }}/${{ zulu_base }}-win_aarch64.zip
+        sha256: 023bddb8cde87e8c44f5573c3187568692f869f51147967e855ee16b71cdfa43
 
 build:
   number: 0
