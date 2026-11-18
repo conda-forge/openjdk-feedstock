@@ -1,5 +1,5 @@
-{% set version = "8.0.472" %}
-{% set zulu_build = "8.90.0.19-ca" %}
+{% set version = "8.0.514" %}
+{% set zulu_build = "8.98.0.201-ca" %}
 
 {% set zulu_url = "https://cdn.azul.com/zulu/bin" %}
 {% set zulu_base = "zulu" ~ zulu_build ~ "-jdk" ~ version %}
@@ -10,15 +10,15 @@ package:
 
 source:
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_x64.tar.gz                      # [linux64]
-    sha256: 6f9e3fa773829ac2553411fb0cdeb394980627c47c9ab8f8892d4b917b70e2dd  # [linux64]
+    sha256: 16a4c55c3061ee41e94edb109f5aea1c55a2952d37e25e215d478b8347350860  # [linux64]
   - url: {{ zulu_url }}/{{ zulu_base }}-linux_aarch64.tar.gz                  # [aarch64]
-    sha256: c372fb26480c052537125013cb0ba7336c404e5190ea8f6e2de247b676432a67  # [aarch64]
+    sha256: 2a8b15fcccadfc7b5c2904f078ef2de56aeb76aae661b95ab527ffeadf0cd592  # [aarch64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_x64.zip                        # [osx and x86_64]
-    sha256: 1a856cf5b7d053f01d07b03d5c70286b9fd20c983a355c833e6821400308000e  # [osx and x86_64]
+    sha256: 5b7c46097db39cf6856403c88566489a73c09b00dfe63a3f2d9e02ede7f1489e  # [osx and x86_64]
   - url: {{ zulu_url }}/{{ zulu_base }}-macosx_aarch64.zip                    # [osx and arm64]
-    sha256: ab4623db23d100fb201cf0b291d430809e0186bccbbf0fb98049f9ba4e14d8bc  # [osx and arm64]
+    sha256: 592400fce5a644284e7ad69b6bedb175c10ff69a884654ecbe4f92ecc10d082c  # [osx and arm64]
   - url: {{ zulu_url }}/{{ zulu_base }}-win_x64.zip                           # [win64]
-    sha256: ff90484103d3fdb9808f737af027586c8dbfa1aa8a310ce99b0b5e0517567aee  # [win64]
+    sha256: ab833a2af66a80e003dacc97c598eaa8fa1a54c2be441e661ef80214eba99a97  # [win64]
 
   - url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip  # [linux]
     sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a  # [linux]
