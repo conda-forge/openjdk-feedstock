@@ -43,7 +43,7 @@ source:
         sha256: ${{ zulu_hash }}
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
