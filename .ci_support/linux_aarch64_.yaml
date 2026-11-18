@@ -1,5 +1,5 @@
 DOCKER_PLATFORM:
-- linux/amd64
+- linux/aarch64
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -19,7 +19,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '15'
 docker_image:
-- quay.io/condaforge/linux-anvil-x86_64:alma10
+- quay.io/condaforge/linux-anvil-aarch64:alma10
 fontconfig:
 - '2'
 freetype:
