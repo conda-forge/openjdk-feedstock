@@ -19,6 +19,13 @@ context:
   extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
   summary: ${{ "An open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
 
+  # only combinations are {osx-64, osx-arm64, win-64}
+  zulu_os: ${{ "macosx" if osx else "win" }}
+  zulu_arch: ${{ "x64" if x86_64 else "aarch64" }}
+  zulu_hash: ${{ "2dc5cc02738006248cca0f13f100e31362685a1432d4c21801467f3f9db2fc7c" if (osx and x86_64) else
+                 "8845a31bbbf290297a21c59b95a31b25852d07022caa68810bf9d3e06a299ee9" if (osx and arm64) else
+                 "e41690273ea37a6faaf54bcc0224362e36cd9c9483d988a856c1e8491ba19a4d" }}
+
 recipe:
   name: openjdk
   version: ${{ version }}
@@ -40,21 +47,11 @@ source:
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
-
-  - if: osx and x86_64
-    then:
-      # example of full url for zulu_build=11.68.17-ca & version=11.0.21:
-      # https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-macosx_x64.zip
-      - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_x64.zip
-        sha256: 2dc5cc02738006248cca0f13f100e31362685a1432d4c21801467f3f9db2fc7c
-  - if: osx and arm64
-    then:
-      - url: ${{ zulu_url }}/${{ zulu_base }}-macosx_aarch64.zip
-        sha256: 8845a31bbbf290297a21c59b95a31b25852d07022caa68810bf9d3e06a299ee9
-  - if: win
-    then:
-      - url: ${{ zulu_url }}/${{ zulu_base }}-win_x64.zip
-        sha256: e41690273ea37a6faaf54bcc0224362e36cd9c9483d988a856c1e8491ba19a4d
+    else:
+      # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
+      # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
+      - url: ${{ zulu_url }}/${{ zulu_base }}-${{ zulu_os }}_${{ zulu_arch }}.zip
+        sha256: ${{ zulu_hash }}
 
 build:
   number: 1
