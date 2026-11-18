@@ -6,10 +6,9 @@ context:
   openjdk_revision: 2
   zulu_build: 25.38.201-ca
   zulu_url: https://cdn.azul.com/zulu/bin
-  # first-order
-  major: ${{ (version | split("."))[0] }}
+  # derived
+  major: ${{ (version | split("."))[0] | int }}
   jdk_full: ${{ version }}+${{ openjdk_revision }}
-  # second-order
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
   homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
@@ -65,7 +64,7 @@ outputs:
         - if: linux
           then:
             # boot JDK for the from-source build; must be JDK N-1 or N
-            - openjdk >=${{ (major | int) - 1 }},<${{ (major | int) + 1 }}
+            - openjdk >=${{ major - 1 }},<${{ major + 1 }}
             - autoconf
             - make
             - pkgconf
