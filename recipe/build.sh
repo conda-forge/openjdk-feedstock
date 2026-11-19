@@ -2,6 +2,12 @@
 
 set -exuo pipefail
 
+# Since late 2026, Zulu macOS zips are a .jdk bundle with the JDK under
+# Contents/Home instead of a flat layout.
+if [[ "${target_platform}" == osx-* && -d Contents/Home ]]; then
+  cd Contents/Home
+fi
+
 # Remove code signatures from osx-64 binaries as they will be invalidated in the later process.
 if [[ "${target_platform}" == "osx-64" ]]; then
   for b in `ls bin`; do
