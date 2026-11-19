@@ -44,6 +44,8 @@ source:
 
 build:
   number: 0
+  # no win-arm64 zulu builds for v26
+  skip: win and arm64
 
 outputs:
   - package:
