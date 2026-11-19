@@ -12,7 +12,7 @@ jobs:
         CONFIG: osx_64_
         UPLOAD_PACKAGES: 'True'
         build_workspace_dir: ~/miniforge3/conda-bld
-        free_disk_space: quick
+        free_disk_space: skip
         pagefile_size: 0
         resize_partitions: false
         store_build_artifacts: false
@@ -22,22 +22,17 @@ jobs:
         CONFIG: osx_arm64_
         UPLOAD_PACKAGES: 'True'
         build_workspace_dir: ~/miniforge3/conda-bld
-        free_disk_space: quick
+        free_disk_space: skip
         pagefile_size: 0
         resize_partitions: false
         store_build_artifacts: false
         tools_install_dir: ~/miniforge3
-        vm_image: macOS-15
+        vm_image: macOS-15-arm64
   timeoutInMinutes: 360
   variables: {}
 
   steps:
   # TODO: Fast finish on azure pipelines?
-  - script: |
-      .scripts/free_disk_space.sh "$(free_disk_space)"
-    env:
-      OS: macos
-    displayName: Manage disk space
   - script: |
       export CI=azure
       export CONDA_BLD_PATH=$(build_workspace_dir)
