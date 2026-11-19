@@ -2,9 +2,9 @@ schema_version: 1
 
 context:
   # constants
-  version: 25.0.5.1
-  openjdk_revision: 2
-  zulu_build: 25.38.201-ca
+  version: 26.0.2.1
+  openjdk_revision: 1
+  zulu_build: 26.32.203-ca
   zulu_url: https://cdn.azul.com/zulu/bin
   # derived
   major: ${{ (version | split("."))[0] | int }}
@@ -18,9 +18,9 @@ context:
   # only combinations are {osx, win} x {x64, arm64}
   zulu_os: ${{ "macosx" if osx else "win" }}
   zulu_arch: ${{ "x64" if x86_64 else "aarch64" }}
-  zulu_hash: ${{ "d89e88d732cf0b6a662f1f97b159d176104fc1640278713c9591df8c244c0e47" if (osx and x86_64) else
-                 "3fef8403cfdc7126689932af7639ab94020ca31d619acad9571596e4739b0128" if (osx and arm64) else
-                 "01c1c4cfe8c0e04a22a46d3cd1ddd18b9db9fb2a1b0a88ffd90e0aa57420845e" if (win and x86_64) else
+  zulu_hash: ${{ "95b0801bed00e24a1bdcf5883550a26b950b25366ddeb40cf1f638e44844a8c8" if (osx and x86_64) else
+                 "014131be55094c39e20bb2a6e6235d333992f1f74f81b72ba24fef163209b29c" if (osx and arm64) else
+                 "d76294c46dcd0a1d532f7a5b7023fc404d14f3a7e7a7f602329201f20908cd71" if (win and x86_64) else
                  "c37778de9e4bbb05aa5357251b36430e371c3ed001784f3792fe4cd4defcefdd" }}
 
 recipe:
@@ -32,7 +32,7 @@ source:
     then:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
-        sha256: b3ecd75437342ee932f71792bbbdd09cd336659324f94ad0e81e527af74d8c5c
+        sha256: 334810683c6beafe00e4945d95b398f0d93ae09fe483c7b30f0c3f9d32403416
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
@@ -43,7 +43,7 @@ source:
         sha256: ${{ zulu_hash }}
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - package:
