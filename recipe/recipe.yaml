@@ -2,9 +2,9 @@ schema_version: 1
 
 context:
   # constants
-  version: 26.0.2.1
-  openjdk_revision: 1
-  zulu_build: 26.32.203-ca
+  version: 27.0.1.1
+  openjdk_revision: 4
+  zulu_build: 27.30.201-ca
   zulu_url: https://cdn.azul.com/zulu/bin
   # derived
   major: ${{ (version | split("."))[0] | int }}
@@ -18,10 +18,10 @@ context:
   # only combinations are {osx, win} x {x64, arm64}
   zulu_os: ${{ "macosx" if osx else "win" }}
   zulu_arch: ${{ "x64" if x86_64 else "aarch64" }}
-  zulu_hash: ${{ "95b0801bed00e24a1bdcf5883550a26b950b25366ddeb40cf1f638e44844a8c8" if (osx and x86_64) else
-                 "014131be55094c39e20bb2a6e6235d333992f1f74f81b72ba24fef163209b29c" if (osx and arm64) else
-                 "d76294c46dcd0a1d532f7a5b7023fc404d14f3a7e7a7f602329201f20908cd71" if (win and x86_64) else
-                 "c37778de9e4bbb05aa5357251b36430e371c3ed001784f3792fe4cd4defcefdd" }}
+  zulu_hash: ${{ "a35898f7c8ce88eaf7cd30630ad2db9e9ea1c59d8853b774c4e3271d35ae318a" if (osx and x86_64) else
+                 "31bff5d3b423d582f1941ec37f8e6a21b297852ef561cd60bb316d8b20ac2f0c" if (osx and arm64) else
+                 "f5424ea36f832aa28a0441a57ffb1dfe2cd3d903802c0a36d22576b1acc430ec" if (win and x86_64) else
+                 "699459a58243a296af0d6beb03e03a58e4a3706f27ac5abd96256f0858a704b2" }}
 
 recipe:
   name: openjdk
@@ -32,7 +32,7 @@ source:
     then:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
-        sha256: 334810683c6beafe00e4945d95b398f0d93ae09fe483c7b30f0c3f9d32403416
+        sha256: 93eb9316f5c932929cb91dd6781d5537e972661ac4b9f8037de35bef4e1181bc
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
@@ -44,8 +44,6 @@ source:
 
 build:
   number: 0
-  # no win-arm64 zulu builds for v26
-  skip: win and arm64
 
 outputs:
   - package:
