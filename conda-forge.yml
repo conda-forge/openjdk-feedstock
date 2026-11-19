@@ -1,5 +1,6 @@
 bot:
   abi_migration_branches:
+  - java25
   - java21
   - java17
   - java11
