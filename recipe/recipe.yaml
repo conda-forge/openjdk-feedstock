@@ -41,6 +41,8 @@ source:
 
 build:
   number: 0
+  skip:
+    - not osx
 
 outputs:
   - package:
