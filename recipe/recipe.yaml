@@ -45,6 +45,8 @@ source:
 
 build:
   number: 0
+  # feel free to debug this if you care about ppc on java11
+  skip: ppc64le
 
 outputs:
   - package:
