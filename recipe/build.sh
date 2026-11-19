@@ -262,7 +262,6 @@ done
 # images where these fonts are missing (thanks to @chapmanb)
 mkdir -p $INSTALL_DIR/lib/fonts
 mv $SRC_DIR/fonts/ttf/* $INSTALL_DIR/lib/fonts/
-fi
 
 find $PREFIX -name "*.debuginfo" -exec rm -rf {} \;
 
