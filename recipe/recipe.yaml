@@ -30,6 +30,8 @@ source:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
         sha256: 93eb9316f5c932929cb91dd6781d5537e972661ac4b9f8037de35bef4e1181bc
+        patches:
+          - patches/0001-fix-rpath.patch
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a

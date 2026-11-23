@@ -1,0 +1,22 @@
+From 381b3d27a3f92c0d2bf9e54a3891aa5c50e07593 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Mon, 23 Nov 2026 18:47:22 +1100
+Subject: [PATCH] fix rpath
+
+---
+ make/autoconf/flags-ldflags.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/make/autoconf/flags-ldflags.m4 b/make/autoconf/flags-ldflags.m4
+index ff10828731e..35023d283fd 100644
+--- a/make/autoconf/flags-ldflags.m4
++++ b/make/autoconf/flags-ldflags.m4
+@@ -111,7 +111,7 @@ AC_DEFUN([FLAGS_SETUP_LDFLAGS_HELPER],
+     fi
+     # FIXME: We should really generalize SetSharedLibraryOrigin instead.
+     OS_LDFLAGS_JVM_ONLY="-Wl,-rpath,@loader_path/. -Wl,-rpath,@loader_path/.."
+-    OS_LDFLAGS="-mmacosx-version-min=$MACOSX_VERSION_MIN -Wl,-reproducible"
++    OS_LDFLAGS="-mmacosx-version-min=$MACOSX_VERSION_MIN -Wl,-reproducible -Wl,-rpath,${PREFIX}/lib -L${PREFIX}/lib"
+   fi
+ 
+   # Setup debug level-dependent LDFLAGS
