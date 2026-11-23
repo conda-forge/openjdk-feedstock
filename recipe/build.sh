@@ -206,6 +206,9 @@ function source_build
     CONFIGURE_ARGS="$CONFIGURE_ARGS --with-cups=${CONDA_BUILD_SYSROOT}/usr"
     # system libs not supported for non-linux by openjdk
     CONFIGURE_ARGS="$CONFIGURE_ARGS --with-freetype=bundled"
+
+    # FIXME: remove this as it makes this script less portable.
+    export DYLD_FALLBACK_LIBRARY_PATH=$PREFIX/lib
   fi
 
   ./configure \
