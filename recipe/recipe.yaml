@@ -33,6 +33,14 @@ source:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
         sha256: 1358a7fbe258370744a11a4be8017bd9d30a00a5fc5b784f9221815bb7444a4d
+        patches:
+          # backport https://github.com/openjdk/jdk/commit/26890d19096a9af95df05105e7e2972068af3742
+          # plus prerequisites:
+          # https://github.com/openjdk/jdk/commit/cab9def1c1ab28b0b1a8cf268d0853f6e2bfa77f
+          # https://github.com/openjdk/jdk/commit/9c88c5bb63fb67f301e843d1bd5700d7e5e95204
+          - patches/0001-8282948-JDK-8274980-missed-correct-handling-of-MACOS.patch
+          - patches/0002-8282700-Properly-handle-several-without-options-duri.patch
+          - patches/0003-8296478-Rework-8282948-and-8282700-to-use-the-new-au.patch
       - target_directory: fonts
         url: https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
         sha256: 7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a
