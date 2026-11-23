@@ -11,16 +11,13 @@ context:
   jdk_full: ${{ version }}+${{ openjdk_revision }}
   zulu_base: zulu${{ zulu_build }}-jdk${{ version }}
   # platform-specific
-  homepage: ${{ "https://openjdk.java.net" if linux else "https://www.azul.com/products/zulu/" }}
-  extra_license: ${{ "fonts/LICENSE" if linux else "LICENSE" }}
-  summary: ${{ "An open-source implementation of the JDK" if linux else "The Zulu OpenJDK build" }}
+  homepage: ${{ "https://openjdk.java.net" if unix else "https://www.azul.com/products/zulu/" }}
+  extra_license: ${{ "fonts/LICENSE" if unix else "LICENSE" }}
+  summary: ${{ "An open-source implementation of the JDK" if unix else "The Zulu OpenJDK build" }}
 
   # only combinations are {osx, win} x {x64, arm64}
-  zulu_os: ${{ "macosx" if osx else "win" }}
   zulu_arch: ${{ "x64" if x86_64 else "aarch64" }}
-  zulu_hash: ${{ "a35898f7c8ce88eaf7cd30630ad2db9e9ea1c59d8853b774c4e3271d35ae318a" if (osx and x86_64) else
-                 "31bff5d3b423d582f1941ec37f8e6a21b297852ef561cd60bb316d8b20ac2f0c" if (osx and arm64) else
-                 "f5424ea36f832aa28a0441a57ffb1dfe2cd3d903802c0a36d22576b1acc430ec" if (win and x86_64) else
+  zulu_hash: ${{ "f5424ea36f832aa28a0441a57ffb1dfe2cd3d903802c0a36d22576b1acc430ec" if (win and x86_64) else
                  "699459a58243a296af0d6beb03e03a58e4a3706f27ac5abd96256f0858a704b2" }}
 
 recipe:
@@ -28,7 +25,7 @@ recipe:
   version: ${{ version }}
 
 source:
-  - if: linux
+  - if: unix
     then:
       - target_directory: src
         url: https://github.com/openjdk/jdk${{ major }}u/archive/refs/tags/jdk-${{ jdk_full }}.tar.gz
@@ -39,7 +36,7 @@ source:
     else:
       # example of full url for zulu_build=17.44.15-ca & version=17.0.8:
       # https://cdn.azul.com/zulu/bin/zulu17.44.15-ca-jdk17.0.8-macosx_x64.zip
-      - url: ${{ zulu_url }}/${{ zulu_base }}-${{ zulu_os }}_${{ zulu_arch }}.zip
+      - url: ${{ zulu_url }}/${{ zulu_base }}-win_${{ zulu_arch }}.zip
         sha256: ${{ zulu_hash }}
 
 build:
@@ -55,17 +52,12 @@ outputs:
         # see https://github.com/prefix-dev/rattler-build/issues/2587
         env:
           PKG_VERSION: ${{ version }}
-      dynamic_linking:
-        # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
-        # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
-        # the Mach-O header or build everything from source.
-        binary_relocation: ${{ false if osx else true }}
     requirements:
       build:
         # compilers also on osx for creating signatures, on win for run-exports
         - ${{ stdlib("c") }}
         - ${{ compiler("cxx") }}
-        - if: linux
+        - if: unix
           then:
             # boot JDK for the from-source build; must be JDK N-1 or N
             - openjdk >=${{ major - 1 }},<${{ major + 1 }}
@@ -99,16 +91,14 @@ outputs:
             - m2-bash
             - symlink-exe-build
       host:
-        - if: linux
+        - if: unix
           then:
-            - alsa-lib
             - fontconfig
             - freetype
             - giflib
             - harfbuzz
             - harfbuzz
             - lcms2
-            - libcups
             - libjpeg-turbo
             - libpng
             - xorg-libx11
@@ -119,14 +109,11 @@ outputs:
             - xorg-libxt
             - xorg-libxtst
             - xorg-xorgproto
-        - if: unix
-          then:
             - zlib
-      ignore_run_exports:
-        by_name:
-          # the produced artefacts still need libc++.*.dylib on osx,
-          # but the one in the platform sdk is enough; avoid extra run-export
-          - libcxx
+        - if: linux
+          then:
+            - alsa-lib
+            - libcups
     tests:
       - files:
           recipe:
