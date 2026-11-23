@@ -124,6 +124,7 @@ function source_build
           --with-libpng=system \
           --with-log=${JVM_BUILD_LOG_LEVEL} \
           --with-stdc++lib=dynamic \
+          --with-version-string="${PKG_VERSION}-condaforge" \
           --with-x=${BUILD_PREFIX} \
           --with-zlib=system \
           $_TOOLCHAIN_ARGS
@@ -200,6 +201,7 @@ function source_build
     --with-libpng=system \
     --with-log=${JVM_BUILD_LOG_LEVEL} \
     --with-stdc++lib=dynamic \
+    --with-version-string="${PKG_VERSION}-condaforge" \
     --with-x=$PREFIX \
     --with-zlib=system \
     ${CONFIGURE_ARGS} \
