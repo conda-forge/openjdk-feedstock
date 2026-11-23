@@ -110,22 +110,22 @@ function source_build
           --build=${BUILD} \
           --host=${BUILD} \
           --target=${BUILD} \
+          --disable-warnings-as-errors \
+          --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
+          --with-cups=${BUILD_PREFIX} \
           --with-extra-cflags="${CFLAGS//$PREFIX/$BUILD_PREFIX}" \
           --with-extra-cxxflags="${CXXFLAGS//$PREFIX/$BUILD_PREFIX} -fpermissive" \
           --with-extra-ldflags="${LDFLAGS//$PREFIX/$BUILD_PREFIX}" \
-          --with-log=${JVM_BUILD_LOG_LEVEL} \
-          --with-stdc++lib=dynamic \
-          --disable-warnings-as-errors \
-          --with-x=${BUILD_PREFIX} \
-          --with-cups=${BUILD_PREFIX} \
+          --with-fontconfig=${BUILD_PREFIX} \
           --with-freetype=system \
           --with-giflib=system \
-          --with-libpng=system \
-          --with-zlib=system \
-          --with-libjpeg=system \
           --with-lcms=system \
-          --with-fontconfig=${BUILD_PREFIX} \
-          --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
+          --with-libjpeg=system \
+          --with-libpng=system \
+          --with-log=${JVM_BUILD_LOG_LEVEL} \
+          --with-stdc++lib=dynamic \
+          --with-x=${BUILD_PREFIX} \
+          --with-zlib=system \
           $_TOOLCHAIN_ARGS
         make JOBS=$CPU_COUNT $_TOOLCHAIN_ARGS images
       popd
@@ -185,23 +185,23 @@ function source_build
     --build=${BUILD} \
     --host=${HOST} \
     --target=${HOST} \
+    --disable-javac-server \
+    --disable-warnings-as-errors \
+    --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
+    --with-cups=$PREFIX \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CXXFLAGS -fpermissive" \
     --with-extra-ldflags="$LDFLAGS" \
-    --with-log=${JVM_BUILD_LOG_LEVEL} \
-    --with-x=$PREFIX \
-    --with-cups=$PREFIX \
-    --with-freetype=system \
     --with-fontconfig=$PREFIX \
+    --with-freetype=system \
     --with-giflib=system \
-    --with-libpng=system \
-    --with-zlib=system \
-    --with-libjpeg=system \
     --with-lcms=system \
+    --with-libjpeg=system \
+    --with-libpng=system \
+    --with-log=${JVM_BUILD_LOG_LEVEL} \
     --with-stdc++lib=dynamic \
-    --disable-warnings-as-errors \
-    --with-boot-jdk=$BUILD_PREFIX/lib/jvm \
-    --disable-javac-server \
+    --with-x=$PREFIX \
+    --with-zlib=system \
     ${CONFIGURE_ARGS} \
     $_TOOLCHAIN_ARGS
 
