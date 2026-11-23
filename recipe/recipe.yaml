@@ -43,7 +43,7 @@ source:
         sha256: ${{ zulu_hash }}
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
@@ -51,6 +51,10 @@ outputs:
     build:
       script:
         file: build
+        # this is a work-around for something rattler-build should be doing,
+        # see https://github.com/prefix-dev/rattler-build/issues/2587
+        env:
+          PKG_VERSION: ${{ version }}
       dynamic_linking:
         # Binaries are already relocatable and conda-build's post-processing would add a very long RPATH to binaries
         # which doesn't fit anymore into the __LINKEDIT section. For this, we either need to manually reassemble
